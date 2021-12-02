@@ -107,7 +107,45 @@
 
 
 .perform_single_NMF_run <- function(X, kVal, alphaVal, seedVal) {
+    #################### Attempt using basilisk
+    # proc <- basilisk::basiliskStart(seqArchR_env)
+    # on.exit(basilisk::basiliskStop(proc))
+    #
+    # nmf_result <- basilisk::basiliskRun(proc,
+    #                             function(givenMat = X, nPatterns = kVal,
+    #                                      nIter=2000, givenAlpha = alphaVal,
+    #                                      givenL1_ratio = 1, seed_val = seedVal){
+    #     # mod <- reticulate::import("sklearn")
+    #     # output <- mod$some_calculation(arg1, arg2)
+    #     #
+    #     # # The return value MUST be a pure R object, i.e., no reticulate
+    #     # # Python objects, no pointers to shared memory.
+    #     # output
+    #
+    #     reticulate::source_python(system.file("python", "perform_nmf.py",
+    #                                           package = "seqArchR",
+    #                                           mustWork = TRUE)
+    #     )
+    #     ##
+    #     nmf_result <- perform_nmf_func(givenMat = givenMat,
+    #                                    nPatterns = as.integer(nPatterns),
+    #                                    nIter = as.integer(nIter),
+    #                                    givenAlpha = givenAlpha,
+    #                                    givenL1_ratio = givenL1_ratio,
+    #                                    seed_val = as.integer(seed_val)
+    #     )
+    #     nmf_result
+    #
+    # })
+    #
+    #
+    # D_W <- as.matrix(get_features_matrix(nmf_result))
+    # D_H <- as.matrix(get_samples_matrix(nmf_result))
+    # return(list(featuresMatrix = D_W, samplesMatrix = D_H))
 
+    # ##################
+    #
+    ### Without basilisk
     reticulate::source_python(system.file("python", "perform_nmf.py",
                                         package = "seqArchR",
                                         mustWork = TRUE)
@@ -120,6 +158,7 @@
                             givenL1_ratio = 1,
                             seed_val = as.integer(seedVal)
                             )
+
     D_W <- as.matrix(get_features_matrix(nmf_result))
     D_H <- as.matrix(get_samples_matrix(nmf_result))
     return(list(featuresMatrix = D_W, samplesMatrix = D_H))

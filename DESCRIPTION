@@ -46,7 +46,8 @@ Imports:
     Biostrings,
     grDevices,
     ggplot2 (>= 3.1.1),
-    ggseqlogo (>= 0.1)
+    ggseqlogo (>= 0.1),
+    basilisk
 Suggests:
     TFBSTools,
     cowplot,
@@ -71,4 +72,5 @@ biocViews:
     DNASeq
 Encoding: UTF-8
 LazyData: false
+StagedInstall: no
 RoxygenNote: 7.1.2
