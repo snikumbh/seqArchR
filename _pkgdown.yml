@@ -1,0 +1,83 @@
+url: http://snikumbh.github.io/seqArchR
+
+template:
+  params:
+      bootswatch: flatly
+      ganalytics: UA-67848084-3
+
+
+
+navbar:
+  structure:
+    left:
+    - home
+    - intro
+    - reference
+    - articles
+    - tutorials
+    - news
+    right: github
+  components:
+    home:
+      icon: fas fa-home fa-lg
+      href: index.html
+    reference:
+      text: Reference
+      href: reference/index.html
+    intro:
+      text: Get started
+      href: articles/seqArchR.html
+    news:
+      text: News
+      href: news/index.html
+    github:
+      icon: fab fa-github fa-lg
+      href: https://github.com/snikumbh/seqArchR/
+
+reference:
+- title: Main functions
+  desc: Most basic functions
+  contents:
+    - seqArchR
+    - set_config
+
+- title: Prepare input
+  desc: Functions enabling preparation of input
+  contents:
+    - prepare_data_from_FASTA
+    - get_one_hot_encoded_seqs
+
+- title: Getter functions
+  desc: Getter functions for seqArchR result object
+  contents:
+    - get_clBasVec
+    - get_clBasVec_k
+    - get_clBasVec_m
+    - get_seqClLab
+    - seqs_str
+
+- title: Visualization functions
+  desc: Functions enabling visualization of intermediate and final output
+  contents:
+    - plot_arch_for_clusters
+    - plot_ggseqlogo_of_seqs
+    - viz_bas_vec_heatmap
+    - plot_ggheatmap
+    - viz_bas_vec_seqlogo
+    - plot_ggseqlogo
+    - viz_bas_vec_heatmap_seqlogo
+    - viz_seqs_acgt_mat_from_seqs
+
+- title: Manipulate seqArchR result
+  desc: Functions to manipulate elements from seqArchR result
+  contents:
+    - collate_seqArchR_result
+    - get_seqs_clust_list
+    - make_sinuc_PWMs
+    - make_dinuc_PWMs
+
+
+articles:
+- title: All vignettes
+  desc: ~
+  contents: '`seqArchR`'

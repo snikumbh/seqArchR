@@ -1,0 +1,327 @@
+---
+title: "Example usage of _seqArchR_ on simulated DNA sequences"
+author: "Sarvesh Nikumbh"
+date: "`r Sys.Date()`"
+output:
+  rmarkdown::html_vignette:
+    fig_caption: yes
+    fig.align: 'center'
+    number_sections: yes
+    dpi: 300
+    toc: yes
+vignette: >
+  %\VignetteIndexEntry{Example usage of _seqArchR_ on simulated DNA sequences}
+  %\VignetteEngine{knitr::rmarkdown}
+  \usepackage[utf8]{inputenc}
+resource_files:
+  - seqArchR_algorithm_static_illustrator_cropped.png
+  - seqArchR_algorithm_1080p_cropped.gif
+---
+
+
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+
+```
+
+# Introduction
+_seqArchR_ is a non-negative matrix factorization (NMF)-based unsupervised 
+learning approach for identifying different core promoter sequence 
+architectures. 
+_seqArchR_ implements an algorithm based on chunking and iterative 
+processing. 
+While matrix factorization-based applications are known to scale poorly for 
+large amounts of data, seqArchR's algorithm enables scalable 
+processing of large number of sequences.
+A notable advantage of seqArchR is that the sequence motifs -- the lengths and 
+positional specificities of individual motifs, and complex inter-relationships 
+where multiple motifs are at play in tandem, all are simultaneously inferred 
+from the data.
+To our knowledge, this is a novel application of NMF on biological sequence data
+ capable of simultaneously discovering the sequence motifs and their positions.
+For a more detailed discussion, see preprint/publication [TODO: link here].
+
+
+This vignette demonstrates _seqArchR_'s usage with the help of a synthetic DNA 
+sequences data set. 
+Please refer to the paper (TODO: cite paper/preprint) for a detailed 
+description of _seqArchR_'s algorithm.
+The paper also discusses the various parameters and their settings.
+For completeness, the following section gives a brief overview of the algorithm.
+
+# _seqArchR_'s algorithm
+_seqArchR_ implements a chunking-based iterative procedure. Below is a 
+schematic of seqArchR's algorithm.
+
+<img src="seqArchR_algorithm_static_illustrator_cropped.png" 
+width="550" align="center">
+
+<!-- ![Schematic of seqArchR's algorithm]() -->
+<!-- ![Schematic of seqArchR's algorithm](seqArchR_algorithm_1080p_cropped.gif) -->
+
+
+Further details to follow.
+
+# Installation
+_seqArchR_ is currently made available via GitHub, thus, you can use the 
+following procedure for installing _seqArchR_.
+```{r seqArchR-install, echo=TRUE, eval=FALSE}
+
+if (!requireNamespace("remotes", quietly = TRUE)) {
+    install.packages("remotes")   
+}
+remotes::install_github("snikumbh/seqArchR")
+ 
+```
+In case of any errors, please consider looking up:
+[https://github.com/snikumbh/seqArchR](https://github.com/snikumbh/seqArchR).
+If none of the already noted points with regards to troubleshooting
+_seqArchR_'s installation help, please file a 
+[new issue](https://github.com/snikumbh/seqArchR/issues/new).
+
+
+
+# Working with _seqArchR_
+```{r setup-two, echo=TRUE}
+# Load seqArchR
+library(seqArchR)
+library(Biostrings, quietly = TRUE)
+
+
+# Set seed for reproducibility
+set.seed(1234)
+
+```
+
+## Synthetic data explained
+
+In order to demonstrate the efficacy of _seqArchR_, we use _seqArchR_ to cluster DNA 
+sequences in a synthetic data set which was generated as follows. 
+A set of 200 simulated DNA sequences was generated, each 100 nucleotides long 
+and with uniform probability for all nucleotides. 
+These sequences have four clusters in them, each with 50 sequences. 
+The profiles of the four clusters are:
+
+
+| Cluster | Characteristic Motifs | Motif Occurrence Position | #Sequences 
+|----------|:----------|:----------|----------
+| A | Dinucleotide repeat `AT` | every 10 nt | 50
+| B | `GATTACA` | 40 | 50
+|   | `GAGAG` | 60 |
+| C | `GAGAG` | 60 | 50
+| D | `GAGAG` | 80 | 50
+|   | `TCAT`  | 40 |
+<!-- ----------|----------|----------|----------| -->
+
+All the motifs across the clusters were planted with a mutation rate of 0.
+
+
+## Input and feature representation
+
+We use one-hot encoding to represent the dinucleotide profiles of each sequence 
+in the data set.
+_seqArchR_ provides functions to read input from (a) a FASTA file, and 
+(b) `Biostrings::DNAStringSet` object.
+
+### Reading input as FASTA file
+The function `seqArchR::prepare_data_from_FASTA()` enables one-hot-encoding the 
+DNA sequences in the given FASTA file.
+The one-hot-encoded sequences are returned as a sparse matrix with as many 
+columns as the number of sequences in the FASTA file and (sequence length x 
+$4^{2}$) rows when dinucleotide profiles is selected. The number of rows will 
+be (sequence length x $4$) when mononucleotide profiles is selected. See the 
+`sinuc_or_dinuc` argument.
+
+
+Upon setting the logical argument `rawSeq` to `TRUE`, the function returns 
+the raw sequences as a `Biostrings::DNAStringSet` object, with `FALSE` it 
+returns the column-wise one-hot encoded representation as noted above.
+When `raw_seq` is `TRUE`, `sinuc_or_dinuc` argument is ignored.
+
+```{r load-example-data, echo=TRUE}
+# Creation of one-hot encoded data matrix from FASTA file
+inputFname <- system.file("extdata", "example_data.fa", 
+                                  package = "seqArchR", 
+                                  mustWork = TRUE)
+
+# Specifying `dinuc` generates dinucleotide features
+inputSeqsMat <- seqArchR::prepare_data_from_FASTA(fasta_fname = inputFname,
+                                                  sinuc_or_dinuc = "dinuc")
+
+inputSeqsRaw <- seqArchR::prepare_data_from_FASTA(fasta_fname = inputFname, 
+                                               raw_seq = TRUE)
+
+nSeqs <- length(inputSeqsRaw)
+positions <- seq(1, Biostrings::width(inputSeqsRaw[1]))
+
+
+```
+
+
+### Reading input as a DNAStringSet object
+If you already have a `Biostrings::DNAStringSet` object, you can use the 
+`get_one_hot_encoded_seqs()` function which directly accepts a `DNAStringSet` 
+object.
+
+```{r load-example-data-2, echo=TRUE, eval=TRUE}
+# Creation of one-hot encoded data matrix from a DNAStringSet object
+inputSeqs_direct <- seqArchR::get_one_hot_encoded_seqs(seqs = inputSeqsRaw, 
+                                                  sinuc_or_dinuc = "dinuc")
+identical(inputSeqs_direct, inputSeqsMat)
+```
+
+
+## Visualize input sequences as an image
+
+```{r plot-seqs, echo=TRUE, fig.dim=c(4,6)}
+# Visualize the sequences in a image matrix where the DNA bases are 
+# assigned fixed colors
+
+seqArchR::viz_seqs_acgt_mat(as.character(inputSeqsRaw), 
+                          pos_lab = positions, save_fname = NULL)
+
+```
+
+
+## Calling _seqArchR_
+
+Setup seqArchR configuration as follows.
+```{r setup-seqArchR-config-call, echo=TRUE}
+# Set seqArchR configuration
+seqArchRconfig <- seqArchR::set_config(
+        parallelize = TRUE,
+        n_cores = 2,
+        n_runs = 100,
+        k_min = 1,
+        k_max = 20,
+        mod_sel_type = "stability",
+        bound = 10^-6,
+        chunk_size = 100,
+        result_aggl = "ward.D", 
+        result_dist = "euclid",
+        flags = list(debug = FALSE, time = TRUE, verbose = TRUE,
+                     plot = FALSE)
+)
+```
+
+Once the configuration is setup, call the `seqArchR::seqArchR` function with 
+user-specified iterations.
+
+```{r call-seqArchR, echo=TRUE}
+# Call/Run seqArchR
+seqArchRresult <- seqArchR::seqArchR(config = seqArchRconfig,
+                            seqs_ohe_mat = inputSeqsMat,
+                            seqs_raw = inputSeqsRaw,
+                            seqs_pos = positions,
+                            total_itr = 2,
+                            set_ocollation = c(TRUE, FALSE))
+
+```
+
+
+
+## Understanding the result object from _seqArchR_
+
+In the version `r packageVersion("seqArchR")`, _seqArchR_ naively returns a result 
+object which is a nested list of seven elements.
+These include: 
+- the sequence cluster labels per iteration [`seqsClustLabels`]; 
+- the collection of NMF basis vectors per iteration [`clustBasisVectors`]: 
+each is a list of two elements `nBasisVectors` and `basisVectors`;
+- the clustering solution, [`clustSol`], which is obtained upon combining raw 
+clusters from the last iteration of seqArchR. This element stores the clustering 
+of NMF basis vectors [`basisVectorsClust`] and the sequence clusters 
+[`clusters`]; 
+- the raw sequences provided [`rawSeqs`]; 
+- if timeFlag is set, timing information (in minutes) per iteration 
+[`timeInfo`];
+- the configuration setting [`config`]; and 
+- the call itself [`call`].
+
+
+
+### NMF basis vectors
+_seqArchR_ stores the NMF basis vectors corresponding to each cluster in 
+every iteration in the variable `clustBasisVectors`. `clustBasisVectors` 
+is a numbered list corresponding to the number of iterations performed.
+This is then again a list holding two pieces of information: the number of 
+basis vectors (`nBasisVectors`) and the basis vectors 
+(`basisVectors`).
+
+```{r seqArchR-result-clust-factors}
+
+# Basis vectors at iteration 2
+seqArchR::get_clBasVec_k(seqArchRresult, iter=2)
+
+i2_bv <- seqArchR::get_clBasVec_m(seqArchRresult, iter=2)
+dim(i2_bv)
+head(i2_bv)
+```
+
+The NMF basis vectors can be visualized as a heatmap and/or sequence logo using 
+[https://snikumbh.github.io/seqArchR/reference/viz_bas_vec_heatmap_seqlogo.html]
+ (viz_bas_vec_heat_seqlogo) function.
+
+### Basis vectors at iteration 1
+
+```{r viz-BV-1, echo=TRUE, fig.height=5, fig.width=25}
+seqArchR::viz_bas_vec_heatmap_seqlogo(feat_mat = get_clBasVec_m(seqArchRresult, 1), 
+                                  method = "bits", sinuc_or_dinuc = "dinuc")
+
+```
+
+### Basis vectors at iteration 2
+
+
+```{r viz-BV-2, fig.height=5, fig.width=25, echo=TRUE} 
+seqArchR::viz_bas_vec_heatmap_seqlogo(feat_mat = get_clBasVec_m(seqArchRresult, 2), 
+                                  method = "bits", sinuc_or_dinuc = "dinuc")
+
+
+```
+
+
+
+### Visualize sequences by clusters
+
+The clustered output from _seqArchR_ can again be visualized as a matrix. 
+Use the [https://snikumbh.github.io/seqArchR/reference/seqs_str.html](seqs_str)
+function to fetch sequences by clusters at any iteration and call 
+`seqArchR::viz_seqs_as_acgt_mat` as shown.
+
+```{r clust-itr1, fig.dim=c(4,6), fig.cap="Figure: Clusters at iteration 1"}
+
+seqArchR::viz_seqs_acgt_mat(seqs_str(seqArchRresult, iter = 1, ord = TRUE),
+                                  pos_lab = positions)
+
+```
+
+```{r clust-itr2, fig.dim=c(4,6), fig.cap="Figure: Clusters at iteration 2"}
+
+seqArchR::viz_seqs_acgt_mat(seqs_str(seqArchRresult, iter = 2, ord = TRUE),
+                                  pos_lab = positions)
+
+```
+
+
+# Conclusion
+
+_seqArchR_ can detect _de novo_ sequence features and simultaneously identify the 
+complex interactions of different features together with their positional 
+specificities.
+
+Note that the sequence architectures identified by _seqArchR_ have no limitations 
+due to the size of the motifs or gaps in them, distance between motifs, 
+compositional and positional variations in the individual motifs and their 
+effects on the complex interactions, and number of motifs involved in any 
+interaction.
+
+
+# Session Info
+```{r session_info, include=TRUE, echo=TRUE, results='markup'}
+sessionInfo()
+```

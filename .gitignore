@@ -1,0 +1,15 @@
+*.Rproj
+.Rproj.user
+.Rhistory
+.RData
+.Ruserdata
+inst/doc
+.DS_Store
+doc
+Meta
+.Rapp.history
+## Ignore travis config file
+^\.travis\.yml$
+vignettes/*.pdf
+vignettes/*.out
+vignettes/*.rds

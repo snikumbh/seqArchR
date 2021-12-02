@@ -1,0 +1,2 @@
+- vdiffr-svg-engine: 2.0
+- vdiffr: 0.4.0
