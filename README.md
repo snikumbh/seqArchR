@@ -16,7 +16,7 @@ Note: _This package is currently under development. So, please bear with me whil
 seqArchR is an unsupervised, non-negative matrix factorization (NMF)-based algorithm for discovery of sequence architectures de novo.
 Below is a schematic of seqArchR's algorithm.
 
-<img src="https://github.com/snikumbh/seqArchR/blob/master/vignettes/seqArchR_algorithm_1080p_cropped.gif" width="550" align="center">
+<img src="https://github.com/snikumbh/seqArchR/blob/main/vignettes/seqArchR_algorithm_1080p_cropped.gif" width="550" align="center">
 
 
 ## Installation
