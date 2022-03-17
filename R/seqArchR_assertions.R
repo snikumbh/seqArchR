@@ -402,8 +402,8 @@
     }
     if(length(set_ocollation) < total_itr){
         stop("Expecting length of set_ocollation to be same as total_itr. ",
-             " Found ", total_itr, " and ", length(set_ocollation),
-             call. = TRUE)
+                " Found ", total_itr, " and ", length(set_ocollation),
+                call. = TRUE)
     }
 }
 

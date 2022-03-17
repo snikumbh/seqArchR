@@ -3,12 +3,10 @@ Package: seqArchR
 Title: Identify Different Architectures of Sequence Elements
 Version: 0.99.0
 Authors@R: 
-    person(given = "Sarvesh",
-           family = "Nikumbh",
-           role = c("aut", "cre", "cph"),
-           email = "sarvesh.nikumbh@gmail.com",
-           comment = c(ORCID = "0000-0003-3163-4447", 
-           Twitter = "@sarveshnikumbh"))
+    person("Sarvesh", "Nikumbh", email = "sarvesh.nikumbh@gmail.com", 
+    role = c("aut", "cre", "cph"), 
+    comment = c(ORCID = "0000-0003-3163-4447", 
+    Twitter = "@sarveshnikumbh"))
 Description: \code{seqArchR} enables unsupervised discovery of _de novo_ clusters 
     with characteristic sequence architectures characterized by 
     position-specific motifs or composition of stretches of nucleotides, 

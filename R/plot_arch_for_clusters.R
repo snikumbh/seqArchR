@@ -248,6 +248,17 @@ plot_ggseqlogo_of_seqs <- function(seqs, pos_lab = NULL, xt_freq = 5,
 }
 ## =============================================================================
 
+handle_only_pos_ticks <- function(xtick_cal, nPos){
+    use_tick_pos <- c(1+xtick_cal[1], xtick_cal[-1])
+    use_tick_pos <- use_tick_pos[use_tick_pos <= nPos]
+}
+
+handle_only_neg_ticks <- function(xtick_cal, nPos){
+    use_tick_pos <- 1+xtick_cal
+    use_tick_pos <- use_tick_pos[use_tick_pos <= nPos]
+}
+
+
 set_xtick_labels <- function(pos_lab, xt_freq){
     ## Note: This works in cases where the position labels are
     ## multiples of 5. Because one doesn't generally choose sequences of length,
@@ -259,23 +270,37 @@ set_xtick_labels <- function(pos_lab, xt_freq){
     has_neg <- any(pos_lab < 0)
     has_pos <- any(pos_lab > 0)
     if(length(has_zero) > 0){
-        use_tick_pos <- 1+xtick_cal
-        use_tick_pos <- use_tick_pos[which(use_tick_pos <= nPos)]
+        ## has a zero
+        use_tick_pos <- handle_only_neg_ticks(xtick_cal, nPos)
     }
-
-    if(length(has_zero) == 0 && !has_neg){
-        use_tick_pos <- c(1+xtick_cal[1], xtick_cal[-1])
-        use_tick_pos <- use_tick_pos[which(use_tick_pos <= nPos)]
+    else if(length(has_zero) == 0 && !has_neg){
+        ## has only negative values with no zero
+        use_tick_pos <- handle_only_pos_ticks(xtick_cal, nPos)
     }
-    if(length(has_zero) == 0 && !has_pos){
-        use_tick_pos <- 1+xtick_cal
-        use_tick_pos <- use_tick_pos[which(use_tick_pos <= nPos)]
+    else if(length(has_zero) == 0 && !has_pos){
+        ## has only negative values with no zero
+        use_tick_pos <- handle_only_neg_ticks(xtick_cal, nPos)
+    }
+    else{
+        pos_idx <- which(pos_lab > 0)
+        pos_lab_p <- pos_lab[pos_idx]
+        pos_lab_n <- pos_lab[-pos_idx]
+        ##
+        nPos <- length(pos_lab_n)
+        xtick_cal <- seq(0, nPos, by = xt_freq)
+        utn <- handle_only_neg_ticks(xtick_cal, nPos)
+        ##
+        nPos <- length(pos_lab_p)
+        xtick_cal <- seq(0, nPos, by = xt_freq)
+        utp <- handle_only_pos_ticks(xtick_cal, nPos)
+        ##
+        use_tick_pos <- c(utn, length(pos_lab_n) + utp)
     }
     use_labs <- pos_lab[use_tick_pos]
     use_breaks <- use_tick_pos
     use_labs <- list(breaks = use_breaks, labels = use_labs)
 }
-
+## =============================================================================
 
 set_ratio <- function(nPos, for100 = 4){
     ## ratio of 4 for 100 positions looks good.

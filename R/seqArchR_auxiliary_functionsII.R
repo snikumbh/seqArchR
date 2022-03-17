@@ -816,7 +816,7 @@ perform_setup <- function(config, total_itr, o_dir, fresh,
     if(length(set_ocollation) > total_itr){
         set_ocollation <- set_ocollation[seq(1,total_itr)]
         cli::cli_alert_info(c("Changing length of 'set_ocollation' to ",
-                              "same as that of total_itr"))
+                                "same as that of total_itr"))
     }
 
 

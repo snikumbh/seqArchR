@@ -238,7 +238,7 @@ get_one_hot_encoded_seqs <- function(seqs, sinuc_or_dinuc = "sinuc") {
     if (0 %in% length_vals) {
         # Checking sequences of length 0
         stop("Found ", which(0 == length_vals),
-             " sequence(s) of length zero\n")
+                " sequence(s) of length zero\n")
         #
     } else if (length(levels(as.factor(length_vals))) > 1) {
         # Checking all sequences are of same length
