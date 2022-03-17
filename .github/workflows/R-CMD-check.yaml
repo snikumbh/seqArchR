@@ -20,17 +20,18 @@ jobs:
   R-CMD-check:
     runs-on: ${{ matrix.config.os }}
 
-    name: ${{ matrix.config.os }} (${{ matrix.config.r }})
+    name: ${{ matrix.config.os }} (${{ matrix.config.r }} - ${{ matrix.config.bioc }} - ${{ matrix.config.image }})
 
     strategy:
       fail-fast: false
       matrix:
         config:
-          - {os: macOS-latest,   r: 'release'}
-          - {os: macOS-latest,   r: 'devel'}
-          - {os: ubuntu-latest,   r: 'devel', http-user-agent: 'release'}
-          - {os: ubuntu-latest,   r: 'release'}
-          - {os: ubuntu-latest,   r: 'oldrel-1'}
+          - {os: macOS-latest,   r: 'release', bioc: 'devel'}
+          - {os: macOS-latest,   r: 'devel', bioc: 'devel'}
+          - {os: ubuntu-latest,   r: 'devel', image: 'bioconductor/bioconductor_docker:devel'}
+          - { os: ubuntu-16.04, r: 'devel', bioc: 'devel', cran: "https://demo.rstudiopm.com/all/__linux__/xenial/latest"}
+          #- {os: ubuntu-latest,   r: 'release', bioc: 'devel'}
+          #- {os: ubuntu-latest,   r: 'oldrel-1', bioc: 'devel'}
             # forking unavailable on windows, hence temporarily commented
             #- {os: windows-latest, r: 'release'}
             #- {os: windows-latest, r: '3.6'}
@@ -55,6 +56,13 @@ jobs:
         with:
           r-version: ${{ matrix.config.r }}
           http-user-agent: ${{ matrix.config.http-user-agent }}
+
+      - name: Set BiocManager version
+        if: matrix.config.image == null
+        run: |
+          install.packages('BiocManager')
+          BiocManager::install(version = "${{ matrix.config.bioc }}", ask = FALSE)
+        shell: Rscript {0}
 
       - name: Install Python
         run: |
@@ -107,6 +115,12 @@ jobs:
         run: rcmdcheck::rcmdcheck(args = c("--no-manual", "--as-cran"), error_on = "warning", check_dir = "check")
         shell: Rscript {0}
 
+      - name: BiocCheck
+        run: |
+          BiocManager::install("BiocCheck")
+          BiocCheck::BiocCheck(".")
+        shell: Rscript {0}
+
       - name: Show testthat output
         if: always()
         run: find check -name 'testthat.Rout*' -exec cat '{}' \; || true
@@ -118,3 +132,10 @@ jobs:
         with:
           name: ${{ runner.os }}-r${{ matrix.config.r }}-results
           path: check
+
+      - name: Test coverage
+        if: matrix.config.os == 'macOS-latest'
+        run: |
+          install.packages("covr")
+          covr::codecov(token = "${{secrets.CODECOV_TOKEN}}")
+        shell: Rscript {0}
