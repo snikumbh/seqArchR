@@ -11,7 +11,7 @@
 #'
 #' @return The (updated) dir name
 #'
-#' @export
+#' export
 handle_dir_creation <- function(o_dir, vrbs){
     ##
     cli::cli_alert_info(c("Output directory at path: ",
