@@ -27,14 +27,19 @@ jobs:
       matrix:
         config:
           - {os: macOS-latest,   r: 'release'}
+          - {os: macOS-latest,   r: 'devel'}
+          - {os: ubuntu-latest,   r: 'devel', http-user-agent: 'release'}
+          - {os: ubuntu-latest,   r: 'release'}
+          - {os: ubuntu-latest,   r: 'oldrel-1'}
             # forking unavailable on windows, hence temporarily commented
             #- {os: windows-latest, r: 'release'}
             #- {os: windows-latest, r: '3.6'}
-          - {os: ubuntu-16.04,   r: 'devel', rspm: "https://packagemanager.rstudio.com/cran/__linux__/xenial/latest", http-user-agent: "R/4.0.0 (ubuntu-16.04) R (4.0.0 x86_64-pc-linux-gnu x86_64 linux-gnu) on GitHub Actions" }
-          - {os: ubuntu-16.04,   r: 'release', rspm: "https://packagemanager.rstudio.com/cran/__linux__/xenial/latest"}
+            # old entries, commented on 17-Mar-2022
+            #- {os: ubuntu-16.04,   r: 'devel', rspm: "https://packagemanager.rstudio.com/cran/__linux__/xenial/latest", http-user-agent: "R/4.0.0 (ubuntu-16.04) R (4.0.0 x86_64-pc-linux-gnu x86_64 linux-gnu) on GitHub Actions" }
+            #- {os: ubuntu-16.04,   r: 'release', rspm: "https://packagemanager.rstudio.com/cran/__linux__/xenial/latest"}
             #- {os: ubuntu-16.04,   r: 'oldrel',  rspm: "https://packagemanager.rstudio.com/cran/__linux__/xenial/latest"}
             #- {os: ubuntu-16.04,   r: '3.6',     rspm: "https://packagemanager.rstudio.com/cran/__linux__/xenial/latest"}
-          - {os: ubuntu-16.04,   r: '4.0',     rspm: "https://packagemanager.rstudio.com/cran/__linux__/xenial/latest"}
+            #- {os: ubuntu-16.04,   r: '4.0',     rspm: "https://packagemanager.rstudio.com/cran/__linux__/xenial/latest"}
             #- {os: ubuntu-16.04,   r: '3.3',     rspm: "https://packagemanager.rstudio.com/cran/__linux__/xenial/latest"}
 
     env:
