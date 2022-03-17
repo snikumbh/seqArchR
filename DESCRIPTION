@@ -18,6 +18,12 @@ Description: \code{seqArchR} enables unsupervised discovery of _de novo_ cluster
     iterative procedure that enables processing of large sequence collections 
     efficiently. Wrapper functions are provided for visualizing cluster 
     architectures as sequence logos.
+Config/reticulate:
+  list(
+    packages = list(
+      list(package = "scikit-learn", version = "0.24.2", pip = FALSE)
+    )
+  )
 License: GPL-3 | file LICENSE
 URL: https://snikumbh.github.io/seqArchR/,
     https://github.com/snikumbh/seqArchR
@@ -39,7 +45,7 @@ Imports:
     cli,
     prettyunits,
     reshape2 (>= 1.4.3),
-    reticulate (>= 1.12),
+    reticulate (>= 1.24),
     parallel,
     Biostrings,
     grDevices,
