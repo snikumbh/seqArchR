@@ -170,7 +170,7 @@
 #'
 #' @examples
 #'
-#' fname <- system.file("extdata", "example_data.fa",
+#' fname <- system.file("extdata", "example_data.fa.gz",
 #'                         package = "seqArchR", mustWork = TRUE)
 #'
 #'
@@ -285,7 +285,7 @@ get_one_hot_encoded_seqs <- function(seqs, sinuc_or_dinuc = "sinuc") {
 #'
 #' @examples
 #'
-#' fname <- system.file("extdata", "example_data.fa",
+#' fname <- system.file("extdata", "example_data.fa.gz",
 #'                         package = "seqArchR", mustWork = TRUE)
 #'
 #' # mononucleotides feature matrix

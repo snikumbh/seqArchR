@@ -75,7 +75,7 @@
 #'
 #' @examples
 #'
-#' fname <- system.file("extdata", "example_data.fa",
+#' fname <- system.file("extdata", "example_data.fa.gz",
 #'                         package = "seqArchR", mustWork = TRUE)
 #'
 #' # Specifying 'dinuc' generates dinucleotide features

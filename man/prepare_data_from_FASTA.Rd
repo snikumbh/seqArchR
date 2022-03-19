@@ -29,7 +29,7 @@ for mono- and dinucleotide features respectively.
 }
 \examples{
 
-fname <- system.file("extdata", "example_data.fa",
+fname <- system.file("extdata", "example_data.fa.gz",
                         package = "seqArchR", mustWork = TRUE)
 
 # mononucleotides feature matrix

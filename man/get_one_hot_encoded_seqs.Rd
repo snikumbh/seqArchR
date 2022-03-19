@@ -21,7 +21,7 @@ Get the one-hot encoding representation of the given sequences.
 }
 \examples{
 
-fname <- system.file("extdata", "example_data.fa",
+fname <- system.file("extdata", "example_data.fa.gz",
                         package = "seqArchR", mustWork = TRUE)
 
 
