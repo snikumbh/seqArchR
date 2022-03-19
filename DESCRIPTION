@@ -39,7 +39,7 @@ Imports:
     cli,
     prettyunits,
     reshape2 (>= 1.4.3),
-    reticulate (>= 1.24),
+    reticulate (>= 1.22),
     parallel,
     Biostrings,
     grDevices,
