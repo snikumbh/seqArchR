@@ -8,11 +8,14 @@ test_that("File non-existance handled", {
 })
 
 test_that("Preparing sinuc/dinuc/trinuc data matrix", {
-    testSeqs_filename <- system.file("extdata", "example_data.fa",
-                                     package = "seqArchR",
-                                     mustWork = TRUE)
-    # This returns empty string when file not found
-    rawSeqs <- prepare_data_from_FASTA(testSeqs_filename, raw_seq = TRUE)
+    # testSeqs_filename <- system.file("extdata", "example_data.fa.gz",
+    #                                  package = "seqArchR",
+    #                                  mustWork = TRUE)
+    # # This returns empty string when file not found
+    # rawSeqs <- prepare_data_from_FASTA(testSeqs_filename, raw_seq = TRUE)
+
+    rawSeqs <- readRDS(system.file("extdata", "tssSeqsRaw.rds",
+                                   package = "seqArchR", mustWork = TRUE))
     use_rawSeqs <- base::substr(rawSeqs[1:2], start = 1, stop = 5)
     # 20 x 2 sparse Matrix of class "dgCMatrix"
     #

@@ -23,11 +23,16 @@ test_that("decide_process_outer_chunk works fine", {
 
 
 test_that("Null dir path is flagged in allSeqs Logo", {
-  fname <- system.file("extdata", "example_data.fa",
-    package = "seqArchR",
-    mustWork = TRUE)
-  tssSeqsRaw <- suppressMessages(seqArchR::prepare_data_from_FASTA(fname,
-      raw_seq = TRUE))
+  # fname <- system.file("extdata", "example_data.fa",
+  #   package = "seqArchR",
+  #   mustWork = TRUE)
+  # tssSeqsRaw <- suppressMessages(seqArchR::prepare_data_from_FASTA(fname,
+  #     raw_seq = TRUE))
+
+  tssSeqsRaw <- readRDS(system.file("extdata", "tssSeqsRaw.rds",
+                                    package = "seqArchR",
+                                    mustWork = TRUE))
+
   expect_error(plot_all_seqs_logo(NULL, NULL, dpath = NULL),
               "seqs_raw is NULL")
   expect_error(plot_all_seqs_logo(seqs_raw = tssSeqsRaw[1:50],

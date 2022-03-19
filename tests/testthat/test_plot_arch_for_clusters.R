@@ -10,11 +10,15 @@ test_that("xtick vals are properly set", {
 
 test_that("plot_arch_for_clusters works", {
 
-    fname <- system.file("extdata", "example_data.fa",
-                         package = "seqArchR",
-                         mustWork = TRUE)
-    seq_raw <- suppressMessages(seqArchR::prepare_data_from_FASTA(fname,
-                                                        raw_seq = TRUE))
+    # fname <- system.file("extdata", "example_data.fa",
+    #                      package = "seqArchR",
+    #                      mustWork = TRUE)
+    # seq_raw <- suppressMessages(seqArchR::prepare_data_from_FASTA(fname,
+    #                                                     raw_seq = TRUE))
+
+    seq_raw <- readRDS(system.file("extdata", "tssSeqsRaw.rds",
+                                   package = "seqArchR",
+                                   mustWork = TRUE))
 
     ## Collect all sequences of clust1
     clust1_idx <- which(unlist(lapply(names(seq_raw), function(x){

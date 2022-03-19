@@ -144,7 +144,7 @@ When `raw_seq` is `TRUE`, `sinuc_or_dinuc` argument is ignored.
 
 ```{r load-example-data, echo=TRUE}
 # Creation of one-hot encoded data matrix from FASTA file
-inputFname <- system.file("extdata", "example_data.fa", 
+inputFname <- system.file("extdata", "example_data.fa.gz", 
                                   package = "seqArchR", 
                                   mustWork = TRUE)
 

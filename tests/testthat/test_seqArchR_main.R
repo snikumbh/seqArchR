@@ -1,17 +1,29 @@
 context("seqArchR main functionality")
 library(seqArchR)
 
+tssSeqs_sinuc <- readRDS(system.file("extdata", "tssSinuc.rds",
+                                     package = "seqArchR",
+                                     mustWork = TRUE))
+tssSeqsRaw <- readRDS(system.file("extdata", "tssSeqsRaw.rds",
+                                  package = "seqArchR",
+                                  mustWork = TRUE))
+
 test_that("seqArchR (stability) works when timeFlag is FALSE/checkpointing", {
     ## Make toy objects and data
-    fname <- system.file("extdata", "example_data.fa",
-                                      package = "seqArchR",
-                                      mustWork = TRUE)
+    ## Commented out. We could just save the sinuc and dinuc profiles instead
+    ## of having to read and recompute them every time.
+    ##
+    # fname <- system.file("extdata", "example_data.fa.gz",
+    #                                   package = "seqArchR",
+    #                                   mustWork = TRUE)
+    #
+    #
+    #
+    # tssSeqs_sinuc <- suppressMessages(seqArchR::prepare_data_from_FASTA(fname))
+    # tssSeqsRaw <- suppressMessages(seqArchR::prepare_data_from_FASTA(fname,
+    #                                 raw_seq = TRUE))
 
 
-
-    tssSeqs_sinuc <- suppressMessages(seqArchR::prepare_data_from_FASTA(fname))
-    tssSeqsRaw <- suppressMessages(seqArchR::prepare_data_from_FASTA(fname,
-                                    raw_seq = TRUE))
 
     nSeqs <- ncol(tssSeqs_sinuc)
     positions <- seq(1,100)
@@ -58,15 +70,15 @@ test_that("seqArchR (stability) works when timeFlag is FALSE/checkpointing", {
 
 test_that("seqArchR (stability) works when plot==TRUE, o_dir is NULL", {
     ## Make toy objects and data
-    fname <- system.file("extdata", "example_data.fa",
-        package = "seqArchR",
-        mustWork = TRUE)
-
-
-
-    tssSeqs_sinuc <- suppressMessages(seqArchR::prepare_data_from_FASTA(fname))
-    tssSeqsRaw <- suppressMessages(seqArchR::prepare_data_from_FASTA(fname,
-        raw_seq = TRUE))
+    # fname <- system.file("extdata", "example_data.fa.gz",
+    #     package = "seqArchR",
+    #     mustWork = TRUE)
+    #
+    #
+    #
+    # tssSeqs_sinuc <- suppressMessages(seqArchR::prepare_data_from_FASTA(fname))
+    # tssSeqsRaw <- suppressMessages(seqArchR::prepare_data_from_FASTA(fname,
+    #     raw_seq = TRUE))
 
     nSeqs <- ncol(tssSeqs_sinuc)
     positions <- seq(1,100)
@@ -100,17 +112,17 @@ test_that("seqArchR (stability) works when plot==TRUE, o_dir is NULL", {
 
 test_that("seqArchR (cv) works when timeFlag is FALSE", {
     ## Make toy objects and data
-    fname <- system.file("extdata", "example_data.fa",
-                                    package = "seqArchR",
-                                    mustWork = TRUE)
-
-
-
-    tssSeqs_sinuc <-
-        suppressMessages(seqArchR::prepare_data_from_FASTA(fname))
-    tssSeqsRaw <-
-        suppressMessages(seqArchR::prepare_data_from_FASTA(fname,
-                            raw_seq = TRUE))
+    # fname <- system.file("extdata", "example_data.fa.gz",
+    #                                 package = "seqArchR",
+    #                                 mustWork = TRUE)
+    #
+    #
+    #
+    # tssSeqs_sinuc <-
+    #     suppressMessages(seqArchR::prepare_data_from_FASTA(fname))
+    # tssSeqsRaw <-
+    #     suppressMessages(seqArchR::prepare_data_from_FASTA(fname,
+    #                         raw_seq = TRUE))
 
     nSeqs <- ncol(tssSeqs_sinuc)
     positions <- seq(1,100)
@@ -141,15 +153,15 @@ test_that("seqArchR (cv) works when timeFlag is FALSE", {
 
 test_that("seqArchR (stability) works when debug & timeFlag is FALSE", {
     ## Make toy objects and data
-    fname <- system.file("extdata", "example_data.fa",
-                                      package = "seqArchR",
-                                      mustWork = TRUE)
-
-
-
-    tssSeqs_sinuc <- suppressMessages(seqArchR::prepare_data_from_FASTA(fname))
-    tssSeqsRaw <- suppressMessages(seqArchR::prepare_data_from_FASTA(fname,
-                                raw_seq = TRUE))
+    # fname <- system.file("extdata", "example_data.fa.gz",
+    #                                   package = "seqArchR",
+    #                                   mustWork = TRUE)
+    #
+    #
+    #
+    # tssSeqs_sinuc <- suppressMessages(seqArchR::prepare_data_from_FASTA(fname))
+    # tssSeqsRaw <- suppressMessages(seqArchR::prepare_data_from_FASTA(fname,
+    #                             raw_seq = TRUE))
 
     nSeqs <- ncol(tssSeqs_sinuc)
     positions <- seq(1,100)
