@@ -9,7 +9,9 @@ viz_seqs_acgt_mat(
   pos_lab = NULL,
   xt_freq = min(length(pos_lab), 5),
   yt_freq = min(length(seqs), 100),
-  col = c("darkgreen", "blue", "orange", "red"),
+  use_col = c("darkgreen", "blue", "orange", "red"),
+  add_legend = TRUE,
+  use_legend = Biostrings::DNA_BASES,
   save_fname = NULL,
   file_type = "PNG",
   f_width = 450,
@@ -28,10 +30,16 @@ sequences.}
 than the length of the sequences. Default is 5.}
 
 \item{yt_freq}{The y-axis tick frequency. Expects a positive integer less
-than number of sequences. Default is 100 or.}
+than number of sequences. Default is 100.}
 
-\item{col}{A vector of four colors used for the DNA bases A, C, G, and T (in
-that order).}
+\item{use_col}{A vector of four colors used for the DNA bases A, C, G,
+and T (in that order).}
+
+\item{add_legend}{Logical. Whether legend should be added to the plot.
+Default is TRUE.}
+
+\item{use_legend}{A character vector of letters in the input sequences.
+Default is \code{\link[Biostrings]{DNA_BASES}}, used for DNA sequences.}
 
 \item{save_fname}{Specify the filename (with extension) for saving the
 plot to disk.}

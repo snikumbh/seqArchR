@@ -1,6 +1,5 @@
 context("Representing sequences as an image")
 
-## TODO: Add a visual test using the new func viz_seqs_as_acgt_mat_from_seqs
 
 test_that("Handling image representation of sequences", {
     # testSeqs_filename <- system.file("extdata",

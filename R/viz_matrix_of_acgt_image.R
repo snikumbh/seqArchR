@@ -47,9 +47,13 @@
 #' @param xt_freq The x-axis tick frequency. Expects a positive integer less
 #' than the length of the sequences. Default is 5.
 #' @param yt_freq The y-axis tick frequency. Expects a positive integer less
-#' than number of sequences. Default is 100 or.
-#' @param col A vector of four colors used for the DNA bases A, C, G, and T (in
-#' that order).
+#' than number of sequences. Default is 100.
+#' @param use_col A vector of four colors used for the DNA bases A, C, G,
+#' and T (in that order).
+#' @param add_legend Logical. Whether legend should be added to the plot.
+#' Default is TRUE.
+#' @param use_legend A character vector of letters in the input sequences.
+#' Default is \code{\link[Biostrings]{DNA_BASES}}, used for DNA sequences.
 #' @param save_fname Specify the filename (with extension) for saving the
 #' plot to disk.
 #' @param file_type Specify the file type, namely PNG, JPEG, TIFF.
@@ -59,12 +63,12 @@
 #' of sequences.
 #' @param f_units Specify the units in which the height and width are given.
 #'
-#' @importFrom Biostrings width
+#' @importFrom Biostrings width DNA_BASES
 #'
 #' @return Nothing returned to the R interpreter.
 #' @family visualization functions
 #' @importFrom grDevices png dev.off
-#' @importFrom graphics axis image
+#' @importFrom graphics axis image legend par
 #'
 #' @examples
 #'
@@ -86,8 +90,10 @@
 viz_seqs_acgt_mat <- function(seqs, pos_lab = NULL,
                                     xt_freq = min(length(pos_lab), 5),
                                     yt_freq = min(length(seqs), 100),
-                                    col = c("darkgreen", "blue",
+                                    use_col = c("darkgreen", "blue",
                                             "orange", "red"),
+                                    add_legend = TRUE,
+                                    use_legend = Biostrings::DNA_BASES,
                                     save_fname = NULL,
                                     file_type = "PNG",
                                     f_width = 450, f_height = 900,
@@ -129,14 +135,22 @@ viz_seqs_acgt_mat <- function(seqs, pos_lab = NULL,
     ytick_names <- rev(seq(yt_freq, nSeqs, by = yt_freq))
     ytick_loc <- 1 + nSeqs - c(rev(seq(yt_freq, nSeqs, by = yt_freq)))
 
+    par(xpd = T, mar = par()$mar + c(0,0,0,1.5))
     graphics::image(x = seq_len(nPos), y = seq_len(nSeqs),
-                z = t(seq_mat), col = col, useRaster = TRUE,
+                z = t(seq_mat), col = use_col, useRaster = TRUE,
                 ylab = paste0("Sequences (n = ", nSeqs, ")"),
                 xlab = "Positions", axes = FALSE)
     axis(side = 1, at = use_xtick_labs$breaks,
             labels = use_xtick_labs$labels, las = 2)
     axis(side = 2, at = ytick_loc, labels = ytick_names, las = 2)
+    ##
+    if(add_legend){
+        legend("topright", inset = c(-0.07, 0), col = use_col,
+            legend = use_legend, horiz = FALSE,
+            pch = 15, pt.cex = 1.2, bty = "n")
+    }
 
+    par(mar=c(5, 4, 4, 2) + 0.1)
     if(!is.null(save_fname)){
         dev.off()
     }
