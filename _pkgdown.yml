@@ -66,12 +66,13 @@ reference:
     - viz_bas_vec_seqlogo
     - plot_ggseqlogo
     - viz_bas_vec_heatmap_seqlogo
-    - viz_seqs_acgt_mat_from_seqs
+    - viz_seqs_acgt_mat
 
 - title: Manipulate seqArchR result
   desc: Functions to manipulate elements from seqArchR result
   contents:
     - collate_seqArchR_result
+    - collate_clusters
     - get_seqs_clust_list
     - make_sinuc_PWMs
     - make_dinuc_PWMs
