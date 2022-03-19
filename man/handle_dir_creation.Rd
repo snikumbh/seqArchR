@@ -13,8 +13,6 @@ handle_dir_creation(o_dir, vrbs)
 }
 \value{
 The (updated) dir name
-
-export
 }
 \description{
 Given the output directory name with its complete path, this
