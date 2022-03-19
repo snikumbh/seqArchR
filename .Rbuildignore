@@ -17,3 +17,4 @@ index.md$
 ^pkgdown$
 ^\.github$
 ^\.git$
+^\.BBSoptions$
