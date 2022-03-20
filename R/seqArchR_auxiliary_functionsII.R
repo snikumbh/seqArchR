@@ -494,7 +494,7 @@ set_config <- function(chunk_size = 500,
     }
     #########################
     if (best_k == max(config$paramRanges$k_vals)) {
-        warning(c("WARNING: Best K for this subset == 'k_max'. ",
+        warning(c("Best K for this subset == 'k_max'. ",
                     "Consider selecting a larger 'k_max' value, or\n",
                     "smaller chunk_size, or\n",
                     "perhaps, further increasing 'n_runs'\n"),
@@ -591,7 +591,7 @@ set_config <- function(chunk_size = 500,
             iChunksColl = innerChunksColl)
         ##
     } else if (best_k < 1) {
-        stop("Error in chosen number of factors: ", best_k)
+        stop("Chosen number of factors: ", best_k)
     }
     .assert_seqArchR_featuresMatrix(featuresMatrix)
     .assert_seqArchR_globClustAssignments(forGlobClustAssignments)
