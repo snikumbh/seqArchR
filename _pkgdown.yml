@@ -74,6 +74,8 @@ reference:
     - collate_seqArchR_result
     - collate_clusters
     - get_seqs_clust_list
+    - make_sinuc_PWMs
+    - make_dinuc_PWMs
 
 
 articles:

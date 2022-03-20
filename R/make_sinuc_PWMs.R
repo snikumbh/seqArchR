@@ -1,21 +1,21 @@
-# @title Make a PWM-resembling matrix out of a given n-vector
-#
-# @description The given matrix (or simply a vector) is reshaped to have four
-# rows for four nucleotides and a relevant number of columns.
-#
-# @param mat Actually a vector that will be reshaped into a (PWM)
-# matrix of DNA sequences.
-# @param add_pseudo_counts Logical, taking values TRUE or FALSE, specifying
-# whether or not pseudocounts are added to the matrix.
-# @param scale Logical, taking values TRUE or FALSE, specifying whether or
-# not the matrix is scaled column-wise, i.e., all columns summed to 1.
-#
-# @return A (PWM) matrix with 4 rows corresponding to the 4 nucleotides (A, C,
-# G, T) and the relevant number of columns (i.e., number of elements in given
-# vector/4)
-#
-# @export
-#
+#' @title Make a PWM-resembling matrix out of a given n-vector
+#'
+#' @description The given matrix (or simply a vector) is reshaped to have four
+#' rows for four nucleotides and a relevant number of columns.
+#'
+#' @param mat Actually a vector that will be reshaped into a (PWM)
+#' matrix of DNA sequences.
+#' @param add_pseudo_counts Logical, taking values TRUE or FALSE, specifying
+#' whether or not pseudocounts are added to the matrix.
+#' @param scale Logical, taking values TRUE or FALSE, specifying whether or
+#' not the matrix is scaled column-wise, i.e., all columns summed to 1.
+#'
+#' @return A (PWM) matrix with 4 rows corresponding to the 4 nucleotides (A, C,
+#' G, T) and the relevant number of columns (i.e., number of elements in given
+#' vector/4)
+#'
+#' @export
+#'
 make_sinuc_PWMs <- function(mat, add_pseudo_counts = TRUE, scale = TRUE) {
     ##
     sinuc <- c("A", "C", "G", "T")
@@ -36,24 +36,24 @@ make_sinuc_PWMs <- function(mat, add_pseudo_counts = TRUE, scale = TRUE) {
 }
 
 
-# @title Similarly to the PWM-like matrix for mononucleotides, make one for
-#  dinucleotides
-#
-# @description This function converts the basis matrix with basis vectors
-# of dinucleotide information into matrix of dimension
-# 16 x (sequence_length) for visualization.
-#
-# @param vec Column vector of the basis matrix
-# @param add_pseudo_counts Whether pesudocounts are to be added. TRUE or FALSE.
-# @param scale Whether to perform per position scaling of the matrix. TRUE or
-# FALSE
-#
-# @return A (PWM) matrix with 16 rows corresponding to the dinucleotide
-# combinations of the four nucleotides (A, C, G, T) and the relevant number
-# of columns (i.e., number of elements in given vector/16)
-#
-# @export
-#
+#' @title Similarly to the PWM-like matrix for mononucleotides, make one for
+#'  dinucleotides
+#'
+#' @description This function converts the basis matrix with basis vectors
+#' of dinucleotide information into matrix of dimension
+#' 16 x (sequence_length) for visualization.
+#'
+#' @param vec Column vector of the basis matrix
+#' @param add_pseudo_counts Whether pesudocounts are to be added. TRUE or FALSE.
+#' @param scale Whether to perform per position scaling of the matrix. TRUE or
+#' FALSE
+#'
+#' @return A (PWM) matrix with 16 rows corresponding to the dinucleotide
+#' combinations of the four nucleotides (A, C, G, T) and the relevant number
+#' of columns (i.e., number of elements in given vector/16)
+#'
+#' @export
+#'
 make_dinuc_PWMs <- function(vec, add_pseudo_counts = TRUE, scale = TRUE) {
 
     # column vector is expected as input
