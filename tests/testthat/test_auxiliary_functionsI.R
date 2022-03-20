@@ -152,7 +152,7 @@ test_that("clustering of factors handles all-zero featuresMatrix", {
 
     fMat <- matrix(rep(0,1000), ncol = 5)
     expect_error(.handle_clustering_of_factors(fMat),
-                   "Error: All zeroes as factors")
+                   "All zeroes as factors")
 })
 
 

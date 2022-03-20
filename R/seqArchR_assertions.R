@@ -89,7 +89,7 @@
         if (all(featuresMatrix == 0)) {
             ## This will lead to an error if hopach is performed,
             ## hence throwing error
-            stop("Error: All zeroes as factors")
+            stop("All zeroes as factors")
         }
         # Commented for low-dimensional representation
         # if ((nrow(featuresMatrix) %% 4) != 0) {

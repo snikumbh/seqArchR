@@ -111,7 +111,7 @@ test_that("get_factors_from_factor_clustering handles all-zero
     hopachObj <- list(clustering = list(k = 5, sizes = rep(5,5), order = 1:25))
     fMat <- matrix(rep(0,1000), ncol = 5)
     expect_error(.get_factors_from_factor_clustering2(hopachObj, fMat),
-                 "Error: All zeroes as factors")
+                 "All zeroes as factors")
 })
 
 
