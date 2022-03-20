@@ -3,8 +3,8 @@
 #' @description The given matrix (or simply a vector) is reshaped to have four
 #' rows for four nucleotides and a relevant number of columns.
 #'
-#' @param mat Actually a vector that will be reshaped into a (PWM)
-#' matrix of DNA sequences.
+#' @param vec A vector that will be reshaped into a PWM matrix of DNA
+#' sequences. Note that the matrix is formed by row.
 #' @param add_pseudo_counts Logical, taking values TRUE or FALSE, specifying
 #' whether or not pseudocounts are added to the matrix.
 #' @param scale Logical, taking values TRUE or FALSE, specifying whether or
@@ -12,17 +12,24 @@
 #'
 #' @return A (PWM) matrix with 4 rows corresponding to the 4 nucleotides (A, C,
 #' G, T) and the relevant number of columns (i.e., number of elements in given
-#' vector/4)
+#' vector/4).
+#'
+#' @examples
+#'
+#' ## Make a dummy PWM of dimensions 4 * 10 from a vector
+#' vec <- runif(4*10)
+#' pwm <- seqArchR::make_sinuc_PWMs(vec = vec, add_pseudo_counts = FALSE)
+#'
 #'
 #' @export
 #'
-make_sinuc_PWMs <- function(mat, add_pseudo_counts = TRUE, scale = TRUE) {
+make_sinuc_PWMs <- function(vec, add_pseudo_counts = TRUE, scale = TRUE) {
     ##
     sinuc <- c("A", "C", "G", "T")
     if (add_pseudo_counts) {
-        mat <- mat + 10^-5
+        vec <- vec + 10^-5
     }
-    this_mat <- t(matrix(mat, ncol = length(sinuc),
+    this_mat <- t(matrix(vec, ncol = length(sinuc),
                                     byrow = FALSE))
     rownames(this_mat) <- sinuc
     if (scale) {
@@ -51,6 +58,14 @@ make_sinuc_PWMs <- function(mat, add_pseudo_counts = TRUE, scale = TRUE) {
 #' @return A (PWM) matrix with 16 rows corresponding to the dinucleotide
 #' combinations of the four nucleotides (A, C, G, T) and the relevant number
 #' of columns (i.e., number of elements in given vector/16)
+#'
+#' @examples
+#'
+#' res <- readRDS(system.file("extdata", "example_seqArchRresult.rds",
+#'          package = "seqArchR", mustWork = TRUE))
+#'
+#' pwm <- seqArchR::make_dinuc_PWMs(get_clBasVec_m(res,iter=1)[,1],
+#'                         add_pseudo_counts = FALSE)
 #'
 #' @export
 #'

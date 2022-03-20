@@ -39,7 +39,9 @@
 plot_ggheatmap <- function(pwm_mat, pos_lab = NULL, pdf_name = NULL,
                             fixed_coord = FALSE){
     if(is.null(pos_lab)) pos_lab <- set_default_pos_lab2(pwm_mat)
+
     check_vars(pwm_mat, pos_lab)
+
     ##
     ## Convert pwm_mat to df, heatmap by ggplot-way
     pwm_mat_df <- as.data.frame(pwm_mat)
@@ -47,6 +49,7 @@ plot_ggheatmap <- function(pwm_mat, pos_lab = NULL, pdf_name = NULL,
     colnames(pwm_mat_df) <- c(pos_lab, "Nucleotides")
     pwm_mat_df_for_ggheatmap <- melt(pwm_mat_df, id.vars = c("Nucleotides"),
                                     variable.name = "positions")
+
     ##
     p1 <- ggplot2::ggplot(data = pwm_mat_df_for_ggheatmap, mapping = aes(
         x = positions,
@@ -64,11 +67,13 @@ plot_ggheatmap <- function(pwm_mat, pos_lab = NULL, pdf_name = NULL,
             legend.justification = "center",
             legend.margin = margin(0,-1,0,0),
             axis.text.x = element_text(size = rel(0.8), angle = 90,
-                            hjust = 1, vjust=0.5),
+                            hjust = 1, vjust = 0.5),
             plot.margin = margin(0,0,0,0)
         )
+
     p1 <- fix_coord(p1, nPos = length(pos_lab), method = "heatmap",
         fixed_coord = fixed_coord)
+
     ##
     if (!is.null(pdf_name)) {
         if (file.exists(pdf_name)) {
@@ -76,6 +81,7 @@ plot_ggheatmap <- function(pwm_mat, pos_lab = NULL, pdf_name = NULL,
         }
         ggplot2::ggsave(p1, device = "pdf", width = 20, height = 2.5)
     }
+
     return(p1)
 }
 ## =============================================================================

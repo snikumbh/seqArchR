@@ -25,3 +25,12 @@ This function converts the basis matrix with basis vectors
 of dinucleotide information into matrix of dimension
 16 x (sequence_length) for visualization.
 }
+\examples{
+
+res <- readRDS(system.file("extdata", "example_seqArchRresult.rds",
+         package = "seqArchR", mustWork = TRUE))
+
+pwm <- seqArchR::make_dinuc_PWMs(get_clBasVec_m(res,iter=1)[,1],
+                        add_pseudo_counts = FALSE)
+
+}
