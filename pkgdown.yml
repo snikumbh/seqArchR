@@ -3,7 +3,7 @@ pkgdown: 2.0.2
 pkgdown_sha: ~
 articles:
   seqArchR: seqArchR.html
-last_built: 2022-03-20T11:56Z
+last_built: 2022-03-20T14:01Z
 urls:
   reference: http://snikumbh.github.io/seqArchR/reference
   article: http://snikumbh.github.io/seqArchR/articles
