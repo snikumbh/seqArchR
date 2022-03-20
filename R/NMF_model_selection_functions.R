@@ -508,9 +508,8 @@ performSearchForK <- function(X, cvfolds, startVal, endVal, step = 1,
 .setup_par_cluster <- function(vlist){
     ## from perform_multiple_NMF_runs
     cl <- parallel::getDefaultCluster()
-    parallel::clusterEvalQ(cl, suppressWarnings(require(MASS, quietly = TRUE)))
     parallel::clusterExport(cl = NULL, varlist = vlist,
-        envir = parent.frame(n=1))
+        envir = parent.frame(n = 1))
     # ## ^for pseudo-inverse using function `ginv` (CV-based model selection)
 
     return(cl)
@@ -716,15 +715,16 @@ check_names_params <- function(x){
 .plot_cv_K <- function(averages) {
     # Using ggplot to plot
     if ("rel_var" %in% averages) {
-        cat("Plotting Q2 vs. K: check colnames in the object
+        message("Plotting Q2 vs. K: check colnames in the object
         (need 'rel_var' as 'k')")
         return(NULL)
     }
     if ("q2_vals" %in% averages) {
-        cat("Plotting Q2 vs. K: check colnames in the object (need 'q2_vals')")
+        message("Plotting Q2 vs. K: check colnames in the object",
+                " (need 'q2_vals')")
         return(NULL)
     }
-    cat("Plotting Q2 as a function of K")
+    message("Plotting Q2 as a function of K")
     p1 <- ggplot2::ggplot(averages, aes_string(x = "rel_var", y = "q2_vals")) +
         ggplot2::geom_point() +
         ggplot2::geom_line() +
