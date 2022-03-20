@@ -60,9 +60,6 @@ schematic of seqArchR's algorithm.
 <img src="seqArchR_algorithm_static_illustrator_cropped.png" 
 width="550" align="center">
 
-<!-- ![Schematic of seqArchR's algorithm]() -->
-<!-- ![Schematic of seqArchR's algorithm](seqArchR_algorithm_1080p_cropped.gif) -->
-
 
 Further details to follow.
 
@@ -99,8 +96,8 @@ set.seed(1234)
 
 ## Synthetic data explained
 
-In order to demonstrate the efficacy of _seqArchR_, we use _seqArchR_ to cluster DNA 
-sequences in a synthetic data set which was generated as follows. 
+In order to demonstrate the efficacy of _seqArchR_, we use _seqArchR_ to 
+cluster DNA sequences in a synthetic data set which was generated as follows. 
 A set of 200 simulated DNA sequences was generated, each 100 nucleotides long 
 and with uniform probability for all nucleotides. 
 These sequences have four clusters in them, each with 50 sequences. 
@@ -226,15 +223,15 @@ seqArchRresult <- seqArchR::seqArchR(config = seqArchRconfig,
 
 ## Understanding the result object from _seqArchR_
 
-In the version `r packageVersion("seqArchR")`, _seqArchR_ naively returns a result 
-object which is a nested list of seven elements.
+In the version `r packageVersion("seqArchR")`, _seqArchR_ naively returns a 
+result object which is a nested list of seven elements.
 These include: 
 - the sequence cluster labels per iteration [`seqsClustLabels`]; 
 - the collection of NMF basis vectors per iteration [`clustBasisVectors`]: 
 each is a list of two elements `nBasisVectors` and `basisVectors`;
 - the clustering solution, [`clustSol`], which is obtained upon combining raw 
-clusters from the last iteration of seqArchR. This element stores the clustering 
-of NMF basis vectors [`basisVectorsClust`] and the sequence clusters 
+clusters from the last iteration of seqArchR. This element stores the 
+clustering of NMF basis vectors [`basisVectorsClust`] and the sequence clusters 
 [`clusters`]; 
 - the raw sequences provided [`rawSeqs`]; 
 - if timeFlag is set, timing information (in minutes) per iteration 
@@ -269,8 +266,9 @@ The NMF basis vectors can be visualized as a heatmap and/or sequence logo using
 ### Basis vectors at iteration 1
 
 ```{r viz-BV-1, echo=TRUE, fig.height=5, fig.width=25}
-seqArchR::viz_bas_vec_heatmap_seqlogo(feat_mat = get_clBasVec_m(seqArchRresult, 1), 
-                                  method = "bits", sinuc_or_dinuc = "dinuc")
+seqArchR::viz_bas_vec_heatmap_seqlogo(
+                        feat_mat = get_clBasVec_m(seqArchRresult, 1), 
+                        method = "bits", sinuc_or_dinuc = "dinuc")
 
 ```
 
@@ -278,8 +276,9 @@ seqArchR::viz_bas_vec_heatmap_seqlogo(feat_mat = get_clBasVec_m(seqArchRresult, 
 
 
 ```{r viz-BV-2, fig.height=5, fig.width=25, echo=TRUE} 
-seqArchR::viz_bas_vec_heatmap_seqlogo(feat_mat = get_clBasVec_m(seqArchRresult, 2), 
-                                  method = "bits", sinuc_or_dinuc = "dinuc")
+seqArchR::viz_bas_vec_heatmap_seqlogo(
+                        feat_mat = get_clBasVec_m(seqArchRresult, 2), 
+                        method = "bits", sinuc_or_dinuc = "dinuc")
 
 
 ```
@@ -310,14 +309,14 @@ seqArchR::viz_seqs_acgt_mat(seqs_str(seqArchRresult, iter = 2, ord = TRUE),
 
 # Conclusion
 
-_seqArchR_ can detect _de novo_ sequence features and simultaneously identify the 
-complex interactions of different features together with their positional 
-specificities.
+_seqArchR_ can detect _de novo_ sequence features and simultaneously 
+identify the complex interactions of different features together with their 
+positional specificities.
 
-Note that the sequence architectures identified by _seqArchR_ have no limitations 
-due to the size of the motifs or gaps in them, distance between motifs, 
-compositional and positional variations in the individual motifs and their 
-effects on the complex interactions, and number of motifs involved in any 
+Note that the sequence architectures identified by _seqArchR_ have no 
+limitations due to the size of the motifs or gaps in them, distance between 
+motifs, compositional and positional variations in the individual motifs and 
+their effects on the complex interactions, and number of motifs involved in any 
 interaction.
 
 
