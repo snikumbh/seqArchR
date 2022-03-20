@@ -135,7 +135,7 @@ viz_seqs_acgt_mat <- function(seqs, pos_lab = NULL,
     ytick_names <- rev(seq(yt_freq, nSeqs, by = yt_freq))
     ytick_loc <- 1 + nSeqs - c(rev(seq(yt_freq, nSeqs, by = yt_freq)))
 
-    par(xpd = T, mar = par()$mar + c(0,0,0,1.5))
+    par(xpd = TRUE, mar = par()$mar + c(0,0,0,1.5))
     graphics::image(x = seq_len(nPos), y = seq_len(nSeqs),
                 z = t(seq_mat), col = use_col, useRaster = TRUE,
                 ylab = paste0("Sequences (n = ", nSeqs, ")"),
