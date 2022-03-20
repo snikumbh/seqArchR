@@ -1,17 +1,17 @@
-#' @title Handle directory creation
-#'
-#' @description Given the output directory name with its complete path, this
-#' function checks if a directory of same name exists the given location. If
-#' yes, then it adds a suffix (a number) to the given directory name, and
-#' proceeds to create the directory.
-#'
-#' @param o_dir Specify the output directory name with its complete path.
-#'
-#' @param vrbs Set verbosity to TRUE or FALSE
-#'
-#' @return The (updated) dir name
-#'
-#'
+# @title Handle directory creation
+#
+# @description Given the output directory name with its complete path, this
+# function checks if a directory of same name exists the given location. If
+# yes, then it adds a suffix (a number) to the given directory name, and
+# proceeds to create the directory.
+#
+# @param o_dir Specify the output directory name with its complete path.
+#
+# @param vrbs Set verbosity to TRUE or FALSE
+#
+# @return The (updated) dir name
+#
+#
 handle_dir_creation <- function(o_dir, vrbs){
     ##
     cli::cli_alert_info(c("Output directory at path: ",

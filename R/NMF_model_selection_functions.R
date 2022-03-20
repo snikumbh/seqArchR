@@ -508,7 +508,7 @@ performSearchForK <- function(X, cvfolds, startVal, endVal, step = 1,
 .setup_par_cluster <- function(vlist){
     ## from perform_multiple_NMF_runs
     cl <- parallel::getDefaultCluster()
-    parallel::clusterEvalQ(cl, require(MASS, quietly = TRUE))
+    parallel::clusterEvalQ(cl, suppressWarnings(require(MASS, quietly = TRUE)))
     parallel::clusterExport(cl = NULL, varlist = vlist,
         envir = parent.frame(n=1))
     # ## ^for pseudo-inverse using function `ginv` (CV-based model selection)
