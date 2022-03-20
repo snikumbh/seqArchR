@@ -2,10 +2,8 @@
 
 # seqArchR
 <!-- badges: start -->
-[![Lifecycle:
-experimental](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://www.tidyverse.org/lifecycle/#experimental)
-[![Build status](https://travis-ci.org/snikumbh/seqArchR.svg?branch=master)](https://travis-ci.org/snikumbh/seqArchR)
-[![Codecov test coverage](https://codecov.io/gh/snikumbh/seqArchR/branch/master/graph/badge.svg)](https://codecov.io/gh/snikumbh/seqArchR?branch=master)
+[![R build status](https://github.com/snikumbh/seqArchR/workflows/R-CMD-check/badge.svg)](https://github.com/snikumbh/seqArchR/actions)
+[![codecov](https://codecov.io/gh/snikumbh/seqArchR/branch/main/graph/badge.svg?token=NEjCGuOUlW)](https://codecov.io/gh/snikumbh/seqArchR)
 <!-- badges: end -->
 
 Note: _This package is currently under development. So, please bear with me while I put the final blocks together. Thanks for your understanding!_ 
