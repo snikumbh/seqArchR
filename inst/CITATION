@@ -1,11 +1,11 @@
-citHeader("To cite archR in publications use:")
+citHeader("To cite seqArchR in publications use:")
 
 citEntry(
   entry    = "Article",
   title    = "Identifying promoter sequence architectures de novo using non-negative matrix factorization",
   author   = personList(
              as.person("Sarvesh Nikumbh"),
-	     as.person("Boris Lenhard")
+	         as.person("Boris Lenhard")
              ),
   journal  = "TODO",
   year     = "TODO",
