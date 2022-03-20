@@ -1,7 +1,25 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
+    <loc>http://snikumbh.github.io/seqArchR/404.html</loc>
+  </url>
+  <url>
+    <loc>http://snikumbh.github.io/seqArchR/LICENSE-text.html</loc>
+  </url>
+  <url>
+    <loc>http://snikumbh.github.io/seqArchR/articles/index.html</loc>
+  </url>
+  <url>
+    <loc>http://snikumbh.github.io/seqArchR/articles/seqArchR.html</loc>
+  </url>
+  <url>
+    <loc>http://snikumbh.github.io/seqArchR/authors.html</loc>
+  </url>
+  <url>
     <loc>http://snikumbh.github.io/seqArchR/index.html</loc>
+  </url>
+  <url>
+    <loc>http://snikumbh.github.io/seqArchR/news/index.html</loc>
   </url>
   <url>
     <loc>http://snikumbh.github.io/seqArchR/reference/collate_clusters.html</loc>
@@ -19,7 +37,7 @@
     <loc>http://snikumbh.github.io/seqArchR/reference/get_seqs_clust_list.html</loc>
   </url>
   <url>
-    <loc>http://snikumbh.github.io/seqArchR/reference/handle_dir_creation.html</loc>
+    <loc>http://snikumbh.github.io/seqArchR/reference/index.html</loc>
   </url>
   <url>
     <loc>http://snikumbh.github.io/seqArchR/reference/make_dinuc_PWMs.html</loc>
@@ -56,8 +74,5 @@
   </url>
   <url>
     <loc>http://snikumbh.github.io/seqArchR/reference/viz_seqs_acgt_mat.html</loc>
-  </url>
-  <url>
-    <loc>http://snikumbh.github.io/seqArchR/articles/seqArchR.html</loc>
   </url>
 </urlset>

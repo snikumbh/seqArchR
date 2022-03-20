@@ -35,6 +35,8 @@
 </script>
 </head>
 <body data-spy="scroll" data-target="#toc">
+    
+
     <div class="container template-home">
       <header><div class="navbar navbar-default navbar-fixed-top" role="navigation">
   <div class="container">
@@ -47,7 +49,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="index.html">seqArchR</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.99.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.99.0</span>
       </span>
     </div>
 
@@ -74,7 +76,7 @@
       </ul>
 <ul class="nav navbar-nav navbar-right">
 <li>
-  <a href="https://github.com/snikumbh/seqArchR/">
+  <a href="https://github.com/snikumbh/seqArchR/" class="external-link">
     <span class="fab fa-github fa-lg"></span>
      
   </a>
@@ -92,36 +94,36 @@
       </header><div class="row">
   <div class="contents col-md-9">
 
-<div id="seqarchr" class="section level1">
-<div class="page-header"><h1 class="hasAnchor">
-<a href="#seqarchr" class="anchor"></a>seqArchR</h1></div>
+<div class="section level1">
+<div class="page-header"><h1 id="seqarchr">seqArchR<a class="anchor" aria-label="anchor" href="#seqarchr"></a>
+</h1></div>
 <!-- badges: start -->
 
 <p>Note: <em>This package is currently under development. So, please bear with me while I put the final blocks together. Thanks for your understanding!</em></p>
 <p>seqArchR is an unsupervised, non-negative matrix factorization (NMF)-based algorithm for discovery of sequence architectures de novo. Below is a schematic of seqArchR’s algorithm.</p>
 <p><img src="reference/figures/seqArchR_algorithm_1080p_cropped.gif" width="550" align="center"></p>
-<div id="installation" class="section level2">
-<h2 class="hasAnchor">
-<a href="#installation" class="anchor"></a>Installation</h2>
-<div id="python-scikit-learn-dependency" class="section level3">
-<h3 class="hasAnchor">
-<a href="#python-scikit-learn-dependency" class="anchor"></a>Python scikit-learn dependency</h3>
-<p>This package requires the Python module scikit-learn. See installation instructions <a href="https://scikit-learn.org/stable/install.html">here</a>.</p>
+<div class="section level2">
+<h2 id="installation">Installation<a class="anchor" aria-label="anchor" href="#installation"></a>
+</h2>
+<div class="section level3">
+<h3 id="python-scikit-learn-dependency">Python scikit-learn dependency<a class="anchor" aria-label="anchor" href="#python-scikit-learn-dependency"></a>
+</h3>
+<p>This package requires the Python module scikit-learn. See installation instructions <a href="https://scikit-learn.org/stable/install.html" class="external-link">here</a>.</p>
 </div>
-<div id="to-install-this-package-use" class="section level3">
-<h3 class="hasAnchor">
-<a href="#to-install-this-package-use" class="anchor"></a>To install this package, use</h3>
+<div class="section level3">
+<h3 id="to-install-this-package-use">To install this package, use<a class="anchor" aria-label="anchor" href="#to-install-this-package-use"></a>
+</h3>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="kw">if</span> <span class="op">(</span><span class="op">!</span><span class="fu"><a href="https://rdrr.io/r/base/ns-load.html">requireNamespace</a></span><span class="op">(</span><span class="st">"remotes"</span>, quietly <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span>
-    <span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html">install.packages</a></span><span class="op">(</span><span class="st">"remotes"</span><span class="op">)</span>   
+<code class="sourceCode R"><span class="kw">if</span> <span class="op">(</span><span class="op">!</span><span class="fu"><a href="https://rdrr.io/r/base/ns-load.html" class="external-link">requireNamespace</a></span><span class="op">(</span><span class="st">"remotes"</span>, quietly <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span>
+    <span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="st">"remotes"</span><span class="op">)</span>   
 <span class="op">}</span>
 
-<span class="fu">remotes</span><span class="fu">::</span><span class="fu"><a href="https://remotes.r-lib.org/reference/install_github.html">install_github</a></span><span class="op">(</span><span class="st">"snikumbh/seqArchR"</span>, build_vignettes <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></code></pre></div>
-<p>If the above command produces errors, see this troubleshooting <a href="https://github.com/snikumbh/seqArchR#troubleshooting-installation">note</a> below.</p>
+<span class="fu">remotes</span><span class="fu">::</span><span class="fu"><a href="https://remotes.r-lib.org/reference/install_github.html" class="external-link">install_github</a></span><span class="op">(</span><span class="st">"snikumbh/seqArchR"</span>, build_vignettes <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></code></pre></div>
+<p>If the above command produces errors, see this troubleshooting <a href="https://github.com/snikumbh/seqArchR#troubleshooting-installation" class="external-link">note</a> below.</p>
 </div>
-<div id="usage" class="section level3">
-<h3 class="hasAnchor">
-<a href="#usage" class="anchor"></a>Usage</h3>
+<div class="section level3">
+<h3 id="usage">Usage<a class="anchor" aria-label="anchor" href="#usage"></a>
+</h3>
 <div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1"></a><span class="co"># load package</span></span>
 <span id="cb2-2"><a href="#cb2-2"></a><span class="kw">library</span>(seqArchR)</span>
 <span id="cb2-3"><a href="#cb2-3"></a><span class="kw">library</span>(Biostrings)</span>
@@ -166,73 +168,78 @@
 <span id="cb2-42"><a href="#cb2-42"></a>                               <span class="dt">threshold_itr =</span> <span class="dv">2</span>)</span></code></pre></div>
 </div>
 </div>
-<div id="troubleshooting-installation" class="section level2">
-<h2 class="hasAnchor">
-<a href="#troubleshooting-installation" class="anchor"></a>Troubleshooting Installation</h2>
-<ol>
-<li>Error during installation (with <code><a href="https://remotes.r-lib.org/reference/install_github.html">remotes::install_github</a></code> or <code>devtools::install_github</code>. If the error occurs during <code>** testing if installed package can be loaded</code>, try adding the <code>--no-test-load</code> option as <code>remotes::install_github("snikumbh/seqArchR", INSTALL_opts = c("--no-test-load"))</code>
+<div class="section level2">
+<h2 id="troubleshooting-installation">Troubleshooting Installation<a class="anchor" aria-label="anchor" href="#troubleshooting-installation"></a>
+</h2>
+<ol style="list-style-type: decimal">
+<li>Error during installation (with <code><a href="https://remotes.r-lib.org/reference/install_github.html" class="external-link">remotes::install_github</a></code> or <code>devtools::install_github</code>. If the error occurs during <code>** testing if installed package can be loaded</code>, try adding the <code>--no-test-load</code> option as <code>remotes::install_github("snikumbh/seqArchR", INSTALL_opts = c("--no-test-load"))</code>
 </li>
 </ol>
 </div>
 </div>
-<div id="contact" class="section level1">
-<h1 class="hasAnchor">
-<a href="#contact" class="anchor"></a>Contact</h1>
-<p>Comments, suggestions, enquiries/requests are welcome! Feel free to email <a href="mailto:sarvesh.nikumbh@gmail.com" class="email">sarvesh.nikumbh@gmail.com</a> or <a href="https://github.com/snikumbh/seqArchR/issues/new">create an new issue</a></p>
+<div class="section level1">
+<h1 id="contact">Contact<a class="anchor" aria-label="anchor" href="#contact"></a>
+</h1>
+<p>Comments, suggestions, enquiries/requests are welcome! Feel free to email <a href="mailto:sarvesh.nikumbh@gmail.com" class="email">sarvesh.nikumbh@gmail.com</a> or <a href="https://github.com/snikumbh/seqArchR/issues/new" class="external-link">create an new issue</a></p>
 </div>
 
   </div>
 
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <div class="links">
-<h2>Links</h2>
+<h2 data-toc-skip>Links</h2>
 <ul class="list-unstyled">
-<li>Browse source code at <br><a href="https://github.com/snikumbh/seqArchR/">https://​github.com/​snikumbh/​seqArchR/​</a>
-</li>
-<li>Report a bug at <br><a href="https://github.com/snikumbh/seqArchR/issues">https://​github.com/​snikumbh/​seqArchR/​issues</a>
-</li>
+<li><a href="https://github.com/snikumbh/seqArchR/" class="external-link">Browse source code</a></li>
+<li><a href="https://github.com/snikumbh/seqArchR/issues" class="external-link">Report a bug</a></li>
 </ul>
 </div>
+
 <div class="license">
-<h2>License</h2>
+<h2 data-toc-skip>License</h2>
 <ul class="list-unstyled">
 <li>
-<a href="https://www.r-project.org/Licenses/GPL-3">GPL-3</a> | file <a href="LICENSE-text.html">LICENSE</a>
-</li>
-</ul>
-</div>
-<div class="citation">
-<h2>Citation</h2>
-<ul class="list-unstyled">
-<li><a href="authors.html">Citing seqArchR</a></li>
-</ul>
-</div>
-<div class="developers">
-<h2>Developers</h2>
-<ul class="list-unstyled">
-<li>Sarvesh Nikumbh <br><small class="roles"> Author, maintainer, copyright holder </small> <a href="https://orcid.org/0000-0003-3163-4447" target="orcid.widget" aria-label="ORCID"><span class="fab fa-orcid orcid" aria-hidden="true"></span></a> <br><small>(@sarveshnikumbh)</small>
+<a href="https://www.r-project.org/Licenses/GPL-3" class="external-link">GPL-3</a> | file <a href="LICENSE-text.html">LICENSE</a>
 </li>
 </ul>
 </div>
 
-  <div class="dev-status">
-<h2>Dev status</h2>
+
+<div class="citation">
+<h2 data-toc-skip>Citation</h2>
 <ul class="list-unstyled">
-<li><a href="https://www.tidyverse.org/lifecycle/#experimental"><img src="https://img.shields.io/badge/lifecycle-experimental-orange.svg" alt="Lifecycle: experimental"></a></li>
-<li><a href="https://travis-ci.org/snikumbh/seqArchR"><img src="https://travis-ci.org/snikumbh/seqArchR.svg?branch=master" alt="Build status"></a></li>
-<li><a href="https://codecov.io/gh/snikumbh/seqArchR?branch=master"><img src="https://codecov.io/gh/snikumbh/seqArchR/branch/master/graph/badge.svg" alt="Codecov test coverage"></a></li>
+<li><a href="authors.html#citation">Citing seqArchR</a></li>
 </ul>
 </div>
+
+<div class="developers">
+<h2 data-toc-skip>Developers</h2>
+<ul class="list-unstyled">
+<li>Sarvesh Nikumbh <br><small class="roles"> Author, maintainer, copyright holder </small> <a href="https://orcid.org/0000-0003-3163-4447" target="orcid.widget" aria-label="ORCID" class="external-link"><span class="fab fa-orcid orcid" aria-hidden="true"></span></a> </li>
+<li><a href="authors.html">More about authors...</a></li>
+</ul>
 </div>
+
+<div class="dev-status">
+<h2 data-toc-skip>Dev status</h2>
+<ul class="list-unstyled">
+<li><a href="https://www.tidyverse.org/lifecycle/#experimental" class="external-link"><img src="https://img.shields.io/badge/lifecycle-experimental-orange.svg" alt="Lifecycle: experimental"></a></li>
+<li><a href="https://travis-ci.org/snikumbh/seqArchR" class="external-link"><img src="https://travis-ci.org/snikumbh/seqArchR.svg?branch=master" alt="Build status"></a></li>
+<li><a href="https://codecov.io/gh/snikumbh/seqArchR?branch=master" class="external-link"><img src="https://codecov.io/gh/snikumbh/seqArchR/branch/master/graph/badge.svg" alt="Codecov test coverage"></a></li>
+</ul>
+</div>
+
+  </div>
 </div>
 
 
       <footer><div class="copyright">
-  <p>Developed by Sarvesh Nikumbh.</p>
+  <p></p>
+<p>Developed by Sarvesh Nikumbh.</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
+  <p></p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.2.</p>
 </div>
 
       </footer>
@@ -240,6 +247,8 @@
 
   
 
+
+  
 
   </body>
 </html>
