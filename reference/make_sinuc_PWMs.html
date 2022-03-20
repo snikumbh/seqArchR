@@ -73,14 +73,14 @@ rows for four nucleotides and a relevant number of columns.</p>
     </div>
 
     <div id="ref-usage">
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">make_sinuc_PWMs</span><span class="op">(</span><span class="va">mat</span>, add_pseudo_counts <span class="op">=</span> <span class="cn">TRUE</span>, scale <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">make_sinuc_PWMs</span><span class="op">(</span><span class="va">vec</span>, add_pseudo_counts <span class="op">=</span> <span class="cn">TRUE</span>, scale <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></code></pre></div>
     </div>
 
     <div id="arguments">
     <h2>Arguments</h2>
-    <dl><dt>mat</dt>
-<dd><p>Actually a vector that will be reshaped into a (PWM)
-matrix of DNA sequences.</p></dd>
+    <dl><dt>vec</dt>
+<dd><p>A vector that will be reshaped into a PWM matrix of DNA
+sequences. Note that the matrix is formed by row.</p></dd>
 <dt>add_pseudo_counts</dt>
 <dd><p>Logical, taking values TRUE or FALSE, specifying
 whether or not pseudocounts are added to the matrix.</p></dd>
@@ -92,9 +92,19 @@ not the matrix is scaled column-wise, i.e., all columns summed to 1.</p></dd>
     <h2>Value</h2>
     <p>A (PWM) matrix with 4 rows corresponding to the 4 nucleotides (A, C,
 G, T) and the relevant number of columns (i.e., number of elements in given
-vector/4)</p>
+vector/4).</p>
     </div>
 
+    <div id="ref-examples">
+    <h2>Examples</h2>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"></span>
+<span class="r-in"><span class="co">## Make a dummy PWM of dimensions 4 * 10 from a vector</span></span>
+<span class="r-in"><span class="va">vec</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/Uniform.html" class="external-link">runif</a></span><span class="op">(</span><span class="fl">4</span><span class="op">*</span><span class="fl">10</span><span class="op">)</span></span>
+<span class="r-in"><span class="va">pwm</span> <span class="op">&lt;-</span> <span class="fu">seqArchR</span><span class="fu">::</span><span class="fu">make_sinuc_PWMs</span><span class="op">(</span>vec <span class="op">=</span> <span class="va">vec</span>, add_pseudo_counts <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
+<span class="r-in"></span>
+<span class="r-in"></span>
+</code></pre></div>
+    </div>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top"><h2 data-toc-skip>Contents</h2>
