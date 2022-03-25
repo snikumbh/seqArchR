@@ -58,7 +58,7 @@ viz_bas_vec_heatmap_seqlogo <- function(feat_mat, method = "bits",
         p1 <- p1 + theme(plot.margin = margin(0,0,0,0, unit="cm"))
         ## Seqlogo below
         p2 <- plot_ggseqlogo(pwm_mat = pwm, method = method, pos_lab = pos_lab,
-                             fixed_coord = fixed_coord)
+                                fixed_coord = fixed_coord)
         ## Make adjustments for alignment
         p2 <- p2 + theme(plot.margin = margin(0,0,0,0, unit="cm"))
         final_p <- cowplot::plot_grid(p1, p2, nrow = 2, align="v")

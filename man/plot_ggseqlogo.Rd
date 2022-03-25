@@ -15,7 +15,7 @@ plot_ggseqlogo(
 }
 \arguments{
 \item{pwm_mat}{Matrix (usually a PWM, but can be any non-normalized matrix)
-to be represented as a sequence logo.}
+to be represented as a sequence logo. Rownames must be letters.}
 
 \item{method}{For \code{ggseqlogo}; either of 'custom', 'bits', or
 'probability'. Default is 'bits'.}

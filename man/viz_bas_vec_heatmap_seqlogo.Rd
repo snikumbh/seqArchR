@@ -50,8 +50,7 @@ positions are labeled from 1 to the length of the sequences.}
 set to FALSE. Setting it to TRUE will enable adding pseudo-counts to the
 features matrix.}
 
-\item{pdf_name}{Name of the file which will be saved as PDF
-(also provide the extension).}
+\item{pdf_name}{Filename to save the plot, also provide the extension.}
 
 \item{sinuc_or_dinuc}{"sinuc" or "dinuc" for choosing between mono- and
 dinucleotide profiles respectively.}
