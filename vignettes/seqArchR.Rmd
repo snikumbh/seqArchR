@@ -208,7 +208,7 @@ seqArchRconfig <- seqArchR::set_config(
 Once the configuration is setup, call the `seqArchR::seqArchR` function with 
 user-specified iterations.
 
-```{r call-seqArchR, echo=TRUE}
+```{r call-seqArchR, echo=TRUE, eval=FALSE}
 # Call/Run seqArchR
 seqArchRresult <- seqArchR::seqArchR(config = seqArchRconfig,
                             seqs_ohe_mat = inputSeqsMat,
@@ -219,13 +219,19 @@ seqArchRresult <- seqArchR::seqArchR(config = seqArchRconfig,
 
 ```
 
+```{r read-stored-result, echo=FALSE}
 
+seqArchRresult <- readRDS(system.file("extdata", "example_seqArchRresult.rds",
+                            package = "seqArchR", mustWork = TRUE))
+
+```
 
 ## Understanding the result object from _seqArchR_
 
 In the version `r packageVersion("seqArchR")`, _seqArchR_ naively returns a 
 result object which is a nested list of seven elements.
 These include: 
+
 - the sequence cluster labels per iteration [`seqsClustLabels`]; 
 - the collection of NMF basis vectors per iteration [`clustBasisVectors`]: 
 each is a list of two elements `nBasisVectors` and `basisVectors`;
@@ -260,8 +266,7 @@ head(i2_bv)
 ```
 
 The NMF basis vectors can be visualized as a heatmap and/or sequence logo using 
-[https://snikumbh.github.io/seqArchR/reference/viz_bas_vec_heatmap_seqlogo.html]
- (viz_bas_vec_heat_seqlogo) function.
+[viz_bas_vec_heat_seqlogo](https://snikumbh.github.io/seqArchR/reference/viz_bas_vec_heatmap_seqlogo.html) function.
 
 ### Basis vectors at iteration 1
 
@@ -275,7 +280,7 @@ seqArchR::viz_bas_vec_heatmap_seqlogo(
 ### Basis vectors at iteration 2
 
 
-```{r viz-BV-2, fig.height=5, fig.width=25, echo=TRUE} 
+```{r viz-BV-2, fig.height=5, fig.width=25, echo=TRUE, warning=FALSE} 
 seqArchR::viz_bas_vec_heatmap_seqlogo(
                         feat_mat = get_clBasVec_m(seqArchRresult, 2), 
                         method = "bits", sinuc_or_dinuc = "dinuc")
