@@ -39,7 +39,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">seqArchR</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.99.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.99.1</span>
       </span>
     </div>
 
@@ -87,7 +87,7 @@
       <h1 data-toc-skip>Example usage of <em>seqArchR</em> on simulated DNA sequences</h1>
                         <h4 data-toc-skip class="author">Sarvesh Nikumbh</h4>
             
-            <h4 data-toc-skip class="date">2022-03-21</h4>
+            <h4 data-toc-skip class="date">2022-03-25</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/snikumbh/seqArchR/blob/HEAD/vignettes/seqArchR.Rmd" class="external-link"><code>vignettes/seqArchR.Rmd</code></a></small>
       <div class="hidden name"><code>seqArchR.Rmd</code></div>
@@ -290,75 +290,21 @@
                             seqs_raw <span class="op">=</span> <span class="va">inputSeqsRaw</span>,
                             seqs_pos <span class="op">=</span> <span class="va">positions</span>,
                             total_itr <span class="op">=</span> <span class="fl">2</span>,
-                            set_ocollation <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/pkg/S4Vectors/man/Vector-class.html" class="external-link">c</a></span><span class="op">(</span><span class="cn">TRUE</span>, <span class="cn">FALSE</span><span class="op">)</span><span class="op">)</span>
-<span class="co">#&gt; ── Setting up ──────────────────────────────────────────────────────────────────</span>
-<span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> Parallelization: 2 cores</span>
-<span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> Model selection by factor stability</span>
-<span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> Bound: 1e-06</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; <span style="color: #00BBBB;">──</span> <span style="font-weight: bold;">Iteration 1 of 2 [1 chunk]</span> <span style="color: #00BBBB;">──────────────────────────────────────────────────</span></span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; ── <span style="font-weight: bold;">Outer chunk 1 of 1 [Size: 200]</span> ──</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; ── Inner chunk 1 of 2 [Size: 100]</span>
-<span class="co">#&gt; Checking K =2</span>
-<span class="co">#&gt; Checking K =3</span>
-<span class="co">#&gt; Checking K =4</span>
-<span class="co">#&gt; Checking K =5</span>
-<span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> Best K for this chunk: 4</span>
-<span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> Adjusting for overfitting, fetched 3 clusters</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; ── Inner chunk 2 of 2 [Size: 100]</span>
-<span class="co">#&gt; Checking K =2</span>
-<span class="co">#&gt; Checking K =3</span>
-<span class="co">#&gt; Checking K =4</span>
-<span class="co">#&gt; Checking K =5</span>
-<span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> Best K for this chunk: 4</span>
-<span class="co">#&gt; <span style="color: #00BB00;">✔</span> 1 of 1 outer chunk complete</span>
-<span class="co">#&gt; <span style="color: #00BB00;">✔</span> 1 of 2 iterations complete</span>
-<span class="co">#&gt; → Iteration 1 completed: 1m 15.8s</span>
-<span class="co">#&gt; → Time ellapsed since start: 1m 15.9s</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; <span style="color: #00BBBB;">──</span> <span style="font-weight: bold;">Iteration 2 of 2 [4 chunks]</span> <span style="color: #00BBBB;">─────────────────────────────────────────────────</span></span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; ── <span style="font-weight: bold;">Outer chunk 1 of 4 [Size: 50]</span> ──</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; ── Inner chunk 1 of 1 [Size: 50]</span>
-<span class="co">#&gt; Checking K =2</span>
-<span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> Best K for this chunk: 1</span>
-<span class="co">#&gt; <span style="color: #00BB00;">✔</span> 1 of 4 outer chunks complete</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; ── <span style="font-weight: bold;">Outer chunk 2 of 4 [Size: 70]</span> ──</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; ── Inner chunk 1 of 1 [Size: 70]</span>
-<span class="co">#&gt; Checking K =2</span>
-<span class="co">#&gt; Checking K =3</span>
-<span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> Best K for this chunk: 2</span>
-<span class="co">#&gt; <span style="color: #00BB00;">✔</span> 2 of 4 outer chunks complete</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; ── <span style="font-weight: bold;">Outer chunk 3 of 4 [Size: 29]</span> ──</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; ── Inner chunk 1 of 1 [Size: 29]</span>
-<span class="co">#&gt; Checking K =2</span>
-<span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> Best K for this chunk: 1</span>
-<span class="co">#&gt; <span style="color: #00BB00;">✔</span> 3 of 4 outer chunks complete</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; ── <span style="font-weight: bold;">Outer chunk 4 of 4 [Size: 51]</span> ──</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; ── Inner chunk 1 of 1 [Size: 51]</span>
-<span class="co">#&gt; Checking K =2</span>
-<span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> Best K for this chunk: 1</span>
-<span class="co">#&gt; <span style="color: #00BB00;">✔</span> 4 of 4 outer chunks complete</span>
-<span class="co">#&gt; <span style="color: #00BB00;">✔</span> 2 of 2 iterations complete</span>
-<span class="co">#&gt; → Iteration 2 completed: 1m 12.1s</span>
-<span class="co">#&gt; → Time ellapsed since start: 2m 28s</span>
-<span class="co">#&gt; ── seqArchR exiting</span>
-<span class="co">#&gt; 2m 28s ─────────────────────────────────────────────────────</span></code></pre></div>
+                            set_ocollation <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/pkg/S4Vectors/man/Vector-class.html" class="external-link">c</a></span><span class="op">(</span><span class="cn">TRUE</span>, <span class="cn">FALSE</span><span class="op">)</span><span class="op">)</span></code></pre></div>
 </div>
 <div class="section level3">
 <h3 id="understanding-the-result-object-from-seqarchr">Understanding the result object from <em>seqArchR</em><a class="anchor" aria-label="anchor" href="#understanding-the-result-object-from-seqarchr"></a>
 </h3>
-<p>In the version 0.99.0, <em>seqArchR</em> naively returns a result object which is a nested list of seven elements. These include: - the sequence cluster labels per iteration [<code>seqsClustLabels</code>]; - the collection of NMF basis vectors per iteration [<code>clustBasisVectors</code>]: each is a list of two elements <code>nBasisVectors</code> and <code>basisVectors</code>; - the clustering solution, [<code>clustSol</code>], which is obtained upon combining raw clusters from the last iteration of seqArchR. This element stores the clustering of NMF basis vectors [<code>basisVectorsClust</code>] and the sequence clusters [<code>clusters</code>]; - the raw sequences provided [<code>rawSeqs</code>]; - if timeFlag is set, timing information (in minutes) per iteration [<code>timeInfo</code>]; - the configuration setting [<code>config</code>]; and - the call itself [<code>call</code>].</p>
+<p>In the version 0.99.1, <em>seqArchR</em> naively returns a result object which is a nested list of seven elements. These include:</p>
+<ul>
+<li>the sequence cluster labels per iteration [<code>seqsClustLabels</code>];</li>
+<li>the collection of NMF basis vectors per iteration [<code>clustBasisVectors</code>]: each is a list of two elements <code>nBasisVectors</code> and <code>basisVectors</code>;</li>
+<li>the clustering solution, [<code>clustSol</code>], which is obtained upon combining raw clusters from the last iteration of seqArchR. This element stores the clustering of NMF basis vectors [<code>basisVectorsClust</code>] and the sequence clusters [<code>clusters</code>];</li>
+<li>the raw sequences provided [<code>rawSeqs</code>];</li>
+<li>if timeFlag is set, timing information (in minutes) per iteration [<code>timeInfo</code>];</li>
+<li>the configuration setting [<code>config</code>]; and</li>
+<li>the call itself [<code>call</code>].</li>
+</ul>
 <div class="section level4">
 <h4 id="nmf-basis-vectors">NMF basis vectors<a class="anchor" aria-label="anchor" href="#nmf-basis-vectors"></a>
 </h4>
@@ -367,20 +313,20 @@
 <code class="sourceCode R">
 <span class="co"># Basis vectors at iteration 2</span>
 <span class="fu">seqArchR</span><span class="fu">::</span><span class="fu"><a href="../reference/get_clBasVec.html">get_clBasVec_k</a></span><span class="op">(</span><span class="va">seqArchRresult</span>, iter<span class="op">=</span><span class="fl">2</span><span class="op">)</span>
-<span class="co">#&gt; [1] 5</span>
+<span class="co">#&gt; [1] 4</span>
 
 <span class="va">i2_bv</span> <span class="op">&lt;-</span> <span class="fu">seqArchR</span><span class="fu">::</span><span class="fu"><a href="../reference/get_clBasVec.html">get_clBasVec_m</a></span><span class="op">(</span><span class="va">seqArchRresult</span>, iter<span class="op">=</span><span class="fl">2</span><span class="op">)</span>
 <span class="fu"><a href="https://rdrr.io/r/base/dim.html" class="external-link">dim</a></span><span class="op">(</span><span class="va">i2_bv</span><span class="op">)</span>
-<span class="co">#&gt; [1] 1600    5</span>
+<span class="co">#&gt; [1] 1600    4</span>
 <span class="fu"><a href="https://rdrr.io/pkg/S4Vectors/man/Vector-class.html" class="external-link">head</a></span><span class="op">(</span><span class="va">i2_bv</span><span class="op">)</span>
-<span class="co">#&gt;            [,1]       [,2]       [,3]       [,4]       [,5]</span>
-<span class="co">#&gt; [1,] 0.05168607 0.07646511 0.05101696 0.08471968 0.12920686</span>
-<span class="co">#&gt; [2,] 0.02486037 0.07603933 0.09368281 0.04243838 0.10288363</span>
-<span class="co">#&gt; [3,] 0.05076204 0.04942229 0.04745960 0.04243838 0.07754562</span>
-<span class="co">#&gt; [4,] 0.09945618 0.04225726 0.11945756 0.03847347 0.05154964</span>
-<span class="co">#&gt; [5,] 0.07484865 0.09133385 0.17064509 0.04028088 0.09605441</span>
-<span class="co">#&gt; [6,] 0.05051104 0.09435299 0.14381388 0.04232253 0.02514596</span></code></pre></div>
-<p>The NMF basis vectors can be visualized as a heatmap and/or sequence logo using [<a href="https://snikumbh.github.io/seqArchR/reference/viz_bas_vec_heatmap_seqlogo.html" class="external-link uri">https://snikumbh.github.io/seqArchR/reference/viz_bas_vec_heatmap_seqlogo.html</a>] (viz_bas_vec_heat_seqlogo) function.</p>
+<span class="co">#&gt;             [,1]       [,2]       [,3]       [,4]</span>
+<span class="co">#&gt; [1,] 0.120740995 0.07407753 0.05168607 0.08186580</span>
+<span class="co">#&gt; [2,] 0.087066440 0.08679174 0.02486037 0.07917296</span>
+<span class="co">#&gt; [3,] 0.080389797 0.03793642 0.05076204 0.05196331</span>
+<span class="co">#&gt; [4,] 0.074610342 0.04276400 0.09945618 0.05334238</span>
+<span class="co">#&gt; [5,] 0.080347189 0.11747636 0.07484865 0.10758754</span>
+<span class="co">#&gt; [6,] 0.007201571 0.11872570 0.05051104 0.10543655</span></code></pre></div>
+<p>The NMF basis vectors can be visualized as a heatmap and/or sequence logo using <a href="https://snikumbh.github.io/seqArchR/reference/viz_bas_vec_heatmap_seqlogo.html" class="external-link">viz_bas_vec_heat_seqlogo</a> function.</p>
 </div>
 <div class="section level4">
 <h4 id="basis-vectors-at-iteration-1">Basis vectors at iteration 1<a class="anchor" aria-label="anchor" href="#basis-vectors-at-iteration-1"></a>
@@ -401,44 +347,47 @@
 <span class="co">#&gt; "none")` instead.</span>
 <span class="co">#&gt; Scale for 'x' is already present. Adding another scale for 'x', which will</span>
 <span class="co">#&gt; replace the existing scale.</span>
-<span class="co">#&gt; Warning: `guides(&lt;scale&gt; = FALSE)` is deprecated. Please use `guides(&lt;scale&gt; =</span>
-<span class="co">#&gt; "none")` instead.</span>
-<span class="co">#&gt; Scale for 'x' is already present. Adding another scale for 'x', which will</span>
-<span class="co">#&gt; replace the existing scale.</span></code></pre></div>
+<span class="co">#&gt; [[1]]</span></code></pre></div>
+<p><img src="seqArchR_files/figure-html/viz-BV-1-1.png" width="2400"></p>
+<pre><code><span class="co">#&gt; </span>
+<span class="co">#&gt; [[2]]</span></code></pre>
+<p><img src="seqArchR_files/figure-html/viz-BV-1-2.png" width="2400"></p>
+<pre><code><span class="co">#&gt; </span>
+<span class="co">#&gt; [[3]]</span></code></pre>
+<p><img src="seqArchR_files/figure-html/viz-BV-1-3.png" width="2400"></p>
 </div>
 <div class="section level4">
 <h4 id="basis-vectors-at-iteration-2">Basis vectors at iteration 2<a class="anchor" aria-label="anchor" href="#basis-vectors-at-iteration-2"></a>
 </h4>
-<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu">seqArchR</span><span class="fu">::</span><span class="fu"><a href="../reference/viz_bas_vec_heatmap_seqlogo.html">viz_bas_vec_heatmap_seqlogo</a></span><span class="op">(</span>
                         feat_mat <span class="op">=</span> <span class="fu"><a href="../reference/get_clBasVec.html">get_clBasVec_m</a></span><span class="op">(</span><span class="va">seqArchRresult</span>, <span class="fl">2</span><span class="op">)</span>, 
                         method <span class="op">=</span> <span class="st">"bits"</span>, sinuc_or_dinuc <span class="op">=</span> <span class="st">"dinuc"</span><span class="op">)</span>
-<span class="co">#&gt; Warning: `guides(&lt;scale&gt; = FALSE)` is deprecated. Please use `guides(&lt;scale&gt; =</span>
-<span class="co">#&gt; "none")` instead.</span>
 <span class="co">#&gt; Scale for 'x' is already present. Adding another scale for 'x', which will</span>
 <span class="co">#&gt; replace the existing scale.</span>
-<span class="co">#&gt; Warning: `guides(&lt;scale&gt; = FALSE)` is deprecated. Please use `guides(&lt;scale&gt; =</span>
-<span class="co">#&gt; "none")` instead.</span>
 <span class="co">#&gt; Scale for 'x' is already present. Adding another scale for 'x', which will</span>
 <span class="co">#&gt; replace the existing scale.</span>
-<span class="co">#&gt; Warning: `guides(&lt;scale&gt; = FALSE)` is deprecated. Please use `guides(&lt;scale&gt; =</span>
-<span class="co">#&gt; "none")` instead.</span>
 <span class="co">#&gt; Scale for 'x' is already present. Adding another scale for 'x', which will</span>
 <span class="co">#&gt; replace the existing scale.</span>
-<span class="co">#&gt; Warning: `guides(&lt;scale&gt; = FALSE)` is deprecated. Please use `guides(&lt;scale&gt; =</span>
-<span class="co">#&gt; "none")` instead.</span>
 <span class="co">#&gt; Scale for 'x' is already present. Adding another scale for 'x', which will</span>
 <span class="co">#&gt; replace the existing scale.</span>
-<span class="co">#&gt; Warning: `guides(&lt;scale&gt; = FALSE)` is deprecated. Please use `guides(&lt;scale&gt; =</span>
-<span class="co">#&gt; "none")` instead.</span>
-<span class="co">#&gt; Scale for 'x' is already present. Adding another scale for 'x', which will</span>
-<span class="co">#&gt; replace the existing scale.</span></code></pre></div>
+<span class="co">#&gt; [[1]]</span></code></pre></div>
+<p><img src="seqArchR_files/figure-html/viz-BV-2-1.png" width="2400"></p>
+<pre><code><span class="co">#&gt; </span>
+<span class="co">#&gt; [[2]]</span></code></pre>
+<p><img src="seqArchR_files/figure-html/viz-BV-2-2.png" width="2400"></p>
+<pre><code><span class="co">#&gt; </span>
+<span class="co">#&gt; [[3]]</span></code></pre>
+<p><img src="seqArchR_files/figure-html/viz-BV-2-3.png" width="2400"></p>
+<pre><code><span class="co">#&gt; </span>
+<span class="co">#&gt; [[4]]</span></code></pre>
+<p><img src="seqArchR_files/figure-html/viz-BV-2-4.png" width="2400"></p>
 </div>
 <div class="section level4">
 <h4 id="visualize-sequences-by-clusters">Visualize sequences by clusters<a class="anchor" aria-label="anchor" href="#visualize-sequences-by-clusters"></a>
 </h4>
 <p>The clustered output from <em>seqArchR</em> can again be visualized as a matrix. Use the <a href="seqs_str">https://snikumbh.github.io/seqArchR/reference/seqs_str.html</a> function to fetch sequences by clusters at any iteration and call <code>seqArchR::viz_seqs_as_acgt_mat</code> as shown.</p>
-<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">
 <code class="sourceCode R">
 <span class="fu">seqArchR</span><span class="fu">::</span><span class="fu"><a href="../reference/viz_seqs_acgt_mat.html">viz_seqs_acgt_mat</a></span><span class="op">(</span><span class="fu"><a href="../reference/seqs_str.html">seqs_str</a></span><span class="op">(</span><span class="va">seqArchRresult</span>, iter <span class="op">=</span> <span class="fl">1</span>, ord <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>,
                                   pos_lab <span class="op">=</span> <span class="va">positions</span><span class="op">)</span></code></pre></div>
@@ -447,7 +396,7 @@
 Figure: Clusters at iteration 1
 </p>
 </div>
-<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb17"><pre class="downlit sourceCode r">
 <code class="sourceCode R">
 <span class="fu">seqArchR</span><span class="fu">::</span><span class="fu"><a href="../reference/viz_seqs_acgt_mat.html">viz_seqs_acgt_mat</a></span><span class="op">(</span><span class="fu"><a href="../reference/seqs_str.html">seqs_str</a></span><span class="op">(</span><span class="va">seqArchRresult</span>, iter <span class="op">=</span> <span class="fl">2</span>, ord <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>,
                                   pos_lab <span class="op">=</span> <span class="va">positions</span><span class="op">)</span></code></pre></div>
@@ -468,7 +417,7 @@ Figure: Clusters at iteration 2
 <div class="section level2">
 <h2 id="session-info">Session Info<a class="anchor" aria-label="anchor" href="#session-info"></a>
 </h2>
-<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb18"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/utils/sessionInfo.html" class="external-link">sessionInfo</a></span><span class="op">(</span><span class="op">)</span>
 <span class="co">#&gt; R version 4.1.3 (2022-03-10)</span>
 <span class="co">#&gt; Platform: x86_64-apple-darwin17.0 (64-bit)</span>
@@ -487,32 +436,31 @@ Figure: Clusters at iteration 2
 <span class="co">#&gt; </span>
 <span class="co">#&gt; other attached packages:</span>
 <span class="co">#&gt; [1] Biostrings_2.62.0   GenomeInfoDb_1.30.1 XVector_0.34.0     </span>
-<span class="co">#&gt; [4] IRanges_2.28.0      S4Vectors_0.32.3    BiocGenerics_0.40.0</span>
-<span class="co">#&gt; [7] seqArchR_0.99.0    </span>
+<span class="co">#&gt; [4] IRanges_2.28.0      S4Vectors_0.32.4    BiocGenerics_0.40.0</span>
+<span class="co">#&gt; [7] seqArchR_0.99.1    </span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt; loaded via a namespace (and not attached):</span>
-<span class="co">#&gt;  [1] Rcpp_1.0.8.3           lattice_0.20-45        prettyunits_1.1.1     </span>
-<span class="co">#&gt;  [4] ggseqlogo_0.1          rprojroot_2.0.2        digest_0.6.29         </span>
-<span class="co">#&gt;  [7] utf8_1.2.2             R6_2.5.1               plyr_1.8.6            </span>
-<span class="co">#&gt; [10] evaluate_0.15          ggplot2_3.3.5          highr_0.9             </span>
-<span class="co">#&gt; [13] pillar_1.7.0           zlibbioc_1.40.0        rlang_1.0.2           </span>
-<span class="co">#&gt; [16] jquerylib_0.1.4        Matrix_1.4-0           rmarkdown_2.13        </span>
-<span class="co">#&gt; [19] pkgdown_2.0.2          labeling_0.4.2         textshaping_0.3.6     </span>
-<span class="co">#&gt; [22] desc_1.4.1             stringr_1.4.0          RCurl_1.98-1.6        </span>
-<span class="co">#&gt; [25] munsell_0.5.0          compiler_4.1.3         xfun_0.30             </span>
-<span class="co">#&gt; [28] pkgconfig_2.0.3        systemfonts_1.0.4      htmltools_0.5.2       </span>
-<span class="co">#&gt; [31] tibble_3.1.6           GenomeInfoDbData_1.2.7 matrixStats_0.61.0    </span>
-<span class="co">#&gt; [34] fansi_1.0.2            crayon_1.5.0           bitops_1.0-7          </span>
-<span class="co">#&gt; [37] grid_4.1.3             jsonlite_1.8.0         gtable_0.3.0          </span>
-<span class="co">#&gt; [40] lifecycle_1.0.1        magrittr_2.0.2         scales_1.1.1          </span>
-<span class="co">#&gt; [43] cli_3.2.0              stringi_1.7.6          cachem_1.0.6          </span>
-<span class="co">#&gt; [46] farver_2.1.0           reshape2_1.4.4         fs_1.5.2              </span>
-<span class="co">#&gt; [49] bslib_0.3.1            ellipsis_0.3.2         ragg_1.2.2            </span>
-<span class="co">#&gt; [52] vctrs_0.3.8            cowplot_1.1.1          tools_4.1.3           </span>
-<span class="co">#&gt; [55] glue_1.6.2             purrr_0.3.4            parallel_4.1.3        </span>
-<span class="co">#&gt; [58] fastmap_1.1.0          yaml_2.3.5             colorspace_2.0-3      </span>
-<span class="co">#&gt; [61] cluster_2.1.2          memoise_2.0.1          knitr_1.37            </span>
-<span class="co">#&gt; [64] sass_0.4.0</span></code></pre></div>
+<span class="co">#&gt;  [1] xfun_0.30              bslib_0.3.1            reshape2_1.4.4        </span>
+<span class="co">#&gt;  [4] purrr_0.3.4            lattice_0.20-45        colorspace_2.0-3      </span>
+<span class="co">#&gt;  [7] vctrs_0.3.8            htmltools_0.5.2        yaml_2.3.5            </span>
+<span class="co">#&gt; [10] utf8_1.2.2             rlang_1.0.2            pkgdown_2.0.2         </span>
+<span class="co">#&gt; [13] jquerylib_0.1.4        pillar_1.7.0           glue_1.6.2            </span>
+<span class="co">#&gt; [16] plyr_1.8.7             GenomeInfoDbData_1.2.7 lifecycle_1.0.1       </span>
+<span class="co">#&gt; [19] stringr_1.4.0          ggseqlogo_0.1          zlibbioc_1.40.0       </span>
+<span class="co">#&gt; [22] munsell_0.5.0          gtable_0.3.0           ragg_1.2.2            </span>
+<span class="co">#&gt; [25] memoise_2.0.1          evaluate_0.15          labeling_0.4.2        </span>
+<span class="co">#&gt; [28] knitr_1.38             fastmap_1.1.0          parallel_4.1.3        </span>
+<span class="co">#&gt; [31] fansi_1.0.3            highr_0.9              Rcpp_1.0.8.3          </span>
+<span class="co">#&gt; [34] scales_1.1.1           cachem_1.0.6           desc_1.4.1            </span>
+<span class="co">#&gt; [37] jsonlite_1.8.0         farver_2.1.0           systemfonts_1.0.4     </span>
+<span class="co">#&gt; [40] fs_1.5.2               textshaping_0.3.6      ggplot2_3.3.5         </span>
+<span class="co">#&gt; [43] digest_0.6.29          stringi_1.7.6          cowplot_1.1.1         </span>
+<span class="co">#&gt; [46] grid_4.1.3             rprojroot_2.0.2        cli_3.2.0             </span>
+<span class="co">#&gt; [49] tools_4.1.3            bitops_1.0-7           magrittr_2.0.2        </span>
+<span class="co">#&gt; [52] sass_0.4.1             RCurl_1.98-1.6         tibble_3.1.6          </span>
+<span class="co">#&gt; [55] crayon_1.5.0           pkgconfig_2.0.3        ellipsis_0.3.2        </span>
+<span class="co">#&gt; [58] Matrix_1.4-0           prettyunits_1.1.1      rmarkdown_2.13        </span>
+<span class="co">#&gt; [61] R6_2.5.1               compiler_4.1.3</span></code></pre></div>
 </div>
   </div>
 
