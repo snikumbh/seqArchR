@@ -79,7 +79,8 @@ plot_ggheatmap <- function(pwm_mat, pos_lab = NULL, pdf_name = NULL,
         if (file.exists(pdf_name)) {
             warning("File exists, will overwrite", immediate. = TRUE)
         }
-        ggplot2::ggsave(p1, device = "pdf", width = 20, height = 2.5)
+        ggplot2::ggsave(filename = pdf_name, plot = p1, device = "pdf",
+                        width = 20, height = 2.5)
     }
 
     return(p1)
@@ -89,7 +90,7 @@ plot_ggheatmap <- function(pwm_mat, pos_lab = NULL, pdf_name = NULL,
 #' @title Visualize a given (PWM) matrix as a sequence logo.
 #'
 #' @param pwm_mat Matrix (usually a PWM, but can be any non-normalized matrix)
-#' to be represented as a sequence logo.
+#' to be represented as a sequence logo. Rownames must be letters.
 #'
 #' @param method For \code{ggseqlogo}; either of 'custom', 'bits', or
 #' 'probability'. Default is 'bits'.
@@ -164,7 +165,8 @@ plot_ggseqlogo <- function(pwm_mat, method = "bits", pos_lab = NULL,
         if (file.exists(pdf_name)) {
             warning("File exists, will overwrite", immediate. = TRUE)
         }
-        ggsave(p1, device = "pdf", width = 25, height = 0.5)
+        ggsave(filename = pdf_name, plot = p1, device = "pdf",
+               width = 25, height = 2.5)
     }
     return(p1)
 }
@@ -210,3 +212,4 @@ check_vars <- function(pwm_mat, pos_lab){
         )
     }
 }
+

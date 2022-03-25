@@ -15,8 +15,7 @@
 #' @param add_pseudo_counts Logical, taking values TRUE or FALSE, default
 #' set to FALSE. Setting it to TRUE will enable adding pseudo-counts to the
 #' features matrix.
-#' @param pdf_name Name of the file which will be saved as PDF
-#' (also provide the extension).
+#' @param pdf_name Filename to save the plot, also provide the extension.
 #' @param sinuc_or_dinuc "sinuc" or "dinuc" for choosing between mono- and
 #' dinucleotide profiles respectively.
 #' @param fixed_coord Set this to TRUE to use a fixed aspect ratio for the
@@ -48,13 +47,7 @@ viz_bas_vec_heatmap_seqlogo <- function(feat_mat, method = "bits",
         pos_lab <- set_default_pos_lab(feat_mat, sinuc_or_dinuc)
     }
     ##
-    if (!is.null(pdf_name)) {
-        if (file.exists(pdf_name)) {
-            warning("File exists, will overwrite", immediate. = TRUE)
-        }
-        grDevices::pdf(file=pdf_name, width=20, height=4)
-    }
-    invisible(apply(feat_mat, MARGIN = 2, function(x) {
+    pl_list <- apply(feat_mat, MARGIN = 2, function(x) {
         if (sinuc_or_dinuc == "dinuc") {
             pwm <- make_dinuc_PWMs(x, add_pseudo_counts = FALSE)
         } else if (sinuc_or_dinuc == "sinuc") {
@@ -65,14 +58,25 @@ viz_bas_vec_heatmap_seqlogo <- function(feat_mat, method = "bits",
         p1 <- p1 + theme(plot.margin = margin(0,0,0,0, unit="cm"))
         ## Seqlogo below
         p2 <- plot_ggseqlogo(pwm_mat = pwm, method = method, pos_lab = pos_lab,
-            fixed_coord = fixed_coord)
+                             fixed_coord = fixed_coord)
         ## Make adjustments for alignment
         p2 <- p2 + theme(plot.margin = margin(0,0,0,0, unit="cm"))
         final_p <- cowplot::plot_grid(p1, p2, nrow = 2, align="v")
         ##
         final_p
-    }))
-    if (!is.null(pdf_name)) {dev.off()}
+    })
+
+    if(!is.null(pdf_name)){
+        if (file.exists(pdf_name)) {
+            warning("File exists, will overwrite", immediate. = TRUE)
+        }
+        grDevices::pdf(file=pdf_name, width=20, height=4)
+        lapply(pl_list, print)
+        dev.off()
+        return(invisible(NULL))
+    }
+
+    pl_list
 }
 ## =============================================================================
 
@@ -98,17 +102,30 @@ viz_bas_vec_seqlogo <- function(feat_mat, method = "bits", pos_lab = NULL,
         pos_lab <- set_default_pos_lab(feat_mat, sinuc_or_dinuc)
     }
     ##
-    invisible(apply(feat_mat, MARGIN = 2, function(x) {
+    pl_list <- apply(feat_mat, MARGIN = 2, function(x) {
         if (sinuc_or_dinuc == "dinuc") {
             pwm <- make_dinuc_PWMs(x, add_pseudo_counts = FALSE)
         } else if (sinuc_or_dinuc == "sinuc") {
             pwm <- make_sinuc_PWMs(x, add_pseudo_counts = FALSE)
         }
         p1 <- plot_ggseqlogo(pwm_mat = pwm, method = method,
-            pos_lab = pos_lab, pdf_name = pdf_name,
+            pos_lab = pos_lab, pdf_name = NULL,
             fixed_coord = fixed_coord)
         p1
-    }))
+    })
+
+
+    if(!is.null(pdf_name)){
+        if (file.exists(pdf_name)) {
+            warning("File exists, will overwrite", immediate. = TRUE)
+        }
+        grDevices::pdf(file=pdf_name, width=20, height=4)
+        lapply(pl_list, print)
+        dev.off()
+        return(invisible(NULL))
+    }
+
+    pl_list
 }
 ## =============================================================================
 
@@ -134,7 +151,7 @@ viz_bas_vec_heatmap <- function(feat_mat, pos_lab = NULL,
         pos_lab <- set_default_pos_lab(feat_mat, sinuc_or_dinuc)
     }
     ##
-    invisible(apply(feat_mat, MARGIN = 2, function(x) {
+    pl_list <- apply(feat_mat, MARGIN = 2, function(x) {
         if (sinuc_or_dinuc == "dinuc") {
             pwm <- make_dinuc_PWMs(x, add_pseudo_counts = FALSE)
         } else if (sinuc_or_dinuc == "sinuc") {
@@ -143,7 +160,8 @@ viz_bas_vec_heatmap <- function(feat_mat, pos_lab = NULL,
         p1 <- plot_ggheatmap(pwm_mat = pwm,
             pos_lab = pos_lab, pdf_name = pdf_name, fixed_coord = fixed_coord)
         p1
-    }))
+    })
+    pl_list
 }
 ## =============================================================================
 
