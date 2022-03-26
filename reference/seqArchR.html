@@ -29,7 +29,7 @@ Call this function to process a data set using seqArchR."><!-- mathjax --><scrip
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">seqArchR</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.99.333</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.99.334</span>
       </span>
     </div>
 
@@ -215,18 +215,17 @@ functions.</p>
     <div id="ref-examples">
     <h2>Examples</h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"></span>
-<span class="r-in"><span class="va">fname</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"extdata"</span>, <span class="st">"example_data.fa.gz"</span>,</span>
-<span class="r-in">                        package <span class="op">=</span> <span class="st">"seqArchR"</span>, mustWork <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
 <span class="r-in"></span>
-<span class="r-in"><span class="co"># Specifying 'dinuc' generates dinucleotide features</span></span>
-<span class="r-in"><span class="va">inputSeqsMat</span> <span class="op">&lt;-</span> <span class="fu">seqArchR</span><span class="fu">::</span><span class="fu"><a href="prepare_data_from_FASTA.html">prepare_data_from_FASTA</a></span><span class="op">(</span>fasta_fname <span class="op">=</span> <span class="va">fname</span>,</span>
-<span class="r-in">    sinuc_or_dinuc <span class="op">=</span> <span class="st">"dinuc"</span><span class="op">)</span></span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Sequences OK, </span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Read 200 sequences</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Generating dinucleotide profiles</span>
+<span class="r-in"><span class="co"># Here,we re-use the example input sequences and one-hot encoded matrix</span></span>
+<span class="r-in"><span class="co"># shipped with seqArchR. Please see examples in the corresponding man pages</span></span>
+<span class="r-in"><span class="co"># for generating a one-hot encoded input matrix from raw FASTA sequences</span></span>
+<span class="r-in"><span class="co"># in `prepare_data_from_FASTA`</span></span>
+<span class="r-in"><span class="co">#</span></span>
+<span class="r-in"><span class="va">inputSeqsMat</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/readRDS.html" class="external-link">readRDS</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"extdata"</span>, <span class="st">"tssSinuc.rds"</span>,</span>
+<span class="r-in">                             package <span class="op">=</span> <span class="st">"seqArchR"</span>, mustWork <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span></span>
 <span class="r-in"></span>
-<span class="r-in"><span class="va">inputSeqsRaw</span> <span class="op">&lt;-</span> <span class="fu">seqArchR</span><span class="fu">::</span><span class="fu"><a href="prepare_data_from_FASTA.html">prepare_data_from_FASTA</a></span><span class="op">(</span>fasta_fname <span class="op">=</span> <span class="va">fname</span>,</span>
-<span class="r-in">    raw_seq <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
+<span class="r-in"><span class="va">inputSeqsRaw</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/readRDS.html" class="external-link">readRDS</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"extdata"</span>, <span class="st">"tssSeqsRaw.rds"</span>,</span>
+<span class="r-in">                             package <span class="op">=</span> <span class="st">"seqArchR"</span>, mustWork <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span></span>
 <span class="r-in"></span>
 <span class="r-in"><span class="co"># Set seqArchR configuration</span></span>
 <span class="r-in"><span class="va">seqArchRconfig</span> <span class="op">&lt;-</span> <span class="fu">seqArchR</span><span class="fu">::</span><span class="fu"><a href="set_config.html">set_config</a></span><span class="op">(</span></span>
@@ -262,7 +261,6 @@ functions.</p>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Checking K =3</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Checking K =4</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">ℹ</span> Best K for this chunk: 3</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">ℹ</span> Adjusting for overfitting, fetched 2 clusters</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> ── Inner chunk 2 of 2 [Size: 100] </span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Checking K =2</span>
@@ -271,8 +269,8 @@ functions.</p>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">ℹ</span> Best K for this chunk: 3</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BB00;">✔</span> 1 of 1 outer chunk complete</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BB00;">✔</span> 1 of 2 iterations complete</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> → Iteration 1 completed: 1m 17.8s</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> → Time ellapsed since start: 1m 18.4s</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> → Iteration 1 completed: 1m 22.3s</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> → Time ellapsed since start: 1m 23.2s</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">──</span> <span style="font-weight: bold;">Iteration 2 of 2 [3 chunks]</span> <span style="color: #00BBBB;">─────────────────────────────────────────────────</span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> </span>
@@ -280,29 +278,30 @@ functions.</p>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> ── Inner chunk 1 of 1 [Size: 50] </span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Checking K =2</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">ℹ</span> Best K for this chunk: 1</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Checking K =3</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Checking K =4</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">ℹ</span> Best K for this chunk: 3</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BB00;">✔</span> 1 of 3 outer chunks complete</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> ── <span style="font-weight: bold;">Outer chunk 2 of 3 [Size: 55]</span> ──</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> ── <span style="font-weight: bold;">Outer chunk 2 of 3 [Size: 98]</span> ──</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> ── Inner chunk 1 of 1 [Size: 55] </span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> ── Inner chunk 1 of 1 [Size: 98] </span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Checking K =2</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Checking K =3</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">ℹ</span> Best K for this chunk: 2</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BB00;">✔</span> 2 of 3 outer chunks complete</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> ── <span style="font-weight: bold;">Outer chunk 3 of 3 [Size: 95]</span> ──</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> ── <span style="font-weight: bold;">Outer chunk 3 of 3 [Size: 52]</span> ──</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> ── Inner chunk 1 of 1 [Size: 95] </span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> ── Inner chunk 1 of 1 [Size: 52] </span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Checking K =2</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Checking K =3</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">ℹ</span> Best K for this chunk: 2</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">ℹ</span> Best K for this chunk: 1</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BB00;">✔</span> 3 of 3 outer chunks complete</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BB00;">✔</span> 2 of 2 iterations complete</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> → Iteration 2 completed: 41.3s</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> → Time ellapsed since start: 1m 59.8s</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> → Iteration 2 completed: 1m 29.5s</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> → Time ellapsed since start: 2m 52.7s</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> ── seqArchR exiting</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> 1m 59.8s ───────────────────────────────────────────────────</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> 2m 52.8s ───────────────────────────────────────────────────</span>
 <span class="r-in"></span>
 <span class="r-in"></span>
 </code></pre></div>
