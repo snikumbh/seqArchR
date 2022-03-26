@@ -454,7 +454,8 @@ set_config <- function(chunk_size = 500,
                                     cgfglinear = TRUE,
                                     coarse_step = 10,
                                     askParsimony = TRUE,
-                                    config, oDir, test_itr, oChunkIdx){
+                                    config, oDir, test_itr, oChunkIdx,
+                                    bpparam){
     .assert_seqArchR_flags(config$flags)
     dbg <- config$flags$debugFlag
     vrbs <- config$flags$verboseFlag
@@ -473,13 +474,13 @@ set_config <- function(chunk_size = 500,
                 suffix_str, flg=dbg)
         best_k <- .cv_model_select_pyNMF2(
                 X = this_mat, param_ranges = config$paramRanges,
-                kFolds = config$kFolds, parallelDo = config$parallelize,
-                nCores = config$nCoresUse, nRuns = config$nRunsUse,
+                kFolds = config$kFolds, nRuns = config$nRunsUse,
+                # parallelDo = config$parallelize, nCores = config$nCoresUse,
                 verboseFlag = config$flags$verboseFlag,
                 debugFlag = config$flags$debugFlag,
                 returnBestK = TRUE, cgfglinear = cgfglinear,
                 coarse_step = coarse_step,
-                askParsimony = askParsimony
+                askParsimony = askParsimony, bpparam = bpparam
             )
     }
     #########################
@@ -487,9 +488,10 @@ set_config <- function(chunk_size = 500,
         .msg_pstr("Performing stability-based model selection", flg=dbg)
         best_k <- .stability_model_select_pyNMF2(
             X = this_mat, param_ranges = config$paramRanges,
-            parallelDo = config$parallelize, nCores = config$nCoresUse,
+            # parallelDo = config$parallelize, nCores = config$nCoresUse,
             nRuns = config$nRunsUse, bound = config$bound,
-            flags = config$flags, returnBestK = TRUE, bootstrap = TRUE
+            flags = config$flags, returnBestK = TRUE, bootstrap = TRUE,
+            bpparam = bpparam
         )
     }
     #########################
@@ -516,10 +518,10 @@ set_config <- function(chunk_size = 500,
         nmf_nRuns_list <- .perform_multiple_NMF_runs(X = this_mat,
                                         kVal = best_k,
                                         alphaVal = 0,
-                                        parallelDo = config$parallelize,
-                                        nCores = config$nCoresUse,
+                                        # parallelDo = config$parallelize,
+                                        # nCores = config$nCoresUse,
                                         nRuns = nRuns,
-                                        bootstrap = TRUE)
+                                        bootstrap = TRUE, bpparam = bpparam)
         featuresMatrixList <- lapply(nmf_nRuns_list$nmf_result_list,
                                         get_features_matrix)
         samplesMatrixList <- lapply(nmf_nRuns_list$nmf_result_list,
@@ -819,16 +821,30 @@ perform_setup <- function(config, total_itr, o_dir, fresh,
                                 "same as that of total_itr"))
     }
 
-
-    #### Start cluster only once
+    #### Start cluster only once -- using BiocParallel
     if(parallelize){
-        cl <- parallel::makeCluster(crs, type = "FORK")
-        parallel::setDefaultCluster(cl)
-        cli::cli_alert_info("Parallelization: {crs} cores")
+        if(.Platform$OS.type == "windows"){
+            if (is.null(crs)) crs <- BiocParallel::multicoreWorkers()
+            cl <- BiocParallel::SnowParam(workers = crs, tasks = crs,
+                                            exportglobals = TRUE)
+        }else{
+            if (is.null(crs)) crs <- BiocParallel::multicoreWorkers()
+            cl <- BiocParallel::MulticoreParam(workers = crs, tasks = crs)
+        }
     }else{
-        cl <- NA
+        cl <- BiocParallel::SerialParam()
         cli::cli_alert_info("Parallelization: No")
     }
+
+    # #### Start cluster only once --using parallel
+    # if(parallelize){
+    #     cl <- parallel::makeCluster(crs, type = "FORK")
+    #     parallel::setDefaultCluster(cl)
+    #     cli::cli_alert_info("Parallelization: {crs} cores")
+    # }else{
+    #     cl <- NA
+    #     cli::cli_alert_info("Parallelization: No")
+    # }
     ##
     if(modSelType != "cv" && modSelType != "stability")
         cli::cli_alert_warning(c("Mis-specified model selection strategy",
@@ -850,7 +866,8 @@ perform_setup <- function(config, total_itr, o_dir, fresh,
 
 
 process_innerChunk <- function(test_itr, innerChunksColl, config, lenOC,
-                            seqs_ohe_mat, set_parsimony, o_dir, outerChunkIdx){
+                            seqs_ohe_mat, set_parsimony, o_dir, outerChunkIdx,
+                            bpparam){
     # globFactors <- vector("list", length(innerChunksColl))
     # globClustAssignments <- vector("list", length(innerChunksColl))
     # nClustEachIC <- rep(0, length(innerChunksColl))
@@ -871,7 +888,7 @@ process_innerChunk <- function(test_itr, innerChunksColl, config, lenOC,
             innerChunksColl, this_seqsMat,
             cgfglinear = TRUE, coarse_step = cvStep,
             askParsimony = set_parsimony[test_itr],
-            config, o_dir, test_itr, outerChunkIdx)
+            config, o_dir, test_itr, outerChunkIdx, bpparam = bpparam)
         thisNMFResult
     })
 

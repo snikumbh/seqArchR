@@ -9,8 +9,6 @@
 
 .stability_model_select_pyNMF2 <- function(X,
                             param_ranges,
-                            parallelDo = FALSE,
-                            nCores = NA,
                             nRuns = 100,
                             bootstrap = TRUE,
                             returnBestK = TRUE,
@@ -19,7 +17,8 @@
                             bound = 10^-6,
                             flags = list(debugFlag = FALSE,
                                 verboseFlag = TRUE, plotVerboseFlag = FALSE,
-                                timeFlag = FALSE)
+                                timeFlag = FALSE),
+                            bpparam
                             ){
     dbg <- flags$debugFlag
     vrbs <- flags$verboseFlag
@@ -41,9 +40,8 @@
 
         ## Get NMF results
         resultList <- .perform_multiple_NMF_runs(X = X, kVal = kValue,
-            alphaVal = 0, parallelDo = parallelDo,
-            nCores = nCores, nRuns = nRuns,
-            bootstrap = bootstrap)
+            alphaVal = 0, nRuns = nRuns,
+            bootstrap = bootstrap, bpparam = bpparam)
 
         featMatList <- .get_feat_or_samp_matList(resultList, feat = TRUE)
 
@@ -101,7 +99,8 @@
 # }
 
 
-.get_feat_or_samp_matList <- function(resultList, bootstrap, feat = TRUE){
+.get_feat_or_samp_matList <- function(resultList, bootstrap = TRUE,
+                                        feat = TRUE){
     if(feat){
         featMatList <- lapply(resultList$nmf_result_list, get_features_matrix)
         return(featMatList)

@@ -39,7 +39,6 @@
 #' change is reported to the user. Default is NULL. When NULL, just the result
 #' is returned, and no plots or checkpoints or result is written to disk.
 #'
-#' @importFrom parallel makeCluster setDefaultCluster stopCluster
 #'
 #' @return A nested list of elements as follows:
 #' \describe{
@@ -70,7 +69,7 @@
 #' }
 #'
 #' @importFrom prettyunits pretty_dt
-#' @importFrom parallel stopCluster
+#' @importFrom BiocParallel bpstart bpstop
 #' @import cli
 #'
 #' @examples
@@ -139,7 +138,7 @@ seqArchR <- function(config, seqs_ohe_mat, seqs_raw, seqs_pos = NULL,
     seqs_pos <- setup_ans$seqs_pos
     o_dir <- setup_ans$o_dir
     set_parsimony <- setup_ans$set_parsimony
-
+    BiocParallel::bpstart(setup_ans$cl)
 
     ##
     ## ** To continue seqArchR from an earlier run (further levels downstream)
@@ -214,7 +213,8 @@ seqArchR <- function(config, seqs_ohe_mat, seqs_raw, seqs_pos = NULL,
                 ## all innerChunks in innerChunksColl have been processed
                 icResult <- process_innerChunk(test_itr, innerChunksColl,
                                     config, lenOC, seqs_ohe_mat, set_parsimony,
-                                    o_dir, outerChunkIdx)
+                                    o_dir, outerChunkIdx, bpparam =
+                                        setup_ans$cl)
                 globFactors <- icResult$globFactors
                 globClustAssignments <- icResult$globClustAssignments
                 nClustEachIC <- icResult$nClustEachIC
@@ -424,7 +424,8 @@ seqArchR <- function(config, seqs_ohe_mat, seqs_raw, seqs_pos = NULL,
     ## achieve suitable clustering results.
 
     ## Stop cluster
-    if(parallelize) parallel::stopCluster(setup_ans$cl)
+    # if(parallelize) parallel::stopCluster(setup_ans$cl)
+    BiocParallel::bpstop(setup_ans$cl)
     ##
     if(tym){
         complTime1 <- Sys.time() - seqArchRStartTime
