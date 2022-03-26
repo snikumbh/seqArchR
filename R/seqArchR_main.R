@@ -74,15 +74,17 @@
 #'
 #' @examples
 #'
-#' fname <- system.file("extdata", "example_data.fa.gz",
-#'                         package = "seqArchR", mustWork = TRUE)
 #'
-#' # Specifying 'dinuc' generates dinucleotide features
-#' inputSeqsMat <- seqArchR::prepare_data_from_FASTA(fasta_fname = fname,
-#'     sinuc_or_dinuc = "dinuc")
+#' # Here,we re-use the example input sequences and one-hot encoded matrix
+#' # shipped with seqArchR. Please see examples in the corresponding man pages
+#' # for generating a one-hot encoded input matrix from raw FASTA sequences
+#' # in `prepare_data_from_FASTA`
+#' #
+#' inputSeqsMat <- readRDS(system.file("extdata", "tssSinuc.rds",
+#'                              package = "seqArchR", mustWork = TRUE))
 #'
-#' inputSeqsRaw <- seqArchR::prepare_data_from_FASTA(fasta_fname = fname,
-#'     raw_seq = TRUE)
+#' inputSeqsRaw <- readRDS(system.file("extdata", "tssSeqsRaw.rds",
+#'                              package = "seqArchR", mustWork = TRUE))
 #'
 #' # Set seqArchR configuration
 #' seqArchRconfig <- seqArchR::set_config(

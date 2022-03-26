@@ -21,15 +21,16 @@ get_seqClLab(res, iter = NULL)
 \item{iter}{Choose the iteration of seqArchR result to get from.}
 }
 \value{
-A list with two elements `nBasisVectors` (integer) and
+get_clBasVec A list with two elements `nBasisVectors` (integer) and
 `basisVectors` (matrix).
 
-The number of basis vectors (integer).
+get_clBasVec_k The number of basis vectors (integer).
 
-The basis vectors' matrix with features along the rows of the
-matrix.
+get_clBasVec_m The basis vectors' matrix with features along the
+rows of the matrix.
 
-A character vector denoting the cluster IDs for each sequence.
+get_seqClLab A character vector denoting the cluster IDs for
+each sequence.
 }
 \description{
 Basis vectors' information for the selected iteration.

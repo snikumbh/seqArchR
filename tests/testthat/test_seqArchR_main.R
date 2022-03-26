@@ -8,6 +8,11 @@ tssSeqsRaw <- readRDS(system.file("extdata", "tssSeqsRaw.rds",
                                   package = "seqArchR",
                                   mustWork = TRUE))
 
+## Reduce size to avoid timing out on Bioconductor
+tssSeqs_sinuc <- tssSeqs_sinuc[,seq(100)]
+tssSeqsRaw <- tssSeqsRaw[seq(100)]
+
+
 test_that("seqArchR (stability) works when timeFlag is FALSE/checkpointing", {
     ## Make toy objects and data
     ## Commented out. We could just save the sinuc and dinuc profiles instead
