@@ -39,7 +39,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">seqArchR</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.99.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.99.333</span>
       </span>
     </div>
 
@@ -87,7 +87,7 @@
       <h1 data-toc-skip>Example usage of <em>seqArchR</em> on simulated DNA sequences</h1>
                         <h4 data-toc-skip class="author">Sarvesh Nikumbh</h4>
             
-            <h4 data-toc-skip class="date">2022-03-25</h4>
+            <h4 data-toc-skip class="date">2022-03-26</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/snikumbh/seqArchR/blob/HEAD/vignettes/seqArchR.Rmd" class="external-link"><code>vignettes/seqArchR.Rmd</code></a></small>
       <div class="hidden name"><code>seqArchR.Rmd</code></div>
@@ -295,7 +295,7 @@
 <div class="section level3">
 <h3 id="understanding-the-result-object-from-seqarchr">Understanding the result object from <em>seqArchR</em><a class="anchor" aria-label="anchor" href="#understanding-the-result-object-from-seqarchr"></a>
 </h3>
-<p>In the version 0.99.1, <em>seqArchR</em> naively returns a result object which is a nested list of seven elements. These include:</p>
+<p>In the version 0.99.333, <em>seqArchR</em> naively returns a result object which is a nested list of seven elements. These include:</p>
 <ul>
 <li>the sequence cluster labels per iteration [<code>seqsClustLabels</code>];</li>
 <li>the collection of NMF basis vectors per iteration [<code>clustBasisVectors</code>]: each is a list of two elements <code>nBasisVectors</code> and <code>basisVectors</code>;</li>
@@ -437,30 +437,30 @@ Figure: Clusters at iteration 2
 <span class="co">#&gt; other attached packages:</span>
 <span class="co">#&gt; [1] Biostrings_2.62.0   GenomeInfoDb_1.30.1 XVector_0.34.0     </span>
 <span class="co">#&gt; [4] IRanges_2.28.0      S4Vectors_0.32.4    BiocGenerics_0.40.0</span>
-<span class="co">#&gt; [7] seqArchR_0.99.1    </span>
+<span class="co">#&gt; [7] seqArchR_0.99.333  </span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt; loaded via a namespace (and not attached):</span>
-<span class="co">#&gt;  [1] xfun_0.30              bslib_0.3.1            reshape2_1.4.4        </span>
-<span class="co">#&gt;  [4] purrr_0.3.4            lattice_0.20-45        colorspace_2.0-3      </span>
-<span class="co">#&gt;  [7] vctrs_0.3.8            htmltools_0.5.2        yaml_2.3.5            </span>
-<span class="co">#&gt; [10] utf8_1.2.2             rlang_1.0.2            pkgdown_2.0.2         </span>
-<span class="co">#&gt; [13] jquerylib_0.1.4        pillar_1.7.0           glue_1.6.2            </span>
-<span class="co">#&gt; [16] plyr_1.8.7             GenomeInfoDbData_1.2.7 lifecycle_1.0.1       </span>
-<span class="co">#&gt; [19] stringr_1.4.0          ggseqlogo_0.1          zlibbioc_1.40.0       </span>
-<span class="co">#&gt; [22] munsell_0.5.0          gtable_0.3.0           ragg_1.2.2            </span>
-<span class="co">#&gt; [25] memoise_2.0.1          evaluate_0.15          labeling_0.4.2        </span>
-<span class="co">#&gt; [28] knitr_1.38             fastmap_1.1.0          parallel_4.1.3        </span>
-<span class="co">#&gt; [31] fansi_1.0.3            highr_0.9              Rcpp_1.0.8.3          </span>
-<span class="co">#&gt; [34] scales_1.1.1           cachem_1.0.6           desc_1.4.1            </span>
-<span class="co">#&gt; [37] jsonlite_1.8.0         farver_2.1.0           systemfonts_1.0.4     </span>
-<span class="co">#&gt; [40] fs_1.5.2               textshaping_0.3.6      ggplot2_3.3.5         </span>
-<span class="co">#&gt; [43] digest_0.6.29          stringi_1.7.6          cowplot_1.1.1         </span>
-<span class="co">#&gt; [46] grid_4.1.3             rprojroot_2.0.2        cli_3.2.0             </span>
-<span class="co">#&gt; [49] tools_4.1.3            bitops_1.0-7           magrittr_2.0.2        </span>
-<span class="co">#&gt; [52] sass_0.4.1             RCurl_1.98-1.6         tibble_3.1.6          </span>
-<span class="co">#&gt; [55] crayon_1.5.0           pkgconfig_2.0.3        ellipsis_0.3.2        </span>
-<span class="co">#&gt; [58] Matrix_1.4-0           prettyunits_1.1.1      rmarkdown_2.13        </span>
-<span class="co">#&gt; [61] R6_2.5.1               compiler_4.1.3</span></code></pre></div>
+<span class="co">#&gt;  [1] Rcpp_1.0.8.3           lattice_0.20-45        prettyunits_1.1.1     </span>
+<span class="co">#&gt;  [4] ggseqlogo_0.1          rprojroot_2.0.2        digest_0.6.29         </span>
+<span class="co">#&gt;  [7] utf8_1.2.2             R6_2.5.1               plyr_1.8.7            </span>
+<span class="co">#&gt; [10] evaluate_0.15          ggplot2_3.3.5          highr_0.9             </span>
+<span class="co">#&gt; [13] pillar_1.7.0           zlibbioc_1.40.0        rlang_1.0.2           </span>
+<span class="co">#&gt; [16] jquerylib_0.1.4        Matrix_1.4-0           rmarkdown_2.13        </span>
+<span class="co">#&gt; [19] pkgdown_2.0.2          labeling_0.4.2         textshaping_0.3.6     </span>
+<span class="co">#&gt; [22] desc_1.4.1             BiocParallel_1.28.3    stringr_1.4.0         </span>
+<span class="co">#&gt; [25] RCurl_1.98-1.6         munsell_0.5.0          compiler_4.1.3        </span>
+<span class="co">#&gt; [28] xfun_0.30              pkgconfig_2.0.3        systemfonts_1.0.4     </span>
+<span class="co">#&gt; [31] htmltools_0.5.2        tibble_3.1.6           GenomeInfoDbData_1.2.7</span>
+<span class="co">#&gt; [34] fansi_1.0.3            crayon_1.5.0           bitops_1.0-7          </span>
+<span class="co">#&gt; [37] grid_4.1.3             jsonlite_1.8.0         gtable_0.3.0          </span>
+<span class="co">#&gt; [40] lifecycle_1.0.1        magrittr_2.0.2         scales_1.1.1          </span>
+<span class="co">#&gt; [43] cli_3.2.0              stringi_1.7.6          cachem_1.0.6          </span>
+<span class="co">#&gt; [46] farver_2.1.0           reshape2_1.4.4         fs_1.5.2              </span>
+<span class="co">#&gt; [49] bslib_0.3.1            ellipsis_0.3.2         ragg_1.2.2            </span>
+<span class="co">#&gt; [52] vctrs_0.3.8            cowplot_1.1.1          tools_4.1.3           </span>
+<span class="co">#&gt; [55] glue_1.6.2             purrr_0.3.4            parallel_4.1.3        </span>
+<span class="co">#&gt; [58] fastmap_1.1.0          yaml_2.3.5             colorspace_2.0-3      </span>
+<span class="co">#&gt; [61] memoise_2.0.1          knitr_1.38             sass_0.4.1</span></code></pre></div>
 </div>
   </div>
 
