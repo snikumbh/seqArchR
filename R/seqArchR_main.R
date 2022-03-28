@@ -213,10 +213,14 @@ seqArchR <- function(config, seqs_ohe_mat, seqs_raw, seqs_pos = NULL,
                 innerChunksColl <- .prepare_chunks(outerChunk, chnksz)
                 ## Maintain these in a list, for collation later when
                 ## all innerChunks in innerChunksColl have been processed
-                icResult <- process_innerChunk(test_itr, innerChunksColl,
-                                    config, lenOC, seqs_ohe_mat, set_parsimony,
-                                    o_dir, outerChunkIdx, bpparam =
-                                        setup_ans$cl)
+                icResult <- process_innerChunk(test_itr = test_itr,
+                                    innerChunksColl = innerChunksColl,
+                                    config = config, lenOC = lenOC,
+                                    seqs_ohe_mat = seqs_ohe_mat,
+                                    set_parsimony = set_parsimony,
+                                    o_dir = o_dir,
+                                    outerChunkIdx = outerChunkIdx,
+                                    bpparam = setup_ans$cl)
                 globFactors <- icResult$globFactors
                 globClustAssignments <- icResult$globClustAssignments
                 nClustEachIC <- icResult$nClustEachIC

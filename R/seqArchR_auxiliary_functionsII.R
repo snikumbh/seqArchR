@@ -827,9 +827,11 @@ perform_setup <- function(config, total_itr, o_dir, fresh,
             if (is.null(crs)) crs <- BiocParallel::multicoreWorkers()
             cl <- BiocParallel::SnowParam(workers = crs, tasks = crs,
                                             exportglobals = TRUE)
+            cli::cli_alert_info("Parallelization: Yes")
         }else{
             if (is.null(crs)) crs <- BiocParallel::multicoreWorkers()
             cl <- BiocParallel::MulticoreParam(workers = crs, tasks = crs)
+            cli::cli_alert_info("Parallelization: Yes")
         }
     }else{
         cl <- BiocParallel::SerialParam()
@@ -888,7 +890,8 @@ process_innerChunk <- function(test_itr, innerChunksColl, config, lenOC,
             innerChunksColl, this_seqsMat,
             cgfglinear = TRUE, coarse_step = cvStep,
             askParsimony = set_parsimony[test_itr],
-            config, o_dir, test_itr, outerChunkIdx, bpparam = bpparam)
+            config = config, oDir = o_dir, test_itr = test_itr,
+            oChunkIdx = outerChunkIdx, bpparam = bpparam)
         thisNMFResult
     })
 
