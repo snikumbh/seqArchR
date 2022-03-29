@@ -69,8 +69,10 @@
 #' }
 #'
 #' @importFrom prettyunits pretty_dt
-#' @importFrom BiocParallel bpstart bpstop
-#' @import cli
+#' @importFrom BiocParallel bpstart bpstop bplapply multicoreWorkers
+#' @importFrom BiocParallel MulticoreParam SnowParam SerialParam
+#' @importFrom cli cli_rule cli_alert_info cli_alert_success cli_h1 cli_h2
+#'
 #'
 #' @examples
 #'
