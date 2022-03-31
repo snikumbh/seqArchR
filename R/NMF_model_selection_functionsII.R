@@ -33,7 +33,7 @@
     prev_amari <- NA
     for(kValue in param_ranges$k_vals){
         if(kValue > 1){
-            .msg_pstr("Checking K =", kValue, flg=vrbs)
+            .msg_pstr("Checking K = ", kValue, flg=vrbs)
         }
 
         ## Get NMF results
