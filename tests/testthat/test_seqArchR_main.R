@@ -202,7 +202,7 @@ test_that("Handles negative threshold iteration", {
         time = FALSE)
     # toyResult <- seqArchR(toyConfig, seqs_ohe_mat = tssSeqs, total_itr = -1)
     expect_error(.assert_seqArchR_thresholdIteration(-1),
-                 "Expecting number of iterations to be numeric and > 0")
+                 "Threshold iteration should be > 0")
     toyConfig <- seqArchR::set_config(chunk_size = 100,
         k_min = 2, k_max = 20, parallelize = FALSE,
         mod_sel_type = "stability",
@@ -211,7 +211,7 @@ test_that("Handles negative threshold iteration", {
         flags = useFlags)
     expect_error(seqArchR(toyConfig, seqs_raw = tssSeqsRaw,
         seqs_ohe_mat = tssSeqs_sinuc, total_itr = -1, set_ocollation = FALSE),
-                 "Expecting number of iterations to be numeric and > 0")
+                 "Threshold iteration should be > 0")
 })
 
 # test_that("Handles negative threshold iteration from seqArchR main", {
@@ -229,7 +229,7 @@ test_that("Config handles: negative chunk_size", {
                                 k_min = 1, k_max = 8, parallelize = TRUE,
                                 cv_folds = 3, n_runs = 50,
                                 n_cores = 2),
-                "'chunk_size' should be > 0")
+                "chunk_size should be > 0")
 })
 
 # This test is now null and void because if the flags variable is NULL,
@@ -277,7 +277,7 @@ test_that("Config handles: negative n_runs", {
                                             plot = FALSE,
                                             verbose = TRUE,
                                             time = TRUE)),
-                 "'n_runs' should be > 0")
+                 "n_runs should be > 0")
 })
 
 
@@ -292,7 +292,7 @@ test_that("Config handles: negative min_size", {
                                                 plot = FALSE,
                                                 verbose = TRUE,
                                                 time = TRUE)),
-                    "'min_size' should be > 0")
+                    "min_size should be > 0")
 })
 
 
@@ -315,17 +315,17 @@ test_that("Config handles: negative alphaVal", {
 
 test_that("Config handles: chunk_size < nSeqs", {
     expect_error(.assert_seqArchR_chunkSize_in_tandem(500,450),
-                    "'chunk_size' should be <= number of input sequences")
+                    "chunk_size should be <= number of input sequences")
 })
 
 test_that("Config handles: kFolds NULL", {
     expect_error(.assert_seqArchR_kFolds_in_tandem(NULL,450),
-                    "'kFolds' is NULL")
+                    "kFolds is NULL")
 })
 
 test_that("Config handles: kFolds is not numeric", {
     expect_error(.assert_seqArchR_kFolds_in_tandem("5",450),
-                 "'kFolds' should be numeric and > 0")
+                 "kFolds should be numeric")
 })
 
 test_that("Config handles: kFolds <= nSeqs", {

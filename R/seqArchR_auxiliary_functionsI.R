@@ -155,7 +155,7 @@ seqs_str <- function(res, iter = NULL, cl = NULL, ord = FALSE){
 .get_cluster_memberships_per_run <- function(samplesMatrix, iChunksColl = NA,
                                         iChunkIdx = NA, test_itr = NA,
                                         oChunkIdx = NA) {
-    .assert_seqArchR_samplesMatrix(samplesMatrix)
+    .assert_seqArchR_featSampMatrix(samplesMatrix, feat = FALSE)
     nClusters <- nrow(samplesMatrix)
     returnClusterAsList <- vector("list", nClusters)
     ## Fetch the cluster memberships for each sample (along the columns)
@@ -178,6 +178,7 @@ seqs_str <- function(res, iter = NULL, cl = NULL, ord = FALSE){
     ##
     unoverfit <- setdiff(unique(old_mem), has_overfit)
     toassign <- utils::tail(sort(unoverfit, decreasing = FALSE), 1)
+
     for(i in has_overfit){
         ## simply assigning 1 is problematic if/when 1 is among the overfit
         ## and/or the only one overfit. This has earlier resulted in an error.
@@ -271,11 +272,11 @@ seqs_str <- function(res, iter = NULL, cl = NULL, ord = FALSE){
     # Adjust qualifying IDs based on Update in compare_clusters func
     # -- Allow any ID for IQR check
 
-    out_clust_iqr <- .compare_iqr(clustwise_matlist, qual_cl_idx,
-                                    zscore_thresh = zscore_thresh)
+    out_clust_iqr <- .compare_iqr_or_range(clustwise_matlist, qual_cl_idx,
+                                    zscore_thresh = zscore_thresh, iqr = TRUE)
     # out_clust_range <- NULL
-    out_clust_range <- .compare_range(clustwise_matlist, qual_cl_idx,
-                                    zscore_thresh = zscore_thresh)
+    out_clust_range <- .compare_iqr_or_range(clustwise_matlist, qual_cl_idx,
+                                    zscore_thresh = zscore_thresh, iqr = FALSE)
 
     ##
     ## Those that qualify as outliers by IQR comparison, will also
@@ -367,44 +368,30 @@ seqs_str <- function(res, iter = NULL, cl = NULL, ord = FALSE){
 }
 ## =============================================================================
 
-## return indices of outliers by comparing IQRs
-.compare_iqr <- function(clustwise_matlist, qual_cl_idx, zscore_thresh = 5){
 
+## return indices of outliers by comparing ranges or IQRs
+## This func is a joint version of earlier separate funcs for each case
+.compare_iqr_or_range <- function(clustwise_matlist, qual_cl_idx,
+                                  zscore_thresh = 5, iqr = TRUE){
     ncl <- ncol(clustwise_matlist[[1]])
-
-    all_iqr <- lapply(clustwise_matlist, function(x){
-        ## get column-wise IQRs
-        matrixStats::colIQRs(x)
-    })
-    all_iqr_vec <- unlist(all_iqr)
-    ##
-    all_iqr_mad <- stats::mad(all_iqr_vec)
-    iqr_zscore <- (all_iqr_vec - stats::median(all_iqr_vec))/all_iqr_mad
-    ##
-    out_idx <- which(iqr_zscore > zscore_thresh)
-    if(length(out_idx) > 0){
-        clust_id <- ceiling(out_idx / ncl)
-        return(intersect(clust_id, qual_cl_idx))
-    }else{
-        # do nothing
-    }
-    return(NULL)
-}
-## =============================================================================
-
-## return indices of outliers by comparing ranges
-.compare_range <- function(clustwise_matlist, qual_cl_idx, zscore_thresh = 5){
-
-    ncl <- ncol(clustwise_matlist[[1]])
-    all_range <- lapply(clustwise_matlist, function(x){
+    all_range_or_iqr <- lapply(clustwise_matlist, function(x){
+        ## get column-wise ranges
         apply(apply(as.matrix(x), MARGIN = 2, range), MARGIN = 2, diff)
     })
-    all_range_vec <- unlist(all_range)
+    if(iqr){
+        all_range_or_iqr <- lapply(clustwise_matlist, function(x){
+            ## get column-wise IQRs
+            matrixStats::colIQRs(x)
+        })
+    }
+    all_range_or_iqr_vec <- unlist(all_range_or_iqr)
     ##
-    all_range_mad <- stats::mad(all_range_vec)
-    range_zscore <- (all_range_vec - stats::median(all_range_vec))/all_range_mad
+    all_range_or_iqr_mad <- stats::mad(all_range_or_iqr_vec)
+    range_or_iqr_zscore <-
+        (all_range_or_iqr_vec -
+             stats::median(all_range_or_iqr_vec))/all_range_or_iqr_mad
     ##
-    out_idx <- which(range_zscore > zscore_thresh)
+    out_idx <- which(range_or_iqr_zscore > zscore_thresh)
     if(length(out_idx) > 0){
         clust_id <- ceiling(out_idx / ncl)
         return(intersect(clust_id, qual_cl_idx))
@@ -414,6 +401,7 @@ seqs_str <- function(res, iter = NULL, cl = NULL, ord = FALSE){
     return(NULL)
 }
 ## =============================================================================
+
 
 .assign_samples_to_clusters <- function(clusterMembershipsVec, nClusters,
                                         iChunksColl, iChunkIdx) {
@@ -648,7 +636,7 @@ collate_clusters <- function(to_clust, orig_clust) {
                                         returnOrder = FALSE,
                                         ...) {
     ##
-    .assert_seqArchR_featuresMatrix(globFactorsMat)
+    .assert_seqArchR_featSampMatrix(globFactorsMat, feat = TRUE)
     .assert_seqArchR_flags(flags)
     dbg <- flags$debugFlag
     vrbs <- flags$verboseFlag

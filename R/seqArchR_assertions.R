@@ -28,62 +28,30 @@
 ## =============================================================================
 
 
+## Function to check properties of a features or a samples matrix from NMF
+## This is combined function instead of two separate functions to check them
+## separately.
+## Expected to be:
+## - not null
+## - a matrix
+## - ncol > 0 or nrow > 0
+## - for featuresMat, if all matrix is 0, using a hopach can throw error,
+##  check and safegaurd against it
 
-## Function to check properties of samples matrix from NMF
-## Expected to be
-## - not NULL
-## - A matrix
-## - ncol > 0
-## - nrows depends on number of factors of NMF
-## - ? It has only 0s and 1s
-.assert_seqArchR_samplesMatrix <- function(samplesMatrix) {
-    check_nrows <- 0
-    if (is.null(samplesMatrix)) {
+.assert_seqArchR_featSampMatrix <- function(fs_mat, feat = TRUE){
+    ##
+    if (is.null(fs_mat)) {
         stop("NULL value found, instead of a matrix")
     }
-    if (!is.matrix(samplesMatrix)) {
+    if (!is.matrix(fs_mat)) {
         stop("Expected a matrix, found otherwise")
     } else {
-        if (ncol(samplesMatrix) < 1) {
-            stop("0 columns (sequences) in samplesMatrix")
+        if (any(is.na(fs_mat))) {
+            stop("Matrix has NA values")
         }
-        ## assume sinuc
-        if (nrow(samplesMatrix) == check_nrows) {
-            stop("Check matrix, nrows == ", check_nrows)
-        } else {
-            ##
-        }
-    }
-
-}
-## =============================================================================
-
-
-## Function to check properties of features matrix from NMF
-## Expected to be
-## - not NULL
-## - A matrix
-## - ncol > 0, nrow > 0, nrow %% 4 == 0
-## - ncol depends on number of factors of NMF
-## - ? It has only 0s and 1s
-.assert_seqArchR_featuresMatrix <- function(featuresMatrix) {
-    check_ncols <- 0
-    if (is.null(featuresMatrix)) {
-        stop("NULL value found, instead of a matrix")
-    }
-    if (!is.matrix(featuresMatrix)) {
-        stop("Expected a matrix, found otherwise")
-    } else {
-        if (any(is.na(featuresMatrix))) {
-            stop("Factors have NA")
-        }
-        if (ncol(featuresMatrix) < 1) {
-            stop("0 columns (sequences) in samplesMatrix")
-        }
-        if (ncol(featuresMatrix) == check_ncols) {
-            stop("Check matrix, 'ncols' is: ", check_ncols)
-        }
-        if (all(featuresMatrix == 0)) {
+        if (!all(dim(fs_mat) > 0))
+            stop("Matrix has zero rows or columns")
+        if (feat && all(fs_mat == 0)) {
             ## This will lead to an error if hopach is performed,
             ## hence throwing error
             stop("All zeroes as factors")
@@ -99,16 +67,8 @@
 ## 1. not NULL
 ## 2. numeric and > 0
 .assert_seqArchR_min_size_independent <- function(minSeqs_var) {
-    if (is.null(minSeqs_var)) {
-        stop("'min_size' is NULL")
-    }
-    if (!is.numeric(minSeqs_var)) {
-        stop("'min_size' should be numeric and > 0")
-    } else {
-        if (minSeqs_var < 0) {
-            stop("'min_size' should be > 0")
-        }
-    }
+    .check_null_num(var = minSeqs_var, use_name = 'min_size')
+    .check_gtZero(var = minSeqs_var, use_name = 'min_size')
 }
 ## =============================================================================
 
@@ -130,43 +90,59 @@
 
 
 
-## Function to check validity of kFolds param in config
-## Expected to be:
-## 1. not NULL
-## 2. numeric and > 0
-.assert_seqArchR_kFolds_independent <- function(kFolds_var) {
-    if (is.null(kFolds_var)) {
-        stop("'kFolds' is NULL")
+
+# .assert_seqArchR_kFolds_independent <- function(kFolds_var) {
+#     if (is.null(kFolds_var)) {
+#         stop("'kFolds' is NULL")
+#     }
+#     if (!is.numeric(kFolds_var)) {
+#         stop("'kFolds' should be numeric and > 0")
+#     } else {
+#         if (kFolds_var < 1) {
+#             stop("'kFolds' should be > 0")
+#         }
+#     }
+# }
+## =============================================================================
+
+.check_null_num <- function(var, use_name){
+    if (is.null(var)) {
+        stop(use_name, " is NULL")
     }
-    if (!is.numeric(kFolds_var)) {
-        stop("'kFolds' should be numeric and > 0")
-    } else {
-        if (kFolds_var < 1) {
-            stop("'kFolds' should be > 0")
-        }
+    if (!is.numeric(var)) {
+        stop(use_name, " should be numeric")
+    }
+}
+## =============================================================================
+
+.check_gtZero <- function(var, use_name){
+    if (var < 0) {
+        stop(use_name, " should be > 0")
     }
 }
 ## =============================================================================
 
 
 
-.assert_seqArchR_kFolds_in_tandem <- function(kFolds_var, given_seqs_size) {
-    if (is.null(kFolds_var)) {
-        stop("'kFolds' is NULL")
+
+## Function to check validity of kFolds param in config
+## Expected to be:
+## 1. not NULL
+## 2. numeric and > 0
+##
+.assert_seqArchR_kFolds_in_tandem <- function(kFolds_var,
+                                              given_seqs_size = NULL) {
+    ##
+    .check_null_num(var = kFolds_var, use_name = 'kFolds')
+    if (kFolds_var < 3) {
+        stop("Set at least 3 cross-validation folds")
     }
-    if (!is.numeric(kFolds_var)) {
-        stop("'kFolds' should be numeric and > 0")
-    } else {
-        if (kFolds_var < 1) {
-            stop("'kFolds' should be > 0")
-        }
-        if (kFolds_var < 3) {
-            stop("Set at least 3 cross-validation folds")
-        } else if (kFolds_var > given_seqs_size) {
-            stop("CV folds should be less than or equal to #sequences. ",
-                "Standard values: 3, 5, 10.")
-        }
+    if (!is.null(given_seqs_size) && kFolds_var > given_seqs_size) {
+        ## using leave-one-out cv will kill, so not suggested actually
+        stop("CV folds should be less than or equal to #sequences. ",
+            "Standard values: 3, 5, 10.")
     }
+
 }
 ## =============================================================================
 
@@ -188,12 +164,16 @@
     }
     ## nCoresUse, bother about it only when parallelize is TRUE
     if (par_var) {
-        if (is.null(nCores_var)) {
-            stop("'nCoresUse' is NULL")
-        }
-        if (!is.numeric(nCores_var) || nCores_var < 1) {
-            stop("'nCoresUse' should be numeric and > 0 and < available #cores")
-        }
+        .check_null_num(var = nCores_var, use_name = 'nCoresUse')
+        .check_gtZero(var = nCores_var, use_name = 'nCoresUse')
+        # if(nCores_var < 1)
+        #     stop("'nCoresUse' < available #cores")
+        # if (is.null(nCores_var)) {
+        #     stop("'nCoresUse' is NULL")
+        # }
+        # if (!is.numeric(nCores_var) || nCores_var < 1) {
+        #     stop("'nCoresUse' should be numeric and > 0 and < available #cores")
+        # }
         if (nCores_var > parallel::detectCores()) {
             stop("Specified more than available cores. Available cores: ",
                 parallel::detectCores())
@@ -235,15 +215,8 @@
 ## 3. > 0
 ##
 .assert_seqArchR_thresholdIteration <- function(given_val) {
-    ## Check if it is NULL
-    if (is.null(given_val)) {
-        stop("Threshold iteration is NULL")
-    }
-    if (is.numeric(given_val) && given_val >= 0) {
-        ## OK
-    } else {
-        stop("Expecting number of iterations to be numeric and > 0")
-    }
+    .check_null_num(var = given_val, use_name = "Threshold iteration")
+    .check_gtZero(var = given_val, use_name = "Threshold iteration")
 }
 ## =============================================================================
 
@@ -293,16 +266,8 @@
 ## 2. numeric and > 0
 ## 3. ?
 .assert_seqArchR_nRuns <- function(nIter_var) {
-    if (is.null(nIter_var)) {
-        stop("'n_runs' is NULL")
-    }
-    if (!is.numeric(nIter_var)) {
-        stop("'n_runs' should be numeric and > 0")
-    } else {
-        if (nIter_var < 0) {
-            stop("'n_runs' should be > 0")
-        }
-    }
+    .check_null_num(var = nIter_var, use_name = 'n_runs')
+    .check_gtZero(var = nIter_var, use_name = 'n_runs')
 }
 ## =============================================================================
 
@@ -316,16 +281,8 @@
 ## When everything is satisfied, still whether it is valid depends on what is
 ## the total number of sequences
 .assert_seqArchR_chunkSize_independent <- function(chunkSize_var) {
-    if (is.null(chunkSize_var)) {
-        stop("'chunk_size' is NULL")
-    }
-    if (!is.numeric(chunkSize_var)) {
-        stop("'chunk_size' should be numeric")
-    } else {
-        if (chunkSize_var <= 0) {
-            stop("'chunk_size' should be > 0")
-        }
-    }
+    .check_null_num(var = chunkSize_var, use_name = 'chunk_size')
+    .check_gtZero(var = chunkSize_var, use_name = 'chunk_size')
 }
 ## =============================================================================
 
@@ -340,7 +297,7 @@
                                                 given_seqs_size) {
     .assert_seqArchR_chunkSize_independent(chunkSize_var)
     if (chunkSize_var > given_seqs_size) {
-        stop("'chunk_size' should be <= number of input sequences")
+        stop("chunk_size should be <= number of input sequences")
     }
 }
 ## =============================================================================
@@ -369,7 +326,7 @@
         if (!all(matchNames)) {
             stop("Check names of elements in 'config'")
         }
-        .assert_seqArchR_kFolds_independent(config_var$kFolds)
+        .assert_seqArchR_kFolds_in_tandem(config_var$kFolds, NULL)
         .assert_seqArchR_chunkSize_independent(config_var$chunkSize)
         if (!is.na(seqs_size)) {
             .assert_seqArchR_kFolds_in_tandem(config_var$kFolds, seqs_size)
@@ -439,7 +396,8 @@
         stop("NMF result should hold information as list w/ elements per
                 inner chunk")
     } else {
-        .assert_seqArchR_featuresMatrix(NMFresultObj$forGlobFactors)
+        .assert_seqArchR_featSampMatrix(NMFresultObj$forGlobFactors,
+                                        feat = TRUE)
         if (!is.list(NMFresultObj$forGlobClustAssignments)) {
             stop("'Global cluster assignments' in NMF result should be a list")
         } else {

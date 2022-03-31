@@ -121,7 +121,7 @@ test_that("get_factors_from_factor_clustering handles NA in
     fMat <- matrix(rep(0,1000), ncol = 5)
     fMat[2,2] <- NA
     expect_error(.get_factors_from_factor_clustering2(hopachObj, fMat),
-                 "Factors have NA")
+                 "Matrix has NA values")
 })
 
 

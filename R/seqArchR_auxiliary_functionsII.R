@@ -295,7 +295,7 @@ set_config <- function(chunk_size = 500,
 ## @return distance matrix from hopach (hdist object)
 .compute_factor_distances <- function(factorsMat, distMethod = "euclid"){
     ## Assumption: Each column is a factor
-    .assert_seqArchR_featuresMatrix(factorsMat)
+    .assert_seqArchR_featSampMatrix(factorsMat, feat = TRUE)
     ## Since the default distMethod is euclid/euclidean, when the user wishes
     ## to use any other distance methods/metrics, we can check if hopach exists
     ## If not, we ask the user to install it.
@@ -395,7 +395,7 @@ set_config <- function(chunk_size = 500,
 ## We currently use the first element of the cluster as its medoid
 .get_factors_from_factor_clustering2 <- function(listObj, globFactorsMat){
     ##
-    .assert_seqArchR_featuresMatrix(globFactorsMat)
+    .assert_seqArchR_featSampMatrix(globFactorsMat, feat = TRUE)
     if (is.null(listObj)) {
         return(globFactorsMat)
     } else {
@@ -564,7 +564,7 @@ set_config <- function(chunk_size = 500,
     } else if (best_k < 1) {
         stop("Chosen number of factors: ", best_k)
     }
-    .assert_seqArchR_featuresMatrix(featuresMatrix)
+    .assert_seqArchR_featSampMatrix(featuresMatrix, feat = TRUE)
     .assert_seqArchR_globClustAssignments(forGlobClustAssignments)
     innerChunkNMFResult <- list(forGlobFactors = featuresMatrix,
                                 forGlobClustAssignments =

@@ -141,7 +141,7 @@ test_that("prepare_chunks handles negative chunkSize", {
                                        tempList[[x]] <- round(10*runif(5))
                                    })
     expect_error(.prepare_chunks(seqsClustLabels, -25),
-                 "'chunk_size' should be > 0")
+                 "chunk_size should be > 0")
 })
 
 
@@ -161,7 +161,7 @@ test_that("handle_clustering_of_factors handles NA in featuresMatrix", {
     fMat <- matrix(rep(0,1000), ncol = 5)
     fMat[2,2] <- NA
     expect_error(.handle_clustering_of_factors(fMat),
-                    "Factors have NA")
+                    "Matrix has NA values")
 })
 
 test_that("handle_clustering_of_factors handles improper flags", {
