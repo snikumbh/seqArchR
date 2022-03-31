@@ -333,12 +333,13 @@ set_config <- function(chunk_size = 500,
         if (nrow(factorsMat) > ncol(factorsMat)){
             factorsMat <- t(factorsMat)
         }
-        hopachDistMat <- hopach::distancematrix(factorsMat, d = distMethod)
+        hopachDist <- hopach::distancematrix(factorsMat, d = distMethod)
         ## hopachDistMat is a hopach hdist object
-        stopifnot(hopachDistMat@Size == nrow(factorsMat))
+        stopifnot(length(hopachDist) == nrow(factorsMat))
         ## make as.matrix as done for dist object in the
         ## stats::dist case (see Else condition next)
-        hopachDistMat <- hopach::as.matrix(hopachDistMat)
+        hopachDistMat <- hopach::as.matrix(hopachDist)
+
         return(hopachDistMat)
     }
 }
