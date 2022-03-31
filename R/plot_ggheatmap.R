@@ -23,8 +23,9 @@
 #' @seealso \code{\link{plot_ggseqlogo}} for plotting PWMs as sequence logos
 #'
 #' @importFrom reshape2 melt
-#' @import ggplot2
-#' @import ggseqlogo
+#' @importFrom ggplot2 ggplot theme_bw geom_tile xlab scale_fill_gradient2
+#' @importFrom ggplot2 theme element_blank element_text margin ggsave aes rel
+#'
 #'
 #' @examples
 #'
@@ -121,8 +122,9 @@ plot_ggheatmap <- function(pwm_mat, pos_lab = NULL, pdf_name = NULL,
 #' \code{\link{plot_ggseqlogo_of_seqs}} for visualizing a collection of
 #' sequences by their sequence logo.
 #'
-#' @import ggplot2
-#' @import ggseqlogo
+#' @importFrom ggplot2 ggplot theme_linedraw theme ggsave element_text
+#' @importFrom ggplot2 element_blank expansion scale_x_continuous aes_string
+#' @importFrom ggseqlogo geom_logo
 #'
 #' @examples
 #'

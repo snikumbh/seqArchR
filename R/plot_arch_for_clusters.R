@@ -181,6 +181,7 @@ make_plot_title_str <- function(i, n, name, this_size, st, ed){
 #' sequence logo plots as a list.
 #'
 #' @importFrom Biostrings width
+#' @importFrom ggplot2 ggtitle
 #'
 #' @examples
 #' res <- readRDS(system.file("extdata", "example_seqArchRresult.rds",

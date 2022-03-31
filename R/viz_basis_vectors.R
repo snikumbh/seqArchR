@@ -26,8 +26,8 @@
 #' @export
 #' @family visualization functions
 #'
-#' @import ggplot2
-#' @import ggseqlogo
+#' @importFrom ggplot2 theme margin
+#'
 #'
 #' @examples
 #' res <- readRDS(system.file("extdata", "example_seqArchRresult.rds",
