@@ -51,7 +51,7 @@ For completeness, the following section gives a brief overview of the algorithm.
 
 # _seqArchR_'s algorithm
 _seqArchR_ implements a chunking-based iterative procedure. Below is a 
-schematic of seqArchR's algorithm.
+schematic of _seqArchR_'s algorithm.
 
 <img src="seqArchR_algorithm_static_illustrator_cropped.png" 
 width="550" align="center">
@@ -164,13 +164,14 @@ positions <- seq(1, Biostrings::width(inputSeqsRaw[1]))
 
 ### Reading input as a DNAStringSet object
 If you already have a `Biostrings::DNAStringSet` object, you can use the 
-`get_one_hot_encoded_seqs()` function which directly accepts a `DNAStringSet` 
-object.
+`seqArchR::get_one_hot_encoded_seqs()` function which directly accepts 
+a `Biostrings::DNAStringSet` object.
 
 ```{r load-example-data-2, echo=TRUE, eval=TRUE}
 # Creation of one-hot encoded data matrix from a DNAStringSet object
 inputSeqs_direct <- seqArchR::get_one_hot_encoded_seqs(seqs = inputSeqsRaw, 
                                                   sinuc_or_dinuc = "dinuc")
+
 identical(inputSeqs_direct, inputSeqsMat)
 ```
 
@@ -208,10 +209,10 @@ seqArchRconfig <- seqArchR::set_config(
 )
 ```
 
-Once the configuration is setup, call the `seqArchR::seqArchR` function with 
-user-specified iterations.
+Once the configuration is setup, call the `seqArchR::seqArchR()` function with 
+user-specified number of iterations.
 
-```{r call-seqArchR, echo=TRUE, eval=TRUE}
+```{r call-seqArchR, echo=TRUE, eval=FALSE}
 # Call/Run seqArchR
 seqArchRresult <- seqArchR::seqArchR(config = seqArchRconfig,
                             seqs_ohe_mat = inputSeqsMat,
@@ -300,14 +301,14 @@ Use the [https://snikumbh.github.io/seqArchR/reference/seqs_str.html](seqs_str)
 function to fetch sequences by clusters at any iteration and call 
 `seqArchR::viz_seqs_as_acgt_mat` as shown.
 
-```{r clust-itr1, fig.dim=c(4,6), fig.cap="Figure: Clusters at iteration 1"}
+```{r clust-itr1, fig.dim=c(4,6), fig.cap="Clusters at iteration 1"}
 
 seqArchR::viz_seqs_acgt_mat(seqs_str(seqArchRresult, iter = 1, ord = TRUE),
                                   pos_lab = positions)
 
 ```
 
-```{r clust-itr2, fig.dim=c(4,6), fig.cap="Figure: Clusters at iteration 2"}
+```{r clust-itr2, fig.dim=c(4,6), fig.cap="Clusters at iteration 2"}
 
 seqArchR::viz_seqs_acgt_mat(seqs_str(seqArchRresult, iter = 2, ord = TRUE),
                                   pos_lab = positions)
