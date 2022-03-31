@@ -56,54 +56,6 @@
 }
 ## =============================================================================
 
-.get_q2_using_py_serial <- function(x, X, cvfolds){
-
-    ##
-    this_k <- as.numeric(x["k_vals"])
-    this_alpha <- as.numeric(x["alpha"])
-    this_seed <- as.numeric(x["seed_val"])
-    #
-    test_fold <- as.numeric(x["fold"])
-    train_rows <-
-        cvfolds$cvf_rows$subsets[cvfolds$cvf_rows$which != test_fold]
-    train_cols <-
-        cvfolds$cvf_cols$subsets[cvfolds$cvf_cols$which != test_fold]
-    test_rows <-
-        cvfolds$cvf_rows$subsets[cvfolds$cvf_rows$which == test_fold]
-    test_cols <-
-        cvfolds$cvf_cols$subsets[cvfolds$cvf_cols$which == test_fold]
-    ##
-    ## Split data matrix X -- separate the training and test parts
-    ##        _      _
-    ##   X = |  A  B  |
-    ##       |_ C  D _|
-    ##
-    ## Reconstruct A, by performing NMF on D
-    ## More details in Owen and Perry, Annals of Statistics, 2009
-    ##
-    ##
-    submatrixD <- X[train_rows, train_cols]
-    submatrixA <- X[test_rows, test_cols]
-    submatrixB <- X[test_rows, train_cols]
-    submatrixC <- X[train_rows, test_cols]
-
-    ## NMF on submatrixD
-    ## 1. Setup params
-    ## 2. NMF call, using python/scikit-learn NMF
-    nmf_submatrixD_result <- .perform_single_NMF_run(Xmat = submatrixD,
-                                                    kVal = as.integer(this_k),
-                                                    alphaVal = this_alpha,
-                                                    seedVal = this_seed)
-    D_W <- nmf_submatrixD_result$featuresMatrix
-    D_H <- nmf_submatrixD_result$samplesMatrix
-    ##
-    reconstructed_submatrixA <- as.matrix(submatrixB) %*%
-        MASS::ginv(D_H) %*% MASS::ginv(D_W) %*% as.matrix(submatrixC)
-    ##
-    q2 <- .compute_q2(as.matrix(submatrixA), reconstructed_submatrixA)
-    return(q2)
-
-}
 
 ## BiocParallel version
 .perform_single_NMF_run <- function(Xmat, kVal, alphaVal, seedVal) {
