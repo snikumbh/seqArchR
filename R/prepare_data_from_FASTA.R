@@ -12,8 +12,9 @@
     dna_alph <- Biostrings::DNA_BASES
     use_alph <- switch(k,
                    dna_alph,
-                   do.call(paste0, expand.grid(dna_alph, dna_alph)),
-                   do.call(paste0, expand.grid(dna_alph, dna_alph, dna_alph)))
+                   get_dimers_from_alphabet(dna_alph),
+                   get_trimers_from_alphabet(dna_alph)
+                )
     seqlen <- length(givenSeq)
     if(seqlen < 1) stop("Empty or NULL sequences")
     use_colnames <- .get_feat_names(alph = dna_alph, k = k, seqlen = seqlen)
