@@ -212,10 +212,6 @@ plot_ggseqlogo_of_seqs <- function(seqs, pos_lab = NULL, xt_freq = 5,
         xt_freq <- 5
     }
     ##
-    # nPos <- length(pos_lab)
-    # xtick_cal <- seq(0, nPos, by = xt_freq)
-    # xtick_cal[1] <- 1
-    # xtick_cal[length(xtick_cal)] <- nPos
     ##
     use_xtick_labs <- set_xtick_labels(pos_lab, xt_freq)
     ##

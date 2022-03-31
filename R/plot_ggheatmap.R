@@ -155,9 +155,6 @@ plot_ggseqlogo <- function(pwm_mat, method = "bits", pos_lab = NULL,
             labels = pos_lab,
             expand = expansion(mult = c(0, 0))) #+
         ##
-        # ggplot2::theme(axis.text.x = element_text(size = rel(0.9),
-        #     angle = 90, hjust = 1),
-        #     axis.text.y = element_text(size = rel(0.9)))
     ##
     p1 <- add_lims_lab(p1, method, bits_yax)
     p1 <- fix_coord(p1, nPos = length(pos_lab),method = method,

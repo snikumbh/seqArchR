@@ -1,13 +1,6 @@
 sklearn <- NULL
 .onLoad <- function(libname, pkgname) {
 
-    # reticulate::source_python(system.file(
-    #     "python", "perform_nmf.py",
-    #     package = "seqArchR",
-    #     mustWork = TRUE
-    # ))
-    # reticulate::configure_environment("seqArchR")
-    # sklearn <<- reticulate::import("sklearn", delay_load = TRUE)
     #
     # CMD check NOTE avoidance See: https://stackoverflow.com/a/12429344
     # Example:

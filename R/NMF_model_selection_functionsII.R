@@ -12,8 +12,6 @@
                             nRuns = 100,
                             bootstrap = TRUE,
                             returnBestK = TRUE,
-                            ## TODO: Should tol stay as an argument?
-                            # tol = 10^-3,
                             bound = 10^-6,
                             flags = list(debugFlag = FALSE,
                                 verboseFlag = TRUE, plotVerboseFlag = FALSE,

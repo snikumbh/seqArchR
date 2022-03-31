@@ -128,8 +128,7 @@ viz_seqs_acgt_mat <- function(seqs, pos_lab = NULL,
         }
     }else{ ## do nothing
     }
-    # xtick_cal <- seq(0, nPos, by = xt_freq)
-    # xtick_cal[1] <- 1
+
     use_xtick_labs <- set_xtick_labels(pos_lab, xt_freq)
     ##
     ytick_names <- rev(seq(yt_freq, nSeqs, by = yt_freq))

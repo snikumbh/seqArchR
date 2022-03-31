@@ -195,7 +195,6 @@ get_n_seeds <- function(n){
 performSearchForK <- function(X, cvfolds, startVal, endVal, step = 1,
                             prev_best_K = -1, best_K = 0, prev_df = NULL,
                             param_ranges, kFolds, nRuns, bpparam,
-                            # parallelDo = FALSE,
                             set_verbose = 1){
     vrbs <- ifelse(set_verbose == 1, TRUE, FALSE)
     dbg <- ifelse(set_verbose == 2, TRUE, FALSE)
@@ -205,7 +204,7 @@ performSearchForK <- function(X, cvfolds, startVal, endVal, step = 1,
         if(prev_best_K != best_K && !is.na(this_K) && this_K != 0){
             ##
             grid_search_params <- .grid_srch_par_df(this_K,
-                #aBase=param_ranges$alphaBase, aPow=param_ranges$alphaPow,
+
                 aBase = 0, aPow = 1,
                 kFolds = kFolds, nIter = nRuns)
             ## Using BiocParallel
@@ -218,20 +217,6 @@ performSearchForK <- function(X, cvfolds, startVal, endVal, step = 1,
                             },
                             BPPARAM = bpparam)
                             )
-            ## Using parallel
-            # if(parallelDo){
-            #     q2_vals <- unlist(parallel::clusterApplyLB(cl = NULL,
-            #             seq_len(nrow(grid_search_params)), function(i) {
-            #                 .get_q2_using_py( grid_search_params[i,] )
-            #             }))
-            # }else{
-            #     q2_vals <- unlist(
-            #         lapply(seq_len(nrow(grid_search_params)),
-            #             function(i) {
-            #                 .get_q2_using_py_serial( grid_search_params[i,],
-            #                                     X = X, cvfolds = cvfolds)
-            #             }))
-            # }
             ##
             grid_search_results <- as.data.frame(grid_search_params[,
                     c("k_vals", "alpha", "fold", "iteration")],
@@ -284,8 +269,6 @@ performSearchForK <- function(X, cvfolds, startVal, endVal, step = 1,
 .cv_model_select_pyNMF2 <- function(X,
                                     param_ranges,
                                     kFolds = 5,
-                                    # parallelDo = FALSE,
-                                    # nCores = NA,
                                     nRuns = 20,
                                     returnBestK = TRUE,
                                     cgfglinear = TRUE,
@@ -323,10 +306,6 @@ performSearchForK <- function(X, cvfolds, startVal, endVal, step = 1,
         #######################
         #### New strategy
         if(returnBestK) {
-            # if(parallelDo){
-            #     cl <- .setup_par_cluster(vlist=
-            #         c(".get_q2_using_py", ".compute_q2", "X", "cvfolds"))
-            # }
             ##
             set_verbose <- ifelse(debugFlag, 2, ifelse(verboseFlag, 1, 0))
             if(cgfglinear){
@@ -446,7 +425,6 @@ performSearchForK <- function(X, cvfolds, startVal, endVal, step = 1,
                     best_K = 0,
                     prev_df = NULL,
                     param_ranges,
-                    # parallelDo = parallelDo,
                     kFolds = kFolds, nRuns = nRuns, bpparam = bpparam,
                     set_verbose = set_verbose)
                 best_K <- searchReturnFine$best_K
@@ -455,7 +433,6 @@ performSearchForK <- function(X, cvfolds, startVal, endVal, step = 1,
                 combined_df <- rbind(prev_df, fine_prev_df)
                 best_K <- .get_best_K(combined_df, parsimony = askParsimony)
                 ## Ensure chosen value is not the lower boundary
-                # minKInDF <- min(as.numeric(unlist(combined_df["k_vals"])))
                 kValsInDF <- as.numeric(unlist(combined_df["k_vals"]))
                 if(best_K != 1 && !any((best_K-1) - kValsInDF == 0)){
                     .msg_pstr("Chosen best K is lowest in the range tested.",
@@ -478,21 +455,16 @@ performSearchForK <- function(X, cvfolds, startVal, endVal, step = 1,
                                 best_K = 0,
                                 prev_df = combined_df,
                                 param_ranges = param_ranges,
-                                # parallelDo = parallelDo,
                                 kFolds = kFolds,
                                 nRuns = nRuns, bpparam = bpparam,
                                 set_verbose = set_verbose)
                         # temp_best_K <- searchReturnFine$best_K
                         combined_df <- searchReturnFine$return_df
 
-                        # combined_df <- rbind(combined_df, fine_prev_df)
                         makeSureK <- .get_best_K(combined_df,
                                                     parsimony = askParsimony)
 
                         attemptCount <- attemptCount + 1
-                        # minKInDF <- min(as.numeric(
-                        #               unlist(combined_df["k_vals"])))
-                        # message("MIN_K_IN_DF: ", minKInDF)
                         kValsInDF <- as.numeric(unlist(combined_df["k_vals"]))
                     }
                     best_K <- makeSureK
@@ -517,72 +489,9 @@ performSearchForK <- function(X, cvfolds, startVal, endVal, step = 1,
 }
 
 
-# .setup_par_cluster <- function(vlist){
-#     ## from perform_multiple_NMF_runs
-#     cl <- parallel::getDefaultCluster()
-#     parallel::clusterExport(cl = NULL, varlist = vlist,
-#         envir = parent.frame(n = 1))
-#     ## ^for pseudo-inverse using function `ginv` (CV-based model selection)
-#
-#     return(cl)
-# }
 
 
-# check_par_conditions <- function(nCores){
-#     if (is.na(nCores)) {
-#         ## raise error or handle
-#         stop("'parallelize' is TRUE, but 'nCores' not specified")
-#     } else {
-#         if (nCores <= parallel::detectCores()) {
-#             ##
-#         } else {
-#             stop("Specified more than available cores. Stopping")
-#         }
-#     }
-# }
 
-# return A list of two lists: one containing feature matrices, the other
-# samples matrices
-# .perform_multiple_NMF_runsOrig <- function(X, kVal, alphaVal,
-#                                       parallelDo = TRUE, nCores = NA,
-#                                       nRuns = 100, bootstrap = TRUE) {
-#     ##
-#     new_ord <- lapply(seq_len(nRuns), function(x){seq_len(ncol(X))})
-#     if(bootstrap){
-#         new_ord <- lapply(seq_len(nRuns), function(x){
-#             sample(ncol(X), ncol(X), replace = FALSE)})
-#     }
-#     ##
-#     seed_val_list <- get_n_seeds(n = nRuns)
-#     ## In parallel
-#     if (parallelDo) {
-#         #TODO: ?
-#         check_par_conditions(nCores=nCores)
-#         ##
-#         cl <- .setup_par_cluster(vlist=c(".perform_single_NMF_run"))
-#         ##
-#         nmf_result_list <- parallel::clusterApplyLB(cl = cl, seq_len(nRuns),
-#                             function(i) {
-#                                 .perform_single_NMF_run(
-#                                 X = X[,new_ord[[i]]], kVal = kVal,
-#                                 alphaVal = alphaVal,
-#                                 seedVal = seed_val_list[i])
-#                             })
-#         return(list(nmf_result_list = nmf_result_list, new_ord = new_ord))
-#         ##
-#     } else{
-#         ## In serial
-#         nmf_result_list <- lapply(seq_len(nRuns),
-#                             function(i) {
-#                                 .perform_single_NMF_run(
-#                                 X = X[,new_ord[[i]]], kVal = kVal,
-#                                 alphaVal = alphaVal,
-#                                 seedVal = seed_val_list[i])
-#                             })
-#         return(list(nmf_result_list = nmf_result_list, new_ord = new_ord))
-#         ##
-#     }
-# }
 
 .perform_multiple_NMF_runs <- function(X, kVal, alphaVal, nRuns = 100,
                                         bootstrap = TRUE, bpparam) {

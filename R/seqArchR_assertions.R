@@ -51,10 +51,7 @@
         if (nrow(samplesMatrix) == check_nrows) {
             stop("Check matrix, nrows == ", check_nrows)
         } else {
-            # matElements <-
-            # if () {
-            #     stop("")
-            # }
+            ##
         }
     }
 
@@ -91,10 +88,6 @@
             ## hence throwing error
             stop("All zeroes as factors")
         }
-        # Commented for low-dimensional representation
-        # if ((nrow(featuresMatrix) %% 4) != 0) {
-        #     stop("#Rows in featuresMatrix not a multiple of 4")
-        # }
     }
 }
 ## =============================================================================

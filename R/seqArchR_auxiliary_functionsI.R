@@ -131,13 +131,11 @@ seqs_str <- function(res, iter = NULL, cl = NULL, ord = FALSE){
         return(as.character(res$rawSeqs[cl_mem]))
     }
     if(!is.null(iter) && !is.null(cl)){
-        # clust_list <- get_seqs_clust_list(res$seqsClustLabels[[iter]])
         clust_list <- get_seqs_clust_list(get_seqClLab(res, iter))
         cl_mem <- clust_list[[cl]]
         return(as.character(res$rawSeqs[cl_mem]))
     }
     if(!is.null(iter) && is.null(cl) && ord){
-        # clust_list <- get_seqs_clust_list(res$seqsClustLabels[[iter]])
         clust_list <- get_seqs_clust_list(get_seqClLab(res, iter))
         use_ord <- unlist(clust_list)
         return(as.character(res$rawSeqs[use_ord]))
@@ -183,7 +181,6 @@ seqs_str <- function(res, iter = NULL, cl = NULL, ord = FALSE){
     for(i in has_overfit){
         ## simply assigning 1 is problematic if/when 1 is among the overfit
         ## and/or the only one overfit. This has earlier resulted in an error.
-        # new_mem[which(old_mem == i)] <- 1
         ## Instead assign the lowest cluster ID which is not overfit
         new_mem[which(old_mem == i)] <- toassign
     }
@@ -298,13 +295,8 @@ seqs_str <- function(res, iter = NULL, cl = NULL, ord = FALSE){
     ## This is commented and out_clust_size is set NULL because this is
     ## already handled above. See detect_overfitting/sizeThreshold
     ##
-    # left_out <- setdiff(qual_cl_idx, union(out_clust_range, out_clust_iqr))
-    # if(length(left_out) > 0){
-    #     out_clust_size <- .compare_size(clustwise_matlist, qual_cl_idx)
-    # }
-
     return(unique(c(out_clust_iqr, out_clust_range, out_clust_size)))
-    # return(NULL)
+
 }
 ## =============================================================================
 
@@ -1080,9 +1072,6 @@ fetch_cutree_by_hc_order <- function(clust_list, cutree_res = NULL, hcorder){
     names(cut_result) <- NULL
     clust_list <- lapply(seq_along(unique(cut_result)),
         function(x) which(cut_result == x))
-    ## if clustering is just for the sake of it, reject it
-    # clust_list <- .detect_just_for_sake_clust(cheight_idx, clust_list,
-    #                                             vrbs=verbose)
     clust_list
 }
 ## =============================================================================
@@ -1212,13 +1201,6 @@ collate_seqArchR_result <- function(result,
     ##
     if(collate){
         .msg_pstr("Collating clusters", flg=dbg)
-        # TODO: resolve how to setup appropriate minCLusters here
-        # useMinClusters <- keepMinClusters(set_ocollation, temp_res,
-        #                                   totOuterChunksColl =
-        #                                       totOuterChunksColl, dbg = dbg,
-        #                                   nClustEachIC = nClustEachIC,
-        #                                   test_itr = test_itr -1,
-        #                                   stage="Final")
         factorsClustering <-
             .handle_clustering_of_factors(basisMat, clustMethod = clust_method,
                     linkage = aggl_method, distMethod = dist_method,

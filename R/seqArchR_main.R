@@ -432,7 +432,6 @@ seqArchR <- function(config, seqs_ohe_mat, seqs_raw, seqs_pos = NULL,
     ## achieve suitable clustering results.
 
     ## Stop cluster
-    # if(parallelize) parallel::stopCluster(setup_ans$cl)
     BiocParallel::bpstop(setup_ans$cl)
     ##
     if(tym){

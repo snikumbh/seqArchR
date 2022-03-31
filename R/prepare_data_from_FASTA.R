@@ -231,7 +231,6 @@ get_one_hot_encoded_seqs <- function(seqs, sinuc_or_dinuc = "sinuc") {
     # Check that all sequences are of same length
     seqs_split_as_list <-
         base::strsplit(as.character(givenSeqs), split = NULL)
-    # length_vals <- unlist(lapply(seqs_split_as_list, length))
     length_vals <- levels(as.factor(Biostrings::width(givenSeqs)))
     char_levels <- levels(as.factor(unlist(seqs_split_as_list)))
     dna_alphabet <- c("A", "C", "G", "T")

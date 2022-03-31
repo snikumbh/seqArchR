@@ -17,8 +17,7 @@ handle_dir_creation <- function(o_dir, vrbs){
     cli::cli_alert_info(c("Output directory at path: ",
                     "{.emph {dirname(o_dir)}}"))
     if(dir.exists(o_dir)){
-        # .msg_pstr("-- Directory exists: -- ", o_dir,
-        #     "-- Changing name to: -- ", flg=vrbs)
+
         cli::cli_alert_warning("Directory exists: {.emph {basename(o_dir)}}")
 
         allExistingDirs <- list.dirs(path = dirname(o_dir),
@@ -226,7 +225,6 @@ set_config <- function(chunk_size = 500,
     }
     ##
     seqArchRconfig <- list(modSelType = mod_sel_type,
-                        # tol = tol,
                         bound = bound,
                         kFolds = cv_folds,
                         parallelize = parallelize,
@@ -361,25 +359,6 @@ set_config <- function(chunk_size = 500,
         dim_names <- get_dimers_from_alphabet(c("A", "C", "G", "T"))
         nPositions <- nrow(factorsMat)/length(dim_names)
         ##
-        # factorsMatList_as2D <- lapply(seq_len(ncol(factorsMat)),
-        #     function(x){matrix(factorsMat[,x],
-        #                     nrow = nrow(factorsMat)/nPositions,
-        #                     byrow = TRUE,
-        #                     dimnames = list(dim_names))
-        #     })
-        # ##
-        # factorsMatList_asPFMs <- lapply(seq_len(length(factorsMatList_as2D)),
-        #         function(x){
-        #             sinucSparse <- collapse_into_sinuc_matrix(
-        #                 given_feature_mat = as.matrix(factorsMat[,x]),
-        #                 dinuc_mat = factorsMatList_as2D[[x]],
-        #                 feature_names = dim_names)
-        #             sinucSparseInt <- matrix(as.integer(round(sinucSparse)),
-        #                 nrow = 4, byrow = FALSE,
-        #                 dimnames = list(rownames(sinucSparse)))
-        #         })
-        ## After collapse_into_sinuc_matrix was updated, the above is changed
-        ## to:
         factorsMatList_asPFMs <- lapply(seq_len(ncol(factorsMat)),
             function(x){
                 ## A 16 x nPositions 2D matrix is obtained
@@ -402,7 +381,6 @@ set_config <- function(chunk_size = 500,
                 temp <- TFBSTools::PFMSimilarity(
                     factorsMatList_asPFMs[[i]], factorsMatList_asPFMs[[j]])
                 scoresMat[i,j] <- temp["score"]
-                # relScoresMat[i,j] <- temp["relScore"]
             }
         }
         ## currently we use scoresMat, so we only return that
@@ -475,7 +453,6 @@ set_config <- function(chunk_size = 500,
         best_k <- .cv_model_select_pyNMF2(
                 X = this_mat, param_ranges = config$paramRanges,
                 kFolds = config$kFolds, nRuns = config$nRunsUse,
-                # parallelDo = config$parallelize, nCores = config$nCoresUse,
                 verboseFlag = config$flags$verboseFlag,
                 debugFlag = config$flags$debugFlag,
                 returnBestK = TRUE, cgfglinear = cgfglinear,
@@ -488,7 +465,6 @@ set_config <- function(chunk_size = 500,
         .msg_pstr("Performing stability-based model selection", flg=dbg)
         best_k <- .stability_model_select_pyNMF2(
             X = this_mat, param_ranges = config$paramRanges,
-            # parallelDo = config$parallelize, nCores = config$nCoresUse,
             nRuns = config$nRunsUse, bound = config$bound,
             flags = config$flags, returnBestK = TRUE, bootstrap = TRUE,
             bpparam = bpparam
@@ -510,7 +486,6 @@ set_config <- function(chunk_size = 500,
         ## Cluster sequences
         ## New strategy, perform nRuns for bestK and use only the best one
         nRuns <- config$nRunsUse
-        # .msg_pstr("Fetching ", best_k, " clusters", flg=(vrbs || dbg))
 
         featuresMatrixList <- vector("list", nRuns)
         samplesMatrixList <- vector("list", nRuns)
@@ -518,8 +493,6 @@ set_config <- function(chunk_size = 500,
         nmf_nRuns_list <- .perform_multiple_NMF_runs(X = this_mat,
                                         kVal = best_k,
                                         alphaVal = 0,
-                                        # parallelDo = config$parallelize,
-                                        # nCores = config$nCoresUse,
                                         nRuns = nRuns,
                                         bootstrap = TRUE, bpparam = bpparam)
         featuresMatrixList <- lapply(nmf_nRuns_list$nmf_result_list,
@@ -531,7 +504,6 @@ set_config <- function(chunk_size = 500,
         ## Get reconstruction accuracies for them
         bestQ2 <- -1
         for (nR in seq_len(nRuns)){
-            ##A <- this_mat[, new_ord[[nR]]]
             A <- this_mat
             recA <- as.matrix(featuresMatrixList[[nR]]) %*%
                 as.matrix(samplesMatrixList[[nR]])
@@ -543,8 +515,6 @@ set_config <- function(chunk_size = 500,
                 bestOrd <- new_ord[[nR]]
             }
         }
-        # .msg_pstr("Best Q2 giving run found: ", bestQ2, flg=dbg)
-        # cli::cli_alert_info("Fetched {best_k} clusters")
         ##
         featuresMatrix <- bestFeatMat
         samplesMatrix <- bestSampMat
@@ -554,7 +524,6 @@ set_config <- function(chunk_size = 500,
         samplesMatrix <- matrix(rep(NA, length(tempM)), nrow = nrow(tempM))
         samplesMatrix[ ,bestOrd] <- tempM
         #####
-        # .msg_pstr("Fetching ", best_k," cluster(s)", flg=dbg)
         clusterMembershipsForSamples <-
             .get_cluster_memberships_per_run(samplesMatrix = samplesMatrix,
                 iChunksColl = innerChunksColl, iChunkIdx = innerChunkIdx,
@@ -750,7 +719,6 @@ keepMinClusters <- function(set_ocollation, temp_res = NULL,
         if(any(set_ocollation)){
             lastItrC <- tail(which(set_ocollation), 1)
             setMinClustersFinal <- get_clBasVec_k(temp_res, lastItrC)
-                # temp_res$clustBasisVectors[[lastItrC]]$nBasisVectors
         }
         return(setMinClustersFinal)
     }
@@ -838,15 +806,6 @@ perform_setup <- function(config, total_itr, o_dir, fresh,
         cli::cli_alert_info("Parallelization: No")
     }
 
-    # #### Start cluster only once --using parallel
-    # if(parallelize){
-    #     cl <- parallel::makeCluster(crs, type = "FORK")
-    #     parallel::setDefaultCluster(cl)
-    #     cli::cli_alert_info("Parallelization: {crs} cores")
-    # }else{
-    #     cl <- NA
-    #     cli::cli_alert_info("Parallelization: No")
-    # }
     ##
     if(modSelType != "cv" && modSelType != "stability")
         cli::cli_alert_warning(c("Mis-specified model selection strategy",
