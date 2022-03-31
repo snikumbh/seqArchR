@@ -34,11 +34,10 @@ handle_dir_creation <- function(o_dir, vrbs){
             o_dir <- paste(o_dir, name_suffix, sep = "_")
         }
     }
-    retVal <- dir.create(paste0(o_dir, "/"), showWarnings = TRUE)
+    retVal <- dir.create(o_dir, showWarnings = TRUE)
     stopifnot(retVal)
-    returnODirName <- paste0(o_dir, "/")
     cli::cli_alert_success("Writing to: {.emph {basename(o_dir)}}")
-    returnODirName
+    o_dir
 }
 ## =============================================================================
 
@@ -455,7 +454,7 @@ set_config <- function(chunk_size = 500,
                                     cgfglinear = TRUE,
                                     coarse_step = 10,
                                     askParsimony = TRUE,
-                                    config, oDir, test_itr, oChunkIdx,
+                                    config, test_itr, oChunkIdx,
                                     bpparam){
     .assert_seqArchR_flags(config$flags)
     dbg <- config$flags$debugFlag
@@ -559,7 +558,7 @@ set_config <- function(chunk_size = 500,
         clusterMembershipsForSamples <-
             .get_cluster_memberships_per_run(samplesMatrix = samplesMatrix,
                 iChunksColl = innerChunksColl, iChunkIdx = innerChunkIdx,
-                oDir, test_itr, oChunkIdx)
+                test_itr, oChunkIdx)
         ##
         ## Could handle overfitting here
         if(best_k > 1){
@@ -869,7 +868,7 @@ perform_setup <- function(config, total_itr, o_dir, fresh,
 
 
 process_innerChunk <- function(test_itr, innerChunksColl, config, lenOC,
-                            seqs_ohe_mat, set_parsimony, o_dir, outerChunkIdx,
+                            seqs_ohe_mat, set_parsimony, outerChunkIdx,
                             bpparam){
     # globFactors <- vector("list", length(innerChunksColl))
     # globClustAssignments <- vector("list", length(innerChunksColl))
@@ -891,7 +890,7 @@ process_innerChunk <- function(test_itr, innerChunksColl, config, lenOC,
             innerChunksColl, this_seqsMat,
             cgfglinear = TRUE, coarse_step = cvStep,
             askParsimony = set_parsimony[test_itr],
-            config = config, oDir = o_dir, test_itr = test_itr,
+            config = config, test_itr = test_itr,
             oChunkIdx = outerChunkIdx, bpparam = bpparam)
         thisNMFResult
     })

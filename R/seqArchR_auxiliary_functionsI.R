@@ -155,8 +155,8 @@ seqs_str <- function(res, iter = NULL, cl = NULL, ord = FALSE){
 # @return A list that can be assigned as an element in globClustAssignments
 #
 .get_cluster_memberships_per_run <- function(samplesMatrix, iChunksColl = NA,
-                                        iChunkIdx = NA, oDir = NA,
-                                        test_itr = NA, oChunkIdx = NA) {
+                                        iChunkIdx = NA, test_itr = NA,
+                                        oChunkIdx = NA) {
     .assert_seqArchR_samplesMatrix(samplesMatrix)
     nClusters <- nrow(samplesMatrix)
     returnClusterAsList <- vector("list", nClusters)

@@ -72,6 +72,7 @@
 #' @importFrom BiocParallel bpstart bpstop bplapply multicoreWorkers
 #' @importFrom BiocParallel MulticoreParam SnowParam SerialParam
 #' @importFrom cli cli_rule cli_alert_info cli_alert_success cli_h1 cli_h2
+#' @importFrom cli cli_alert_warning
 #'
 #'
 #' @examples
@@ -220,7 +221,6 @@ seqArchR <- function(config, seqs_ohe_mat, seqs_raw, seqs_pos = NULL,
                                     config = config, lenOC = lenOC,
                                     seqs_ohe_mat = seqs_ohe_mat,
                                     set_parsimony = set_parsimony,
-                                    o_dir = o_dir,
                                     outerChunkIdx = outerChunkIdx,
                                     bpparam = setup_ans$cl)
                 globFactors <- icResult$globFactors
