@@ -32,8 +32,8 @@
 #' res <- readRDS(system.file("extdata", "example_seqArchRresult.rds",
 #'          package = "seqArchR", mustWork = TRUE))
 #'
-#' pwm <- seqArchR::make_dinuc_PWMs(get_clBasVec_m(res,iter=1)[,1],
-#'                         add_pseudo_counts = FALSE)
+#' pwm <- seqArchR::make_PWMs(get_clBasVec_m(res,iter=1)[,1],
+#'                         add_pseudo_counts = FALSE, sinuc = FALSE)
 #'
 #' plot_ggheatmap(pwm_mat = pwm, fixed_coord = TRUE)
 #'
@@ -131,8 +131,8 @@ plot_ggheatmap <- function(pwm_mat, pos_lab = NULL, pdf_name = NULL,
 #' res <- readRDS(system.file("extdata", "example_seqArchRresult.rds",
 #'          package = "seqArchR", mustWork = TRUE))
 #'
-#' pwm <- seqArchR::make_dinuc_PWMs(get_clBasVec_m(res,iter=1)[,1],
-#'                         add_pseudo_counts = FALSE)
+#' pwm <- seqArchR::make_PWMs(get_clBasVec_m(res,iter=1)[,1],
+#'                         add_pseudo_counts = FALSE, sinuc = FALSE)
 #'
 #' plot_ggseqlogo(pwm_mat = pwm, fixed_coord = TRUE)
 #'

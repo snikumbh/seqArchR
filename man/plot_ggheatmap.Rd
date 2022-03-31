@@ -33,8 +33,8 @@ The given matrix is plotted as a heatmap using \code{ggplot2}'s
 res <- readRDS(system.file("extdata", "example_seqArchRresult.rds",
          package = "seqArchR", mustWork = TRUE))
 
-pwm <- seqArchR::make_dinuc_PWMs(get_clBasVec_m(res,iter=1)[,1],
-                        add_pseudo_counts = FALSE)
+pwm <- seqArchR::make_PWMs(get_clBasVec_m(res,iter=1)[,1],
+                        add_pseudo_counts = FALSE, sinuc = FALSE)
 
 plot_ggheatmap(pwm_mat = pwm, fixed_coord = TRUE)
 

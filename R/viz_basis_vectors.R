@@ -49,9 +49,9 @@ viz_bas_vec_heatmap_seqlogo <- function(feat_mat, method = "bits",
     ##
     pl_list <- apply(feat_mat, MARGIN = 2, function(x) {
         if (sinuc_or_dinuc == "dinuc") {
-            pwm <- make_dinuc_PWMs(x, add_pseudo_counts = FALSE)
+            pwm <- make_PWMs(x, add_pseudo_counts = FALSE, sinuc = FALSE)
         } else if (sinuc_or_dinuc == "sinuc") {
-            pwm <- make_sinuc_PWMs(x, add_pseudo_counts = FALSE)
+            pwm <- make_PWMs(x, add_pseudo_counts = FALSE, sinuc = TRUE)
         }
         ## Heatmap on top
         p1 <- plot_ggheatmap(pwm_mat = pwm, pos_lab = pos_lab)
@@ -104,9 +104,9 @@ viz_bas_vec_seqlogo <- function(feat_mat, method = "bits", pos_lab = NULL,
     ##
     pl_list <- apply(feat_mat, MARGIN = 2, function(x) {
         if (sinuc_or_dinuc == "dinuc") {
-            pwm <- make_dinuc_PWMs(x, add_pseudo_counts = FALSE)
+            pwm <- make_PWMs(x, add_pseudo_counts = FALSE, sinuc = FALSE)
         } else if (sinuc_or_dinuc == "sinuc") {
-            pwm <- make_sinuc_PWMs(x, add_pseudo_counts = FALSE)
+            pwm <- make_PWMs(x, add_pseudo_counts = FALSE, sinuc = TRUE)
         }
         p1 <- plot_ggseqlogo(pwm_mat = pwm, method = method,
             pos_lab = pos_lab, pdf_name = NULL,
@@ -153,9 +153,9 @@ viz_bas_vec_heatmap <- function(feat_mat, pos_lab = NULL,
     ##
     pl_list <- apply(feat_mat, MARGIN = 2, function(x) {
         if (sinuc_or_dinuc == "dinuc") {
-            pwm <- make_dinuc_PWMs(x, add_pseudo_counts = FALSE)
+            pwm <- make_PWMs(x, add_pseudo_counts = FALSE, sinuc = FALSE)
         } else if (sinuc_or_dinuc == "sinuc") {
-            pwm <- make_sinuc_PWMs(x, add_pseudo_counts = FALSE)
+            pwm <- make_PWMs(x, add_pseudo_counts = FALSE, sinuc = TRUE)
         }
         p1 <- plot_ggheatmap(pwm_mat = pwm,
             pos_lab = pos_lab, pdf_name = pdf_name, fixed_coord = fixed_coord)

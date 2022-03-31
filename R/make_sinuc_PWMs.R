@@ -9,84 +9,109 @@
 #' whether or not pseudocounts are added to the matrix.
 #' @param scale Logical, taking values TRUE or FALSE, specifying whether or
 #' not the matrix is scaled column-wise, i.e., all columns summed to 1.
+#' @param sinuc Logical. Specify TRUE for mononucleotides (default), FALSE to
+#' for dinucleotides.
 #'
-#' @return A (PWM) matrix with 4 rows corresponding to the 4 nucleotides (A, C,
-#' G, T) and the relevant number of columns (i.e., number of elements in given
-#' vector/4).
+#' @return A PWM. If sinuc is `TRUE`, the PWM has 4 rows corresponding to the
+#' 4 nucleotides (A, C, G, T) and the relevant number of columns (i.e.,
+#' number of elements in given vector/4).
+#' If dinucleotide is selected, by setting `sinuc` to `FALSE`, the PWM has
+#' 16 rows corresponding to the dinucleotide combinations of the four
+#' nucleotides (A, C, G, T) and the relevant number of columns (i.e.,
+#' number of elements in given vector/16).
 #'
 #' @examples
 #'
+#' ## Mononucleotides case
 #' ## Make a dummy PWM of dimensions 4 * 10 from a vector
 #' vec <- runif(4*10)
-#' pwm <- seqArchR::make_sinuc_PWMs(vec = vec, add_pseudo_counts = FALSE)
+#' pwm <- seqArchR::make_PWMs(vec = vec, add_pseudo_counts = FALSE)
 #'
-#'
-#' @export
-#'
-make_sinuc_PWMs <- function(vec, add_pseudo_counts = TRUE, scale = TRUE) {
-    ##
-    sinuc <- c("A", "C", "G", "T")
-    if (add_pseudo_counts) {
-        vec <- vec + 10^-5
-    }
-    this_mat <- t(matrix(vec, ncol = length(sinuc),
-                                    byrow = FALSE))
-    rownames(this_mat) <- sinuc
-    if (scale) {
-        scaled <- this_mat
-        scaled <- base::sweep(this_mat, 2, colSums(this_mat),
-                                "/")
-        return(scaled)
-    } else {
-        return(this_mat)
-    }
-}
-
-
-#' @title Similarly to the PWM-like matrix for mononucleotides, make one for
-#'  dinucleotides
-#'
-#' @description This function converts the basis matrix with basis vectors
-#' of dinucleotide information into matrix of dimension
-#' 16 x (sequence_length) for visualization.
-#'
-#' @param vec Column vector of the basis matrix
-#' @param add_pseudo_counts Whether pesudocounts are to be added. TRUE or FALSE.
-#' @param scale Whether to perform per position scaling of the matrix. TRUE or
-#' FALSE
-#'
-#' @return A (PWM) matrix with 16 rows corresponding to the dinucleotide
-#' combinations of the four nucleotides (A, C, G, T) and the relevant number
-#' of columns (i.e., number of elements in given vector/16)
-#'
-#' @examples
-#'
+#' ## Dinucleotides case
 #' res <- readRDS(system.file("extdata", "example_seqArchRresult.rds",
 #'          package = "seqArchR", mustWork = TRUE))
 #'
-#' pwm <- seqArchR::make_dinuc_PWMs(get_clBasVec_m(res,iter=1)[,1],
-#'                         add_pseudo_counts = FALSE)
+#' pwm <- seqArchR::make_PWMs(get_clBasVec_m(res,iter=1)[,1],
+#'                         add_pseudo_counts = FALSE, sinuc = FALSE)
 #'
 #' @export
 #'
-make_dinuc_PWMs <- function(vec, add_pseudo_counts = TRUE, scale = TRUE) {
-
-    # column vector is expected as input
-    dna_alphabet <- c("A", "C", "G", "T")
-    dinuc <- do.call(paste0, expand.grid(dna_alphabet, dna_alphabet))
-    if (add_pseudo_counts) {
-        vec <- vec + 10^-5
-    }
-    this_mat <- t(matrix(vec, ncol = length(dinuc),
-                                    byrow = FALSE))
-    rownames(this_mat) <- dinuc
+make_PWMs <- function(vec, add_pseudo_counts = TRUE, scale = TRUE,
+                      sinuc = TRUE) {
+    ##
+    if(add_pseudo_counts) vec <- add_pseudo_count(vec)
+    ##
+    rnames <- Biostrings::DNA_BASES
+    if(!sinuc) rnames <- get_dimers_from_alphabet(Biostrings::DNA_BASES)
+    ##
+    this_mat <- make_matrix(vec, use_rnames = rnames)
+    ##
     if (scale) {
-        this_mat <- base::sweep(this_mat, 2, colSums(this_mat), "/")
+        this_mat <- scale_matrix(this_mat)
     }
+    ##
+    if(sinuc) return(this_mat)
+    ## sinuc == FALSE reaches here
     return_mat <- collapse_into_sinuc_matrix(dinuc_mat = this_mat,
-                                            feat_names = dinuc)
+                                             feat_names = rnames)
     return(return_mat)
 }
+
+
+add_pseudo_count <- function(vec, pseudo_count = 10^-5){
+    vec <- vec + pseudo_count
+}
+
+make_matrix <- function(vec, use_rnames){
+    this_mat <- t(matrix(vec, ncol = length(use_rnames), byrow = FALSE))
+    rownames(this_mat) <- use_rnames
+    this_mat
+}
+
+scale_matrix <- function(this_mat){
+    scaled <- base::sweep(this_mat, 2, colSums(this_mat), "/")
+    scaled
+}
+
+# @title Similarly to the PWM-like matrix for mononucleotides, make one for
+#  dinucleotides
+#
+# @description This function converts the basis matrix with basis vectors
+# of dinucleotide information into matrix of dimension
+# 16 x (sequence_length) for visualization.
+#
+# @param vec Column vector of the basis matrix
+# @param add_pseudo_counts Whether pesudocounts are to be added. TRUE or FALSE.
+# @param scale Whether to perform per position scaling of the matrix. TRUE or
+# FALSE
+#
+# @return A (PWM) matrix with 16 rows corresponding to the dinucleotide
+# combinations of the four nucleotides (A, C, G, T) and the relevant number
+# of columns (i.e., number of elements in given vector/16)
+#
+# @examples
+#
+# res <- readRDS(system.file("extdata", "example_seqArchRresult.rds",
+#          package = "seqArchR", mustWork = TRUE))
+#
+# pwm <- seqArchR::make_dinuc_PWMs(get_clBasVec_m(res,iter=1)[,1],
+#                         add_pseudo_counts = FALSE)
+#
+# @export
+#
+# make_dinuc_PWMs <- function(vec, add_pseudo_counts = TRUE, scale = TRUE) {
+#     # column vector is expected as input
+#     dinuc <- get_dimers_from_alphabet(Biostrings::DNA_BASES)
+#     if(add_pseudo_counts) vec <- add_pseudo_count(vec)
+#     this_mat <- make_matrix(vec, use_rnames = dinuc)
+#     if (scale) this_mat <- scale_matrix(this_mat)
+#     return_mat <- collapse_into_sinuc_matrix(dinuc_mat = this_mat,
+#                                             feat_names = dinuc)
+#     return(return_mat)
+# }
+
+
+
 
 
 ## Collapse the dinucleotide matrix to single nucleotide

@@ -55,14 +55,14 @@ test_that("ggseqlogo plotting works", {
   # test variables
   # testPositionLabels <- seq(25)
   # testPwmMat <- matrix(rnorm(100), nrow = 4)
-  # testPwmMat <- make_sinuc_PWMs(testPwmMat)
+  # testPwmMat <- make_PWMs(testPwmMat)
   # p1 <- plot_ggseqlogo(testPwmMat, pos_lab = testPositionLabels)
   #
   res <- readRDS(system.file("extdata", "example_seqArchRresult.rds",
           package = "seqArchR", mustWork = TRUE))
 
-  pwm <- seqArchR::make_dinuc_PWMs(get_clBasVec_m(res,iter=1)[,1],
-                         add_pseudo_counts = FALSE)
+  pwm <- seqArchR::make_PWMs(get_clBasVec_m(res,iter=1)[,1],
+                         add_pseudo_counts = FALSE, sinuc = FALSE)
 
   p1 <- suppressWarnings(plot_ggseqlogo(pwm_mat = pwm, fixed_coord = TRUE))
   # test plot
