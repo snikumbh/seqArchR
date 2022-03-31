@@ -164,7 +164,7 @@ plot_ggseqlogo <- function(pwm_mat, method = "bits", pos_lab = NULL,
         if (file.exists(pdf_name)) {
             warning("File exists, will overwrite", immediate. = TRUE)
         }
-        ggsave(filename = pdf_name, plot = p1, device = "pdf",
+        ggplot2::ggsave(filename = pdf_name, plot = p1, device = "pdf",
                 width = 25, height = 2.5)
     }
     return(p1)
