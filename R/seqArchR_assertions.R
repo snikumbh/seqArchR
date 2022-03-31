@@ -565,7 +565,7 @@
     ## this should be 4L, (4^2)L, (4^3)L, and so on
     factor_rows <- unlist(lapply(seqArchRresultObj$clustBasisVectors,
         function(x){
-            tmp <- seqArchRresultObj$rawSeqs[1]@ranges@width
+            tmp <- Biostrings::width(seqArchRresultObj$rawSeqs[1])
             log(nrow(x$basisVectors)/(tmp), base=4)
     }))
     if(!all(diff(factor_rows) == 0))
