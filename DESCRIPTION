@@ -49,6 +49,7 @@ Suggests:
     TFBSTools,
     cowplot,
     hopach (>= 2.42.0),
+    BiocStyle,
     knitr (>= 1.22),
     rmarkdown (>= 1.12),
     testthat (>= 3.0.2),

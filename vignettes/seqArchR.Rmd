@@ -2,13 +2,10 @@
 title: "Example usage of _seqArchR_ on simulated DNA sequences"
 author: "Sarvesh Nikumbh"
 date: "`r Sys.Date()`"
+package: seqArchR
 output:
-  rmarkdown::html_vignette:
-    fig_caption: yes
-    fig.align: 'center'
-    number_sections: yes
-    dpi: 300
-    toc: yes
+  BiocStyle::html_document:
+      toc: true
 vignette: >
   %\VignetteIndexEntry{Example usage of _seqArchR_ on simulated DNA sequences}
   %\VignetteEngine{knitr::rmarkdown}
@@ -43,13 +40,12 @@ where multiple motifs are at play in tandem, all are simultaneously inferred
 from the data.
 To our knowledge, this is a novel application of NMF on biological sequence data
  capable of simultaneously discovering the sequence motifs and their positions.
-For a more detailed discussion, see preprint/publication [TODO: link here].
+For a more detailed discussion, see preprint/publication.
 
 
 This vignette demonstrates _seqArchR_'s usage with the help of a synthetic DNA 
 sequences data set. 
-Please refer to the paper (TODO: cite paper/preprint) for a detailed 
-description of _seqArchR_'s algorithm.
+Please refer to the paper for a detailed description of _seqArchR_'s algorithm.
 The paper also discusses the various parameters and their settings.
 For completeness, the following section gives a brief overview of the algorithm.
 
@@ -64,16 +60,23 @@ width="550" align="center">
 Further details to follow.
 
 # Installation
-_seqArchR_ is currently made available via GitHub, thus, you can use the 
-following procedure for installing _seqArchR_.
+
+## Python scikit-learn dependency
+
+_seqArchR_ requires the Python module scikit-learn. Please see installation 
+instructions [here](https://scikit-learn.org/stable/install.html).
+
+_seqArchR_ is available on Bioconductor, and can be installed using:
+
 ```{r seqArchR-install, echo=TRUE, eval=FALSE}
 
-if (!requireNamespace("remotes", quietly = TRUE)) {
-    install.packages("remotes")   
-}
-remotes::install_github("snikumbh/seqArchR")
- 
+if (!require("BiocManager", quietly = TRUE))
+    install.packages("BiocManager")
+
+BiocManager::install("seqArchR")
 ```
+
+
 In case of any errors, please consider looking up:
 [https://github.com/snikumbh/seqArchR](https://github.com/snikumbh/seqArchR).
 If none of the already noted points with regards to troubleshooting
@@ -208,7 +211,7 @@ seqArchRconfig <- seqArchR::set_config(
 Once the configuration is setup, call the `seqArchR::seqArchR` function with 
 user-specified iterations.
 
-```{r call-seqArchR, echo=TRUE, eval=FALSE}
+```{r call-seqArchR, echo=TRUE, eval=TRUE}
 # Call/Run seqArchR
 seqArchRresult <- seqArchR::seqArchR(config = seqArchRconfig,
                             seqs_ohe_mat = inputSeqsMat,
