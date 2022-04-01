@@ -37,7 +37,7 @@
 #' @export
 #'
 make_PWMs <- function(vec, add_pseudo_counts = TRUE, scale = TRUE,
-                      sinuc = TRUE) {
+                        sinuc = TRUE) {
     ##
     if(add_pseudo_counts) vec <- add_pseudo_count(vec)
     ##
@@ -53,7 +53,7 @@ make_PWMs <- function(vec, add_pseudo_counts = TRUE, scale = TRUE,
     if(sinuc) return(this_mat)
     ## sinuc == FALSE reaches here
     return_mat <- collapse_into_sinuc_matrix(dinuc_mat = this_mat,
-                                             feat_names = rnames)
+                                                feat_names = rnames)
     return(return_mat)
 }
 
