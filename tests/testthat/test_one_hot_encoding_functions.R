@@ -10,7 +10,7 @@ test_that("Report empty sequence", {
 })
 
 test_that("One-hot encoding is correctly done", {
-  testSeqs <- c("GGCT", "ATCG")
+  testSeqs <- Biostrings::DNAStringSet(c("GGCT", "ATCG"))
   testSeqsB <- list(c("G", "G", "C", "T"), c("A", "T", "C", "G"))
   testAns <- t(matrix(c(
     0, 0, 0, 0, 0, 0, 1, 0, 1, 1, 0, 0, 0, 0, 0, 1,
@@ -20,7 +20,7 @@ test_that("One-hot encoding is correctly done", {
   ))
   testAns <- Matrix::Matrix(testAns, sparse=  TRUE)
   rownames(testAns) <-
-    .get_feat_names(k=1, seqlen=nchar(testSeqs[1]))
+    .get_feat_names(k=1, seqlen=Biostrings::width(testSeqs[1]))
   #
   # givenAns1 <- .one_hot_encode_sinuc(testSeqsB[[1]])
   givenAns1 <- .one_hot_encode(testSeqsB[[1]], k=1)

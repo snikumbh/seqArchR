@@ -16,7 +16,8 @@ test_that("Preparing sinuc/dinuc/trinuc data matrix", {
 
     rawSeqs <- readRDS(system.file("extdata", "tssSeqsRaw.rds",
                                    package = "seqArchR", mustWork = TRUE))
-    use_rawSeqs <- base::substr(rawSeqs[1:2], start = 1, stop = 5)
+    use_rawSeqs <- Biostrings::subseq(rawSeqs[1:2], start = 1, end = 5)
+    # use_rawSeqs <- base::substr(rawSeqs[1:2], start = 1, stop = 5)
     # 20 x 2 sparse Matrix of class "dgCMatrix"
     #
     # [1,] . .
