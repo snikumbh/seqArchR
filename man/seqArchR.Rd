@@ -121,7 +121,7 @@ functions.
 \item \code{\link{plot_ggseqlogo_of_seqs}}
 \item \code{\link{viz_bas_vec}}
 \item \code{\link{viz_seqs_acgt_mat}}
-\item \code{\link{plot_pwm}}
+\item \code{\link{viz_pwm}}
 }
 }
 

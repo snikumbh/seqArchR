@@ -8,22 +8,23 @@
 #' visualization., or as a single heatmap or as a single sequence logo.
 #'
 #' @param feat_mat The features matrix (basis vectors matrix) from seqArchR.
-#' @param type Character. Specify "heatmap" or "seqlogo" to visualize the
-#' basis vectors as such. Specify "both" to visualize position-aligned heatmap
-#' and sequence logo.
+#' @param ptype Character vector of length one or two. Specify just one of
+#' "heatmap" or "seqlogo" to visualize the basis vectors as such, or specify
+#' a vector of length two for plotting both, heatmap and seqlogo. These are
+#' then arranged one below the other, the first on top and the second under it.
 #' @param method Specify either of "custom", "bits", or "probability" for
 #' plotting sequence logo. Default is "bits".
 #' @param pos_lab Labels for sequence positions, should be of same
 #' length as that of the sequences. Default value is NULL, when the
 #' positions are labeled from 1 to the length of the sequences.
+#' @param pdf_name Filename to save the plot, also provide the extension.
 #' @param add_pseudo_counts Logical, taking values TRUE or FALSE, default
 #' set to FALSE. Setting it to TRUE will enable adding pseudo-counts to the
 #' features matrix.
-#' @param pdf_name Filename to save the plot, also provide the extension.
 #' @param sinuc_or_dinuc "sinuc" or "dinuc" for choosing between mono- and
 #' dinucleotide profiles respectively.
 #' @param fixed_coord Set this to TRUE to use a fixed aspect ratio for the
-#' plot. Default is FALSE.
+#' plot irrestive of the width and height of the PDF. Default is FALSE.
 #'
 #' @return nothing
 #'
@@ -39,69 +40,103 @@
 #'
 #' # Visualize basis vectors at iteration 1 of seqArchR result as heatmap and
 #' # sequence logo
-#' viz_bas_vec(feat_mat = get_clBasVec_m(res,iter=1), type = "both",
-#'                      sinuc_or_dinuc = "dinuc", fixed_coord = TRUE)
+#' viz_bas_vec(feat_mat = get_clBasVec_m(res,iter=1), sinuc_or_dinuc = "dinuc",
+#'.                 ptype = c("heatmap", "seqlogo"))
 #'
 #'
 #' # Visualize basis vectors at iteration 1 of seqArchR result as sequence logos
-#' viz_bas_vec(feat_mat = get_clBasVec_m(res,iter=1), type = "seqlogo",
-#'                      sinuc_or_dinuc = "dinuc", fixed_coord = TRUE)
+#' viz_bas_vec(feat_mat = get_clBasVec_m(res,iter=1), ptype = "seqlogo",
+#'                  sinuc_or_dinuc = "dinuc")
 #'
 #'
 #' # Visualizing basis vector for a single cluster as a heatmap
 #' viz_bas_vec(feat_mat = as.matrix(get_clBasVec_m(res,iter=1)[,3]),
-#'              type = "heatmap", sinuc_or_dinuc = "dinuc", fixed_coord = TRUE)
+#'                  ptype = "heatmap", sinuc_or_dinuc = "dinuc")
 #'
-viz_bas_vec <- function(feat_mat, type = "both", method = "bits",
-                          pos_lab = NULL, add_pseudo_counts = FALSE,
-                          pdf_name = NULL, sinuc_or_dinuc = "sinuc",
-                          fixed_coord = FALSE){
+viz_bas_vec <- function(feat_mat, ptype = c("heatmap", "seqlogo"),
+                        method = "bits", pos_lab = NULL, pdf_name = NULL,
+                        add_pseudo_counts = FALSE, sinuc_or_dinuc = "sinuc",
+                        fixed_coord = FALSE){
     ## Visualize all basis factors (expected as columns of the given features
     ## matrix) as heatmaps or seqlogos or both combined
     check_vars2(feat_mat)
     pos_lab <- set_default_pos_lab(feat_mat, sinuc_or_dinuc, pos_lab)
-
-    if(type != "both"){
-        ##
-        pl_list <- apply(feat_mat, MARGIN = 2, function(x) {
-            set_sinuc <- TRUE
-            if (sinuc_or_dinuc == "dinuc") {
-                set_sinuc <- FALSE
-            }
-            pwm <- make_PWMs(x, add_pseudo_counts = FALSE, sinuc = set_sinuc)
-            ##
-            if(type == "heatmap"){
-                p1 <- plot_pwm(pwm_mat = pwm, method = "heatmap",
-                            pos_lab = pos_lab, fixed_coord = fixed_coord)
-            }
-            if(type == "seqlogo"){
-                p1 <- plot_pwm(pwm_mat = pwm, method = method,
-                            pos_lab = pos_lab, pdf_name = NULL,
-                                fixed_coord = fixed_coord)
-            }
-            p1
-        })
-    }else if(type == "both"){
-        ##
-        pl_list <- apply(feat_mat, MARGIN = 2, function(x) {
-            set_sinuc <- TRUE
-            if (sinuc_or_dinuc == "dinuc") {
-                set_sinuc <- FALSE
-            }
-            pwm <- make_PWMs(x, add_pseudo_counts = FALSE, sinuc = set_sinuc)
-            ## Heatmap on top
-            p1 <- plot_pwm(pwm_mat = pwm, method = "heatmap", pos_lab = pos_lab)
-            p1 <- p1 + theme(plot.margin = margin(0,0,0,0, unit="cm"))
-            ## Seqlogo below
-            p2 <- plot_pwm(pwm_mat = pwm, method = method, pos_lab = pos_lab,
-                           fixed_coord = fixed_coord)
-            ## Make adjustments for alignment
-            p2 <- p2 + theme(plot.margin = margin(0,0,0,0, unit="cm"))
-            final_p <- cowplot::plot_grid(p1, p2, nrow = 2, align="v")
-            ##
-            final_p
-        })
+    expType <- c("seqlogo", "heatmap")
+    if(!(length(match(ptype, expType)) == length(ptype))){
+        stop("Expected values for arg 'ptype' are 'seqlogo' and 'heatmap'")
     }
+    # print(ptype)
+    # print(length(ptype))
+    pl_list <- apply(feat_mat, MARGIN = 2, function(x) {
+        set_sinuc <- TRUE
+        if (sinuc_or_dinuc == "dinuc") {
+            set_sinuc <- FALSE
+        }
+        pwm <- make_PWMs(x, add_pseudo_counts = FALSE, sinuc = set_sinuc)
+        pl <- vector("list", length(expType))
+        ##
+        if("heatmap" %in% ptype){
+            p1 <- viz_pwm(pwm_mat = pwm, method = "heatmap", pos_lab = pos_lab)
+            # p1 <- p1 + theme(plot.margin = margin(0,0,0,0, unit="cm"))
+            if(length(ptype) == 1) return(p1)
+            pl[[match("heatmap", ptype)]] <- p1
+        }
+        if("seqlogo" %in% ptype){
+            p2 <- viz_pwm(pwm_mat = pwm, method = method, pdf_name = NULL,
+                          pos_lab = pos_lab, fixed_coord = fixed_coord)
+            # p2 <- p2 + theme(plot.margin = margin(0,0,0,0, unit="cm"))
+            if(length(ptype) == 1) return(p2)
+            pl[[match("seqlogo", ptype)]] <- p2
+        }
+        if(length(ptype) == length(expType)){
+            check_cowplot()
+            pl <- cowplot::plot_grid(plotlist = pl, nrow = 2, align="v")
+            return(pl)
+        }
+        pl
+    })
+
+
+    # if(is.null(type)){
+    #     ##
+    #     pl_list <- apply(feat_mat, MARGIN = 2, function(x) {
+    #         set_sinuc <- TRUE
+    #         if (sinuc_or_dinuc == "dinuc") {
+    #             set_sinuc <- FALSE
+    #         }
+    #         pwm <- make_PWMs(x, add_pseudo_counts = FALSE, sinuc = set_sinuc)
+    #         ##
+    #         if(type == "heatmap"){
+    #             p1 <- viz_pwm(pwm_mat = pwm, method = "heatmap",
+    #                         pos_lab = pos_lab, fixed_coord = fixed_coord)
+    #         }
+    #         if(type == "seqlogo"){
+    #             p1 <- viz_pwm(pwm_mat = pwm, method = method, pdf_name = NULL,
+    #                         pos_lab = pos_lab, fixed_coord = fixed_coord)
+    #         }
+    #         p1
+    #     })
+    # }else if(!is.null(type) && type == "both"){
+    #     ##
+    #     pl_list <- apply(feat_mat, MARGIN = 2, function(x) {
+    #         set_sinuc <- TRUE
+    #         if (sinuc_or_dinuc == "dinuc") {
+    #             set_sinuc <- FALSE
+    #         }
+    #         pwm <- make_PWMs(x, add_pseudo_counts = FALSE, sinuc = set_sinuc)
+    #         ## Heatmap on top
+    #         p1 <- viz_pwm(pwm_mat = pwm, type = "heatmap", pos_lab = pos_lab)
+    #         p1 <- p1 + theme(plot.margin = margin(0,0,0,0, unit="cm"))
+    #         ## Seqlogo below
+    #         p2 <- viz_pwm(pwm_mat = pwm, type = "seqlogo", method = method,
+    #                     pos_lab = pos_lab, fixed_coord = fixed_coord)
+    #         ## Make adjustments for alignment
+    #         p2 <- p2 + theme(plot.margin = margin(0,0,0,0, unit="cm"))
+    #         final_p <- cowplot::plot_grid(p1, p2, nrow = 2, align="v")
+    #         ##
+    #         final_p
+    #     })
+    # }
     handle_pdffile_plotlist(pdf_name, pl_list)
     pl_list
 }

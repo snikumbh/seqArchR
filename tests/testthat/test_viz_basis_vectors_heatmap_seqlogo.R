@@ -7,7 +7,7 @@ test_that("Given object is matrix", {
   testPositionLabels <- seq(25)
   expect_error(
     viz_bas_vec(
-      testFeaturesMat, type = "both",
+        feat_mat = testFeaturesMat, ptype = c("seqlogo", "heatmap"),
       pos_lab = testPositionLabels),
     "not of type matrix"
   )
@@ -18,7 +18,7 @@ test_that("Handling empty matrix", {
   testPositionLabels <- seq(25)
   expect_error(
     viz_bas_vec(
-      testFeaturesMat, type = "both",
+      feat_mat = testFeaturesMat, ptype = c("seqlogo", "heatmap"),
       pos_lab = testPositionLabels
     ),
     "Empty"
@@ -30,7 +30,7 @@ test_that("Position labels inadequate", {
   testPositionLabels <- seq(20)
   expect_error(
     viz_bas_vec(
-      testFeaturesMat, type = "both",
+        feat_mat = testFeaturesMat, ptype = c("seqlogo", "heatmap"),
       pos_lab = testPositionLabels),
     "Inadequate"
   )
@@ -41,7 +41,7 @@ test_that("Position labels over-abundant", {
   testPositionLabels <- seq(60)
   expect_error(
     viz_bas_vec(
-      testFeaturesMat, type = "both",
+        feat_mat = testFeaturesMat, ptype = c("seqlogo", "heatmap"),
       pos_lab = testPositionLabels),
     "Overabundant"
   )

@@ -6,11 +6,11 @@
 \usage{
 viz_bas_vec(
   feat_mat,
-  type = "both",
+  ptype = c("heatmap", "seqlogo"),
   method = "bits",
   pos_lab = NULL,
-  add_pseudo_counts = FALSE,
   pdf_name = NULL,
+  add_pseudo_counts = FALSE,
   sinuc_or_dinuc = "sinuc",
   fixed_coord = FALSE
 )
@@ -18,9 +18,10 @@ viz_bas_vec(
 \arguments{
 \item{feat_mat}{The features matrix (basis vectors matrix) from seqArchR.}
 
-\item{type}{Character. Specify "heatmap" or "seqlogo" to visualize the
-basis vectors as such. Specify "both" to visualize position-aligned heatmap
-and sequence logo.}
+\item{ptype}{Character vector of length one or two. Specify just one of
+"heatmap" or "seqlogo" to visualize the basis vectors as such, or specify
+a vector of length two for plotting both, heatmap and seqlogo. These are
+then arranged one below the other, the first on top and the second under it.}
 
 \item{method}{Specify either of "custom", "bits", or "probability" for
 plotting sequence logo. Default is "bits".}
@@ -29,11 +30,11 @@ plotting sequence logo. Default is "bits".}
 length as that of the sequences. Default value is NULL, when the
 positions are labeled from 1 to the length of the sequences.}
 
+\item{pdf_name}{Filename to save the plot, also provide the extension.}
+
 \item{add_pseudo_counts}{Logical, taking values TRUE or FALSE, default
 set to FALSE. Setting it to TRUE will enable adding pseudo-counts to the
 features matrix.}
-
-\item{pdf_name}{Filename to save the plot, also provide the extension.}
 
 \item{sinuc_or_dinuc}{"sinuc" or "dinuc" for choosing between mono- and
 dinucleotide profiles respectively.}
@@ -55,23 +56,24 @@ res <- readRDS(system.file("extdata", "example_seqArchRresult.rds",
 
 # Visualize basis vectors at iteration 1 of seqArchR result as heatmap and
 # sequence logo
-viz_bas_vec(feat_mat = get_clBasVec_m(res,iter=1), type = "both",
-                     sinuc_or_dinuc = "dinuc", fixed_coord = TRUE)
+viz_bas_vec(feat_mat = get_clBasVec_m(res,iter=1), sinuc_or_dinuc = "dinuc",
+.                 ptype = c("heatmap", "seqlogo"),  fixed_coord = TRUE)
 
 
 # Visualize basis vectors at iteration 1 of seqArchR result as sequence logos
-viz_bas_vec(feat_mat = get_clBasVec_m(res,iter=1), type = "seqlogo",
-                     sinuc_or_dinuc = "dinuc", fixed_coord = TRUE)
+viz_bas_vec(feat_mat = get_clBasVec_m(res,iter=1), ptype = "seqlogo",
+                 sinuc_or_dinuc = "dinuc", fixed_coord = TRUE)
 
 
 # Visualizing basis vector for a single cluster as a heatmap
 viz_bas_vec(feat_mat = as.matrix(get_clBasVec_m(res,iter=1)[,3]),
-             type = "heatmap", sinuc_or_dinuc = "dinuc", fixed_coord = TRUE)
+                 ptype = "heatmap", sinuc_or_dinuc = "dinuc",
+                 fixed_coord = TRUE)
 
 }
 \seealso{
 Other visualization functions: 
-\code{\link{plot_pwm}()},
+\code{\link{viz_pwm}()},
 \code{\link{viz_seqs_acgt_mat}()}
 }
 \concept{visualization functions}

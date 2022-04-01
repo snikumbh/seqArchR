@@ -6,8 +6,8 @@
 #' @param pwm_mat Matrix (usually a PWM, but can be any non-normalized matrix)
 #' to be visualized. Rownames must be letters.
 #' @param method Character. Set this to 'heatmap' when plotting a heatmap, else
-#' you can set it to either of 'custom', 'bits', or 'probability'. Default is
-#' 'heatmap'.
+#' you can set it to either of 'custom', 'bits', or 'probability' when you
+#' wish to visualize it as a sequence logo. Default is 'heatmap'.
 #' @param pos_lab Labels for sequence positions, should be of same
 #' length as that of the sequences. Default value is NULL, when the
 #' positions are labeled from 1 to the length of the sequences.
@@ -45,11 +45,11 @@
 #' pwm <- seqArchR::make_PWMs(get_clBasVec_m(res,iter=1)[,1],
 #'                         add_pseudo_counts = FALSE, sinuc = FALSE)
 #'
-#' plot_pwm(pwm_mat = pwm, method = "heatmap", fixed_coord = TRUE)
+#' viz_pwm(pwm_mat = pwm, method = "heatmap", fixed_coord = TRUE)
 #'
-#' plot_pwm(pwm_mat = pwm, method = "bits", fixed_coord = TRUE)
+#' viz_pwm(pwm_mat = pwm, method = "bits", fixed_coord = TRUE)
 #'
-plot_pwm <- function(pwm_mat, method = "heatmap", pos_lab = NULL,
+viz_pwm <- function(pwm_mat, method = "heatmap", pos_lab = NULL,
                      pdf_name = NULL, fixed_coord = FALSE, bits_yax = "full"){
 
     pos_lab <- set_default_pos_lab2(pwm_mat, pos_lab)

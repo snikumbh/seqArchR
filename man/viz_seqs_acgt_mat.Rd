@@ -80,7 +80,7 @@ viz_seqs_acgt_mat(seqs = use_seqs)
 }
 \seealso{
 Other visualization functions: 
-\code{\link{plot_pwm}()},
-\code{\link{viz_bas_vec}()}
+\code{\link{viz_bas_vec}()},
+\code{\link{viz_pwm}()}
 }
 \concept{visualization functions}
