@@ -33,9 +33,10 @@
         retVal
     }))
     ##
-    for (i in seq_along(alph)) {
-        ohe[, (i - 1) * seqlen + which(modseq == alph[i])] <- 1
-    }
+    colIdx <- unlist(lapply(seq_along(alph), function(x){
+        (x - 1) * seqlen + which(modseq == alph[x])
+    }))
+    ohe[, colIdx] <- 1
     colnames(ohe) <- set_colnames
     ohe
 }
@@ -86,6 +87,7 @@ get_one_hot_encoded_seqs <- function(seqs, sinuc_or_dinuc = "sinuc") {
     if(is.null(seqs) || length(seqs) == 0){
         stop("Empty or NULL sequences")
     }
+    if(!is(seqs, "DNAStringSet")) stop("seqs not a DNAStringSet object")
     seqs_split_as_list <-
         base::strsplit(as.character(seqs), split = NULL)
     if (length(seqs_split_as_list) > 0) {
