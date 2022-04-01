@@ -51,8 +51,6 @@
 
         foo_scores[kValue, "Score"] <- this_amari
 
-
-
         ##
         check_errant <- FALSE
         if(kValue %% 5 == 0){
