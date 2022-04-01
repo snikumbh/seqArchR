@@ -680,8 +680,6 @@ collate_clusters <- function(to_clust, orig_clust) {
 
 .unfurl_nodeList <- function(nodeList, vec_ver = FALSE, vrbs=FALSE){
     ##
-    # returnVal <- .assert_seqArchR_list_properties(nodeList)
-    # if(returnVal != "FOO") stop(returnVal)
     .check_list_prop(nodeList)
     ##
     if(vec_ver){

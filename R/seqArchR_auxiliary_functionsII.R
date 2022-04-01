@@ -48,10 +48,8 @@ handle_dir_creation <- function(o_dir, vrbs){
 
 ## Getter function to fetch the features matrix from NMF result object
 ## (from python)
-##Dependency on python script perform_nmf.py
+## Dependency on python script perform_nmf.py
 get_features_matrix <- function(nmfResultObj){
-    # returnVal <- .assert_seqArchR_list_properties(nmfResultObj)
-    # if (returnVal != "FOO") stop(returnVal)
     .check_list_prop(nmfResultObj)
     return(as.matrix(nmfResultObj[[1]]))
 }
@@ -61,8 +59,6 @@ get_features_matrix <- function(nmfResultObj){
 ## (from python)
 ## Dependency on python script perform_nmf.py
 get_samples_matrix <- function(nmfResultObj){
-    # returnVal <- .assert_seqArchR_list_properties(nmfResultObj)
-    # if (returnVal != "FOO") stop(returnVal)
     .check_list_prop(nmfResultObj)
     return(as.matrix(nmfResultObj[[2]]))
 }
