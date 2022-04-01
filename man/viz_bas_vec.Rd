@@ -40,7 +40,7 @@ features matrix.}
 dinucleotide profiles respectively.}
 
 \item{fixed_coord}{Set this to TRUE to use a fixed aspect ratio for the
-plot. Default is FALSE.}
+plot irrestive of the width and height of the PDF. Default is FALSE.}
 }
 \value{
 nothing
@@ -57,18 +57,17 @@ res <- readRDS(system.file("extdata", "example_seqArchRresult.rds",
 # Visualize basis vectors at iteration 1 of seqArchR result as heatmap and
 # sequence logo
 viz_bas_vec(feat_mat = get_clBasVec_m(res,iter=1), sinuc_or_dinuc = "dinuc",
-.                 ptype = c("heatmap", "seqlogo"),  fixed_coord = TRUE)
+                ptype = c("heatmap", "seqlogo"))
 
 
 # Visualize basis vectors at iteration 1 of seqArchR result as sequence logos
 viz_bas_vec(feat_mat = get_clBasVec_m(res,iter=1), ptype = "seqlogo",
-                 sinuc_or_dinuc = "dinuc", fixed_coord = TRUE)
+                 sinuc_or_dinuc = "dinuc")
 
 
 # Visualizing basis vector for a single cluster as a heatmap
 viz_bas_vec(feat_mat = as.matrix(get_clBasVec_m(res,iter=1)[,3]),
-                 ptype = "heatmap", sinuc_or_dinuc = "dinuc",
-                 fixed_coord = TRUE)
+                 ptype = "heatmap", sinuc_or_dinuc = "dinuc")
 
 }
 \seealso{
