@@ -41,7 +41,7 @@
 #' # Visualize basis vectors at iteration 1 of seqArchR result as heatmap and
 #' # sequence logo
 #' viz_bas_vec(feat_mat = get_clBasVec_m(res,iter=1), sinuc_or_dinuc = "dinuc",
-#'.                 ptype = c("heatmap", "seqlogo"))
+#'                 ptype = c("heatmap", "seqlogo"))
 #'
 #'
 #' # Visualize basis vectors at iteration 1 of seqArchR result as sequence logos
@@ -65,8 +65,7 @@ viz_bas_vec <- function(feat_mat, ptype = c("heatmap", "seqlogo"),
     if(!(length(match(ptype, expType)) == length(ptype))){
         stop("Expected values for arg 'ptype' are 'seqlogo' and 'heatmap'")
     }
-    # print(ptype)
-    # print(length(ptype))
+
     pl_list <- apply(feat_mat, MARGIN = 2, function(x) {
         set_sinuc <- TRUE
         if (sinuc_or_dinuc == "dinuc") {
@@ -96,58 +95,17 @@ viz_bas_vec <- function(feat_mat, ptype = c("heatmap", "seqlogo"),
         pl
     })
 
-
-    # if(is.null(type)){
-    #     ##
-    #     pl_list <- apply(feat_mat, MARGIN = 2, function(x) {
-    #         set_sinuc <- TRUE
-    #         if (sinuc_or_dinuc == "dinuc") {
-    #             set_sinuc <- FALSE
-    #         }
-    #         pwm <- make_PWMs(x, add_pseudo_counts = FALSE, sinuc = set_sinuc)
-    #         ##
-    #         if(type == "heatmap"){
-    #             p1 <- viz_pwm(pwm_mat = pwm, method = "heatmap",
-    #                         pos_lab = pos_lab, fixed_coord = fixed_coord)
-    #         }
-    #         if(type == "seqlogo"){
-    #             p1 <- viz_pwm(pwm_mat = pwm, method = method, pdf_name = NULL,
-    #                         pos_lab = pos_lab, fixed_coord = fixed_coord)
-    #         }
-    #         p1
-    #     })
-    # }else if(!is.null(type) && type == "both"){
-    #     ##
-    #     pl_list <- apply(feat_mat, MARGIN = 2, function(x) {
-    #         set_sinuc <- TRUE
-    #         if (sinuc_or_dinuc == "dinuc") {
-    #             set_sinuc <- FALSE
-    #         }
-    #         pwm <- make_PWMs(x, add_pseudo_counts = FALSE, sinuc = set_sinuc)
-    #         ## Heatmap on top
-    #         p1 <- viz_pwm(pwm_mat = pwm, type = "heatmap", pos_lab = pos_lab)
-    #         p1 <- p1 + theme(plot.margin = margin(0,0,0,0, unit="cm"))
-    #         ## Seqlogo below
-    #         p2 <- viz_pwm(pwm_mat = pwm, type = "seqlogo", method = method,
-    #                     pos_lab = pos_lab, fixed_coord = fixed_coord)
-    #         ## Make adjustments for alignment
-    #         p2 <- p2 + theme(plot.margin = margin(0,0,0,0, unit="cm"))
-    #         final_p <- cowplot::plot_grid(p1, p2, nrow = 2, align="v")
-    #         ##
-    #         final_p
-    #     })
-    # }
     handle_pdffile_plotlist(pdf_name, pl_list)
     pl_list
 }
 ## =============================================================================
 
-handle_pdffile_plotlist <- function(pdf_name, pl_list){
+handle_pdffile_plotlist <- function(pdf_name, pl_list, pw = 20, ph = 4){
     if(!is.null(pdf_name)){
         if (file.exists(pdf_name)) {
             warning("File exists, will overwrite", immediate. = TRUE)
         }
-        grDevices::pdf(file=pdf_name, width=20, height=4)
+        grDevices::pdf(file=pdf_name, width=pw, height=ph)
         lapply(pl_list, print)
         dev.off()
         return(invisible(NULL))
