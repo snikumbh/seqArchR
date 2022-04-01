@@ -93,9 +93,7 @@ plot_arch_for_clusters <- function(seqs,
         stop("Expecting either a DNAStringSet object or a character vector")
     }
     ##
-    if(is.null(pos_lab)){
-        pos_lab <- seq_len(Biostrings::width(seqs[1]))
-    }
+    pos_lab <- set_default_pos_lab2(Biostrings::DNAString(seqs[1]), pos_lab)
     ##
     plot_titles <- make_plot_titles(clust_list, set_titles)
     plot_list <- lapply(seq_along(clust_list), function(x){
@@ -110,12 +108,8 @@ plot_arch_for_clusters <- function(seqs,
         invisible(capture.output(plot_list))
     }
     ##
-    if(!is.null(pdf_name)){
-        grDevices::pdf(file=pdf_name, width=pdf_width, height=pdf_height)
-        lapply(plot_list, print)
-        dev.off()
-        return(invisible(NULL))
-    }
+    handle_pdffile_plotlist(pdf_name, pl_list = plot_list, pw = pdf_width,
+                            ph = pdf_height)
     return(plot_list)
 }
 ## =============================================================================
