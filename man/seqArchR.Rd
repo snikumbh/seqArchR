@@ -119,12 +119,9 @@ functions.
 \itemize{
 \item \code{\link{plot_arch_for_clusters}}
 \item \code{\link{plot_ggseqlogo_of_seqs}}
-\item \code{\link{viz_bas_vec_heatmap}}
-\item \code{\link{viz_bas_vec_seqlogo}}
-\item \code{\link{viz_bas_vec_heatmap_seqlogo}}
+\item \code{\link{viz_bas_vec}}
 \item \code{\link{viz_seqs_acgt_mat}}
-\item \code{\link{plot_ggseqlogo}}
-\item \code{\link{plot_ggheatmap}}
+\item \code{\link{plot_pwm}}
 }
 }
 

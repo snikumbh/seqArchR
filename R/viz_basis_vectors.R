@@ -1,14 +1,18 @@
-#' @title Visualize the NMF basis vectors in a paired heatmap and sequence logo
-#' plot
+
+
+
+#' @title Visualize the NMF basis vectors
 #'
-#' @description The given features matrix is visualized as a heatmap followed
-#' by a sequence logo where the positions are aligned for better
-#' visualization.
+#' @description The given features matrix is visualized as a paired heatmap
+#' and sequence logo where the positions are aligned for better
+#' visualization., or as a single heatmap or as a single sequence logo.
 #'
 #' @param feat_mat The features matrix (basis vectors matrix) from seqArchR.
-#'
-#' @param method For \code{ggseqlogo} -- either of "custom", "bits", or
-#' "probability". Default is "bits".
+#' @param type Character. Specify "heatmap" or "seqlogo" to visualize the
+#' basis vectors as such. Specify "both" to visualize position-aligned heatmap
+#' and sequence logo.
+#' @param method Specify either of "custom", "bits", or "probability" for
+#' plotting sequence logo. Default is "bits".
 #' @param pos_lab Labels for sequence positions, should be of same
 #' length as that of the sequences. Default value is NULL, when the
 #' positions are labeled from 1 to the length of the sequences.
@@ -33,88 +37,77 @@
 #' res <- readRDS(system.file("extdata", "example_seqArchRresult.rds",
 #'          package = "seqArchR", mustWork = TRUE))
 #'
-#' viz_bas_vec_heatmap_seqlogo(feat_mat = get_clBasVec_m(res,iter=1),
-#'                             sinuc_or_dinuc = "dinuc", fixed_coord = TRUE)
-#'
-viz_bas_vec_heatmap_seqlogo <- function(feat_mat, method = "bits",
-                                pos_lab = NULL, add_pseudo_counts = FALSE,
-                                pdf_name = NULL, sinuc_or_dinuc = "sinuc",
-                                fixed_coord = FALSE){
-    check_cowplot()
-    check_vars2(feat_mat)
-    ##
-    if(is.null(pos_lab)){
-        pos_lab <- set_default_pos_lab(feat_mat, sinuc_or_dinuc)
-    }
-    ##
-    pl_list <- apply(feat_mat, MARGIN = 2, function(x) {
-        if (sinuc_or_dinuc == "dinuc") {
-            pwm <- make_PWMs(x, add_pseudo_counts = FALSE, sinuc = FALSE)
-        } else if (sinuc_or_dinuc == "sinuc") {
-            pwm <- make_PWMs(x, add_pseudo_counts = FALSE, sinuc = TRUE)
-        }
-        ## Heatmap on top
-        p1 <- plot_ggheatmap(pwm_mat = pwm, pos_lab = pos_lab)
-        p1 <- p1 + theme(plot.margin = margin(0,0,0,0, unit="cm"))
-        ## Seqlogo below
-        p2 <- plot_ggseqlogo(pwm_mat = pwm, method = method, pos_lab = pos_lab,
-                                fixed_coord = fixed_coord)
-        ## Make adjustments for alignment
-        p2 <- p2 + theme(plot.margin = margin(0,0,0,0, unit="cm"))
-        final_p <- cowplot::plot_grid(p1, p2, nrow = 2, align="v")
-        ##
-        final_p
-    })
-
-    if(!is.null(pdf_name)){
-        if (file.exists(pdf_name)) {
-            warning("File exists, will overwrite", immediate. = TRUE)
-        }
-        grDevices::pdf(file=pdf_name, width=20, height=4)
-        lapply(pl_list, print)
-        dev.off()
-        return(invisible(NULL))
-    }
-
-    pl_list
-}
-## =============================================================================
-
-
-
-#' @describeIn viz_bas_vec_heatmap_seqlogo Visualize the NMF basis vectors
-#' as a sequence logo
-#'
-#'
-#' @examples
-#' viz_bas_vec_seqlogo(feat_mat = get_clBasVec_m(res,iter=1),
+#' # Visualize basis vectors at iteration 1 of seqArchR result as heatmap and
+#' # sequence logo
+#' viz_bas_vec(feat_mat = get_clBasVec_m(res,iter=1), type = "both",
 #'                      sinuc_or_dinuc = "dinuc", fixed_coord = TRUE)
 #'
-#' @export
-viz_bas_vec_seqlogo <- function(feat_mat, method = "bits", pos_lab = NULL,
-                                add_pseudo_counts = FALSE, pdf_name = NULL,
-                                sinuc_or_dinuc = "sinuc", fixed_coord = FALSE){
+#'
+#' # Visualize basis vectors at iteration 1 of seqArchR result as sequence logos
+#' viz_bas_vec(feat_mat = get_clBasVec_m(res,iter=1), type = "seqlogo",
+#'                      sinuc_or_dinuc = "dinuc", fixed_coord = TRUE)
+#'
+#'
+#' # Visualizing basis vector for a single cluster as a heatmap
+#' viz_bas_vec(feat_mat = as.matrix(get_clBasVec_m(res,iter=1)[,3]),
+#'              type = "heatmap", sinuc_or_dinuc = "dinuc", fixed_coord = TRUE)
+#'
+viz_bas_vec <- function(feat_mat, type = "both", method = "bits",
+                          pos_lab = NULL, add_pseudo_counts = FALSE,
+                          pdf_name = NULL, sinuc_or_dinuc = "sinuc",
+                          fixed_coord = FALSE){
     ## Visualize all basis factors (expected as columns of the given features
-    ## matrix) as seqlogos
+    ## matrix) as heatmaps or seqlogos or both combined
     check_vars2(feat_mat)
-    ##
-    if(is.null(pos_lab)){
-        pos_lab <- set_default_pos_lab(feat_mat, sinuc_or_dinuc)
+    pos_lab <- set_default_pos_lab(feat_mat, sinuc_or_dinuc, pos_lab)
+
+    if(type != "both"){
+        ##
+        pl_list <- apply(feat_mat, MARGIN = 2, function(x) {
+            set_sinuc <- TRUE
+            if (sinuc_or_dinuc == "dinuc") {
+                set_sinuc <- FALSE
+            }
+            pwm <- make_PWMs(x, add_pseudo_counts = FALSE, sinuc = set_sinuc)
+            ##
+            if(type == "heatmap"){
+                p1 <- plot_pwm(pwm_mat = pwm, method = "heatmap",
+                            pos_lab = pos_lab, fixed_coord = fixed_coord)
+            }
+            if(type == "seqlogo"){
+                p1 <- plot_pwm(pwm_mat = pwm, method = method,
+                            pos_lab = pos_lab, pdf_name = NULL,
+                                fixed_coord = fixed_coord)
+            }
+            p1
+        })
+    }else if(type == "both"){
+        ##
+        pl_list <- apply(feat_mat, MARGIN = 2, function(x) {
+            set_sinuc <- TRUE
+            if (sinuc_or_dinuc == "dinuc") {
+                set_sinuc <- FALSE
+            }
+            pwm <- make_PWMs(x, add_pseudo_counts = FALSE, sinuc = set_sinuc)
+            ## Heatmap on top
+            p1 <- plot_pwm(pwm_mat = pwm, method = "heatmap", pos_lab = pos_lab)
+            p1 <- p1 + theme(plot.margin = margin(0,0,0,0, unit="cm"))
+            ## Seqlogo below
+            p2 <- plot_pwm(pwm_mat = pwm, method = method, pos_lab = pos_lab,
+                           fixed_coord = fixed_coord)
+            ## Make adjustments for alignment
+            p2 <- p2 + theme(plot.margin = margin(0,0,0,0, unit="cm"))
+            final_p <- cowplot::plot_grid(p1, p2, nrow = 2, align="v")
+            ##
+            final_p
+        })
     }
-    ##
-    pl_list <- apply(feat_mat, MARGIN = 2, function(x) {
-        if (sinuc_or_dinuc == "dinuc") {
-            pwm <- make_PWMs(x, add_pseudo_counts = FALSE, sinuc = FALSE)
-        } else if (sinuc_or_dinuc == "sinuc") {
-            pwm <- make_PWMs(x, add_pseudo_counts = FALSE, sinuc = TRUE)
-        }
-        p1 <- plot_ggseqlogo(pwm_mat = pwm, method = method,
-            pos_lab = pos_lab, pdf_name = NULL,
-            fixed_coord = fixed_coord)
-        p1
-    })
+    handle_pdffile_plotlist(pdf_name, pl_list)
+    pl_list
+}
+## =============================================================================
 
-
+handle_pdffile_plotlist <- function(pdf_name, pl_list){
     if(!is.null(pdf_name)){
         if (file.exists(pdf_name)) {
             warning("File exists, will overwrite", immediate. = TRUE)
@@ -124,57 +117,18 @@ viz_bas_vec_seqlogo <- function(feat_mat, method = "bits", pos_lab = NULL,
         dev.off()
         return(invisible(NULL))
     }
-
-    pl_list
 }
 ## =============================================================================
 
-#' @describeIn viz_bas_vec_heatmap_seqlogo Visualize the
-#' NMF basis vectors as a heatmap
-#'
-#'
-#' @examples
-#' # Visualizing basis vector for a single cluster
-#' viz_bas_vec_heatmap(feat_mat = as.matrix(get_clBasVec_m(res,iter=1)[,3]),
-#'                      sinuc_or_dinuc = "dinuc", fixed_coord = TRUE)
-#'
-#' @export
-viz_bas_vec_heatmap <- function(feat_mat, pos_lab = NULL,
-                                add_pseudo_counts = FALSE, pdf_name = NULL,
-                                sinuc_or_dinuc = "sinuc", fixed_coord = FALSE){
-    # Visualize all basis factors (expected as columns of the given features
-    # matrix) as heatmaps
-    ##
-    check_vars2(feat_mat)
-    ##
-    if(is.null(pos_lab)){
-        pos_lab <- set_default_pos_lab(feat_mat, sinuc_or_dinuc)
-    }
-    ##
-    pl_list <- apply(feat_mat, MARGIN = 2, function(x) {
-        if (sinuc_or_dinuc == "dinuc") {
-            pwm <- make_PWMs(x, add_pseudo_counts = FALSE, sinuc = FALSE)
-        } else if (sinuc_or_dinuc == "sinuc") {
-            pwm <- make_PWMs(x, add_pseudo_counts = FALSE, sinuc = TRUE)
-        }
-        p1 <- plot_ggheatmap(pwm_mat = pwm,
-            pos_lab = pos_lab, pdf_name = pdf_name, fixed_coord = fixed_coord)
-        p1
-    })
-    pl_list
-}
-## =============================================================================
-
-set_default_pos_lab <- function(feat_mat, sinuc_or_dinuc){
-    pos_lab <- NULL
-    if(sinuc_or_dinuc == "sinuc"){
-        pos_lab <- seq_len(nrow(feat_mat)/4)
-    }
+set_default_pos_lab <- function(feat_mat, sinuc_or_dinuc, pos_lab){
+    if(!is.null(pos_lab)) return(pos_lab)
+    deno <- 4
     if(sinuc_or_dinuc == "dinuc"){
-        pos_lab <- seq_len(nrow(feat_mat)/16)
+        deno <- 16
     }
-    pos_lab
+    pos_lab <- seq_len(nrow(feat_mat)/deno)
 }
+## =============================================================================
 
 check_cowplot <- function(){
     if(!requireNamespace("cowplot", quietly = TRUE)){

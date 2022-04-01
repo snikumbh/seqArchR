@@ -204,14 +204,11 @@ plot_ggseqlogo_of_seqs <- function(seqs, pos_lab = NULL, xt_freq = 5,
                                     method = "bits", title = NULL,
                                     bits_yax = "full", fixed_coord = FALSE){
     ##
-    if(is.null(pos_lab)){
-        pos_lab <- seq_len(Biostrings::width(seqs[1]))
-    }
+    pos_lab <- set_default_pos_lab2(seqs[1], pos_lab)
     ##
     if(xt_freq > Biostrings::width(seqs[1])){
         xt_freq <- 5
     }
-    ##
     ##
     use_xtick_labs <- set_xtick_labels(pos_lab, xt_freq)
     ##

@@ -80,8 +80,7 @@ viz_seqs_acgt_mat(seqs = use_seqs)
 }
 \seealso{
 Other visualization functions: 
-\code{\link{plot_ggheatmap}()},
-\code{\link{plot_ggseqlogo}()},
-\code{\link{viz_bas_vec_heatmap_seqlogo}()}
+\code{\link{plot_pwm}()},
+\code{\link{viz_bas_vec}()}
 }
 \concept{visualization functions}

@@ -99,10 +99,8 @@ viz_seqs_acgt_mat <- function(seqs, pos_lab = NULL,
                                     f_width = 450, f_height = 900,
                                     f_units = "px"
                                     ) {
-    if(is.null(pos_lab)){
-        pos_lab <- seq_len(Biostrings::width(seqs[1]))
-    }
-
+    ##
+    pos_lab <- set_default_pos_lab2(Biostrings::DNAString(seqs[1]), pos_lab)
     if(xt_freq <= 0 || xt_freq > length(pos_lab)){
         warning("Expected positive integer (< length of sequences) for",
             "xt_freq. Reverting to default value")

@@ -275,9 +275,8 @@ The NMF basis vectors can be visualized as a heatmap and/or sequence logo using
 ### Basis vectors at iteration 1
 
 ```{r viz-BV-1, echo=TRUE, fig.height=5, fig.width=25}
-seqArchR::viz_bas_vec_heatmap_seqlogo(
-                        feat_mat = get_clBasVec_m(seqArchRresult, 1), 
-                        method = "bits", sinuc_or_dinuc = "dinuc")
+seqArchR::viz_bas_vec(feat_mat = get_clBasVec_m(seqArchRresult, 1), 
+                      type = "both", method = "bits", sinuc_or_dinuc = "dinuc")
 
 ```
 
@@ -285,9 +284,8 @@ seqArchR::viz_bas_vec_heatmap_seqlogo(
 
 
 ```{r viz-BV-2, fig.height=5, fig.width=25, echo=TRUE, warning=FALSE} 
-seqArchR::viz_bas_vec_heatmap_seqlogo(
-                        feat_mat = get_clBasVec_m(seqArchRresult, 2), 
-                        method = "bits", sinuc_or_dinuc = "dinuc")
+seqArchR::viz_bas_vec(feat_mat = get_clBasVec_m(seqArchRresult, 2), 
+                      type = "both", method = "bits", sinuc_or_dinuc = "dinuc")
 
 
 ```
