@@ -53,31 +53,6 @@
 ## =============================================================================
 
 
-
-# @title One-hot decode
-#
-# @description One-hot decode a given one-hot encoded DNA sequence.
-#
-# @param oneHotEncodedSeqV A single one-hot encoded sequence vector.
-#
-# @return The one-hot decoded sequence of ACGTs.
-#
-.one_hot_decode <- function(oneHotEncodedSeqV) {
-
-    dna_alphabet <- c("A", "C", "G", "T")
-    seqlen <- length(oneHotEncodedSeqV)/length(dna_alphabet)
-    decodedSeq <- rep("Q", seqlen)
-    for (alpha_char in seq_along(dna_alphabet)) {
-        cutp <- seqlen
-        startp <- (alpha_char * cutp) - cutp + 1
-        endp <- (alpha_char * cutp)
-        decodedSeq[which(oneHotEncodedSeqV[startp:endp] == 1)] <-
-            dna_alphabet[alpha_char]
-    }
-    return(paste0(decodedSeq, collapse = ""))
-}
-## =============================================================================
-
 #' @title Get one-hot encoded sequences
 #'
 #' @description Get the one-hot encoding representation of the given sequences.
