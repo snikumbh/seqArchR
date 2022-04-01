@@ -294,6 +294,8 @@ set_config <- function(chunk_size = 500,
 ## Edit on 2021-01-02:
 ## Default value changed to euclid instead of modNW which is computed using
 ## a suggested package
+## Edit on 2022-04-01:
+## modNW removed. May not be required at all
 ##
 ## @return distance matrix from hopach (hdist object)
 .compute_factor_distances <- function(factorsMat, distMethod = "euclid"){
@@ -307,10 +309,6 @@ set_config <- function(chunk_size = 500,
                             "abseuclid", "cor", "abscor")
     distMethods_stats <- c("euclid")
     ##
-    if(distMethod == "modNW"){
-        distMat <- .get_modNW_dist(factorsMat)
-        return(distMat)
-    }
     if(any(distMethod == distMethods_hopach)){
         distMat <- .get_hopach_dist(factorsMat, distMethod)
         return(distMat)
@@ -352,46 +350,6 @@ set_config <- function(chunk_size = 500,
     distMat <- as.matrix(as_dist)
     return(distMat)
 }
-
-.get_modNW_dist <- function(factorsMat){
-    if(!requireNamespace("TFBSTools", quietly = TRUE)){
-        stop("Please install R package 'TFBSTools' for using modNW distance.")
-    }else{
-        ## Turn the factors which are vectors into a 2D matrix of
-        ## dinucs x positions
-        dim_names <- get_dimers_from_alphabet(c("A", "C", "G", "T"))
-        nPositions <- nrow(factorsMat)/length(dim_names)
-        ##
-        factorsMatList_asPFMs <- lapply(seq_len(ncol(factorsMat)),
-            function(x){
-                ## A 16 x nPositions 2D matrix is obtained
-                sinucSparse <- make_PWMs(factorsMat[,x],
-                                            add_pseudo_counts = FALSE,
-                                            scale = FALSE, sinuc = FALSE)
-                sinucSparseInt <- matrix(as.integer(round(sinucSparse)),
-                                    nrow = 4, byrow = FALSE,
-                                    dimnames = list(rownames(sinucSparse)))
-            })
-
-        ##
-        lenPFMs <- length(factorsMatList_asPFMs)
-        scoresMat <- matrix(rep(0, lenPFMs*lenPFMs), nrow = lenPFMs)
-        rownames(scoresMat) <- seq(1,nrow(scoresMat),by=1)
-        colnames(scoresMat) <- seq(1,ncol(scoresMat),by=1)
-
-        for(i in seq_len(lenPFMs)){
-            for(j in seq_len(lenPFMs)){
-                temp <- TFBSTools::PFMSimilarity(
-                    factorsMatList_asPFMs[[i]], factorsMatList_asPFMs[[j]])
-                scoresMat[i,j] <- temp["score"]
-            }
-        }
-        ## currently we use scoresMat, so we only return that
-        distMat <- max(scoresMat) - scoresMat
-    }
-    return(distMat)
-}
-## =============================================================================
 
 
 ## For hierarchical clustering object, return the cluster medoids
