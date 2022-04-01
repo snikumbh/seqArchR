@@ -50,7 +50,7 @@
 #' viz_pwm(pwm_mat = pwm, method = "bits", fixed_coord = TRUE)
 #'
 viz_pwm <- function(pwm_mat, method = "heatmap", pos_lab = NULL,
-                     pdf_name = NULL, fixed_coord = FALSE, bits_yax = "full"){
+                    pdf_name = NULL, fixed_coord = FALSE, bits_yax = "full"){
 
     pos_lab <- set_default_pos_lab2(pwm_mat, pos_lab)
     check_vars(pwm_mat, pos_lab)
@@ -61,7 +61,7 @@ viz_pwm <- function(pwm_mat, method = "heatmap", pos_lab = NULL,
         pwm_mat_df$Nucleotides <- rownames(pwm_mat_df)
         colnames(pwm_mat_df) <- c(pos_lab, "Nucleotides")
         pwm_mat_df_for_ggheatmap <- melt(pwm_mat_df, id.vars = c("Nucleotides"),
-                                         variable.name = "positions")
+                                            variable.name = "positions")
         p1 <- get_ggheatmap(pwm_mat_df = pwm_mat_df_for_ggheatmap)
     }else{
         p1 <- get_ggseqlogo(pwm_mat, method = method, pos_lab = pos_lab)
@@ -91,13 +91,13 @@ get_ggheatmap <- function(pwm_mat_df){
         ggplot2::theme_bw() +
         ggplot2::xlab(label = element_blank()) +
         ggplot2::scale_fill_gradient2(name = "", low = "white",
-                                      mid = "white", high = "#012345") +
+                                        mid = "white", high = "#012345") +
         ggplot2::theme(legend.position = "top",
-                       legend.justification = "center",
-                       legend.margin = margin(0,-1,0,0),
-                       axis.text.x = element_text(size = rel(0.8), angle = 90,
-                                                  hjust = 1, vjust = 0.5),
-                       plot.margin = margin(0,0,0,0)
+                        legend.justification = "center",
+                        legend.margin = margin(0,-1,0,0),
+                        axis.text.x = element_text(size = rel(0.8), angle = 90,
+                                                hjust = 1, vjust = 0.5),
+                        plot.margin = margin(0,0,0,0)
         )
     ##
     p1
