@@ -462,20 +462,19 @@ set_config <- function(chunk_size = 500,
                                         get_samples_matrix)
         ##
         new_ord <- nmf_nRuns_list$new_ord
-        ## Get reconstruction accuracies for them
-        bestQ2 <- -1
-        for (nR in seq_len(nRuns)){
-            A <- this_mat
-            recA <- as.matrix(featuresMatrixList[[nR]]) %*%
+        ## Get reconstruction accuracies (q2) for them
+        ## assume this_Mat is A, recA is reconstructedA
+        recA_list <- lapply(seq_len(nRuns), function(nR){
+            as.matrix(featuresMatrixList[[nR]]) %*%
                 as.matrix(samplesMatrixList[[nR]])
-            this_q2 <- .compute_q2(as.matrix(A), recA)
-            if(this_q2 > bestQ2){
-                bestQ2 <- this_q2
-                bestFeatMat <- featuresMatrixList[[nR]]
-                bestSampMat <- samplesMatrixList[[nR]]
-                bestOrd <- new_ord[[nR]]
-            }
-        }
+        })
+        q2_nRuns <- unlist(lapply(recA_list, function(recA){
+            .compute_q2(as.matrix(this_mat), recA)
+        }))
+        bestQ2_run <- which.max(q2_nRuns)
+        bestFeatMat <- featuresMatrixList[[bestQ2_run]]
+        bestSampMat <- samplesMatrixList[[bestQ2_run]]
+        bestOrd <- new_ord[[bestQ2_run]]
         ##
         featuresMatrix <- bestFeatMat
         samplesMatrix <- bestSampMat
@@ -537,12 +536,12 @@ set_config <- function(chunk_size = 500,
 
 
 
-.getMeanOfListOfMatrices <- function(listOfMats) {
-    # Currently, assume all matrices have same dimensions
-    # if discrepancy in dimensions, throws error "non-conformable arrays"
-    meanMat <- Reduce("+", listOfMats)/length(listOfMats)
-    return(meanMat)
-}
+# .getMeanOfListOfMatrices <- function(listOfMats) {
+#     # Currently, assume all matrices have same dimensions
+#     # if discrepancy in dimensions, throws error "non-conformable arrays"
+#     meanMat <- Reduce("+", listOfMats)/length(listOfMats)
+#     return(meanMat)
+# }
 
 
 ## @title Setup the clustFactors list element for seqArchR result object
