@@ -24,7 +24,7 @@ URL: https://snikumbh.github.io/seqArchR/,
 BugReports: https://github.com/snikumbh/seqArchR/issues
 SystemRequirements: Python (>= 3.5), scikit-learn (>= 0.21.2)
 Depends:
-    R (>= 4.1.0)
+    R (>= 4.2.0)
 Imports:
     utils,
     graphics,
