@@ -144,6 +144,16 @@ test_that("prepare_chunks handles negative chunkSize", {
                  "chunk_size should be > 0")
 })
 
+test_that("prepare_chunks handles chunkLength > reqdChunkSize", {
+    seqsClustLabels <- rep("0-1-2-3", 20)
+    tempList <- vector("list", 5)
+    globClustAssignments <- lapply(seq_along(tempList),
+                                   function(x){
+                                       tempList[[x]] <- round(10*runif(5))
+                                   })
+    expect_error(.prepare_chunks(seqsClustLabels, -25),
+                 "chunk_size should be > 0")
+})
 
 
 

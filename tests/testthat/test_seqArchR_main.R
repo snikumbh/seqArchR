@@ -37,7 +37,7 @@ test_that("seqArchR (stability) works when timeFlag is FALSE/checkpointing", {
                      verbose = TRUE,
                      plot = FALSE,
                      time = FALSE)
-    toyConfig <- seqArchR::set_config(chunk_size = 100,
+    toyConfig <- seqArchR::set_config(chunk_size = 50,
                                         k_min = 1, k_max = 20,
                                         parallelize = FALSE,
                                         mod_sel_type = "stability",
