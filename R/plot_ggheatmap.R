@@ -111,9 +111,9 @@ get_ggseqlogo <- function(pwm_mat, method, pos_lab){
         ggseqlogo::geom_logo(pwm_mat, method = method, seq_type = "dna") +
         ggplot2::theme_linedraw() +
         ggplot2::theme(axis.text.x = element_text(size = rel(0.8),
-                                                  angle = 90, hjust = 1, vjust=0.5),
-                       axis.text.y = element_text(size = rel(0.8)),
-                       panel.grid = element_blank()) +
+                                            angle = 90, hjust = 1, vjust=0.5),
+                        axis.text.y = element_text(size = rel(0.8)),
+                        panel.grid = element_blank()) +
         ggplot2::xlab(label = "Positions") +
         ##
         ggplot2::scale_x_continuous(breaks = seq_len(ncol(pwm_mat)),
