@@ -119,22 +119,6 @@
     return(sampMatList)
 }
 
-# .tol_best_k <- function(kValue, this_amari, prev_amari, tol, verbose){
-#     magChange <- .mag_change(this_amari, prev_amari)
-#     .msg_pstr("Change is : ", magChange, flg=verbose)
-#     bestK <- NULL
-#     if(magChange >= abs(log10(tol))){
-#         ## detected fall based on tolerance, choose and break loop
-#         bestK <- kValue - 1
-#         .msg_pstr("magnitude change > tol, ", abs(log10(tol)), flg=verbose)
-#         .msg_pstr("This amariType Distance = ", this_amari, flg=verbose)
-#         .msg_pstr("Would have choosen bestK as : ", bestK, flg=verbose)
-#     }
-#     return(bestK)
-# }
-
-
-
 
 .get_amari_from_featMatList <- function(featMatList){
     return(computeAmariDistances(featMatList))
@@ -158,27 +142,3 @@ computeAmariDistances <- function(matrices){
     )
     return(mean(distances.list))
 }
-
-
-# getConsensusMat <- function(matrices){
-#     memberships <- lapply(matrices, function(x){
-#         apply(x, 2, which.max)
-#     })
-#     ## compute connectivity matrix per run
-#     ## finally, compute the consensus matrix (average of all connectivity
-#     ## matrices)
-#     ## Compute the dispersion score (range: -1 to +1)
-#     connectivityMats <- lapply(seq_along(matrices), function(x){
-#         xMat <- matrices[[x]]
-#         xMemberships <- memberships[[x]]
-#         nSamples <- ncol(xMat)
-#         connMat <- matrix(rep(0, nSamples*nSamples), nrow = nSamples)
-#         for(i in seq_len(nrow(connMat))){
-#             relColIdx <- which(xMemberships == xMemberships[i])
-#             connMat[i,relColIdx] <- 1
-#         }
-#         connMat
-#     })
-#     ##
-#     consensusMat <- .getMeanOfListOfMatrices(connectivityMats)
-# }
