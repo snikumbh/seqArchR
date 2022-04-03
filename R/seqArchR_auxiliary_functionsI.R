@@ -1072,8 +1072,7 @@ fetch_cutree_by_hc_order <- function(clust_list, cutree_res = NULL, hcorder){
 #'
 #' @param dist_method Distance measure to be used with hierarchical clustering.
 #' Available options are "euclid" (default), "cor" for correlation, "cosangle"
-#' for cosine angle, "modNW" for modified Needleman-Wunsch similarity (see
-#' \code{\link[TFBSTools]{PFMSimilarity}}).
+#' for cosine angle.
 #'
 #' @param regularize Logical. Specify TRUE if regularization is to be performed
 #' before comparison. Default is FALSE. Also see argument 'topN'.
