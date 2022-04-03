@@ -82,7 +82,7 @@ viz_bas_vec <- function(feat_mat, ptype = c("heatmap", "seqlogo"),
         }
         if("seqlogo" %in% ptype){
             p2 <- viz_pwm(pwm_mat = pwm, method = method, pdf_name = NULL,
-                          pos_lab = pos_lab, fixed_coord = fixed_coord)
+                            pos_lab = pos_lab, fixed_coord = fixed_coord)
             # p2 <- p2 + theme(plot.margin = margin(0,0,0,0, unit="cm"))
             if(length(ptype) == 1) return(p2)
             pl[[match("seqlogo", ptype)]] <- p2
