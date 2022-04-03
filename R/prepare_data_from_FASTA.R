@@ -11,9 +11,9 @@
     if(k > 3) stop("Only mono-, di- and trinucleotides are supported")
     dna_alph <- Biostrings::DNA_BASES
     use_alph <- switch(k,
-                   dna_alph,
-                   get_dimers_from_alphabet(dna_alph),
-                   get_trimers_from_alphabet(dna_alph)
+                    dna_alph,
+                    get_dimers_from_alphabet(dna_alph),
+                    get_trimers_from_alphabet(dna_alph)
                 )
     seqlen <- length(givenSeq)
     if(seqlen < 1) stop("Empty or NULL sequences")
