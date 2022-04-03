@@ -1,7 +1,22 @@
 citHeader("To cite seqArchR in publications use:")
 
-citEntry(
-  entry    = "Article",
+bibentry(
+  bibtype  = "Manual",
+  title    = "{seqArchR}: an R/Bioconductor package for identifying promoter sequence architectures",
+  author   = personList(
+             as.person("Sarvesh Nikumbh")
+             ),
+  journal  = "TODO",
+  year     = "TODO",
+  volume   = "TODO",
+  number   = "TODO",
+  pages    = "TODO",
+  url      = "TODO"
+)
+
+
+bibentry(
+  bibtype  = "Article",
   title    = "Identifying promoter sequence architectures de novo using non-negative matrix factorization",
   author   = personList(
              as.person("Sarvesh Nikumbh"),
@@ -12,6 +27,6 @@ citEntry(
   volume   = "TODO",
   number   = "TODO",
   pages    = "TODO",
-  url      = "TODO",
-  textVersion = paste("Not yet")
+  url      = "TODO"
 )
+
