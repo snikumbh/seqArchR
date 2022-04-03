@@ -90,21 +90,6 @@
 
 
 
-
-# .assert_seqArchR_kFolds_independent <- function(kFolds_var) {
-#     if (is.null(kFolds_var)) {
-#         stop("'kFolds' is NULL")
-#     }
-#     if (!is.numeric(kFolds_var)) {
-#         stop("'kFolds' should be numeric and > 0")
-#     } else {
-#         if (kFolds_var < 1) {
-#             stop("'kFolds' should be > 0")
-#         }
-#     }
-# }
-## =============================================================================
-
 .check_null_num <- function(var, use_name){
     if (is.null(var)) {
         stop(use_name, " is NULL")
@@ -131,7 +116,7 @@
 ## 2. numeric and > 0
 ##
 .assert_seqArchR_kFolds_in_tandem <- function(kFolds_var,
-                                              given_seqs_size = NULL) {
+                                            given_seqs_size = NULL) {
     ##
     .check_null_num(var = kFolds_var, use_name = 'kFolds')
     if (kFolds_var < 3) {
@@ -166,14 +151,6 @@
     if (par_var) {
         .check_null_num(var = nCores_var, use_name = 'nCoresUse')
         .check_gtZero(var = nCores_var, use_name = 'nCoresUse')
-        # if(nCores_var < 1)
-        #     stop("'nCoresUse' < available #cores")
-        # if (is.null(nCores_var)) {
-        #     stop("'nCoresUse' is NULL")
-        # }
-        # if (!is.numeric(nCores_var) || nCores_var < 1) {
-        #     stop("'nCoresUse' should be numeric and > 0 and < available #cores")
-        # }
         if (nCores_var > parallel::detectCores()) {
             stop("Specified more than available cores. Available cores: ",
                 parallel::detectCores())
