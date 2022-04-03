@@ -29,7 +29,7 @@
 get_clBasVec <- function(res, iter){
     return(res$clustBasisVectors[[iter]])
 }
-
+## =============================================================================
 
 #' @describeIn get_clBasVec Get the number of basis vectors (clusters)
 #' at the  selected iteration.
@@ -40,6 +40,7 @@ get_clBasVec <- function(res, iter){
 get_clBasVec_k <- function(res, iter){
     return(res$clustBasisVectors[[iter]]$nBasisVectors)
 }
+## =============================================================================
 
 #' @describeIn get_clBasVec The basis vectors matrix at the selected
 #' iteration. Note that eatures along rows.
@@ -51,6 +52,7 @@ get_clBasVec_k <- function(res, iter){
 get_clBasVec_m <- function(res, iter){
     return(res$clustBasisVectors[[iter]]$basisVectors)
 }
+## =============================================================================
 
 #' @describeIn get_clBasVec Get the cluster IDs for each sequence. Note that
 #' order of sequences here is as per the input.
@@ -67,7 +69,7 @@ get_seqClLab <- function(res, iter = NULL){
         return(res$seqsClustLabels[[iter]])
     }
 }
-
+## =============================================================================
 
 
 #' @title Get sequences from the seqArchR result object
@@ -142,8 +144,6 @@ seqs_str <- function(res, iter = NULL, cl = NULL, ord = FALSE){
     }
 
 }
-
-
 ## =============================================================================
 
 # @title Assign samples to clusters
@@ -321,21 +321,20 @@ seqs_str <- function(res, iter = NULL, cl = NULL, ord = FALSE){
     #####
     all_stats_midpoint_nl <- unlist(all_stats_midpoints)
     #####
-    out_cl_idx <- NULL
-    for(i in check_these){
+    temp <- vapply(check_these, function(x){
         ## use midpoints to compare locations of boxes
-        check_midpoint <- all_stats_midpoints[[i]][i]
-        distWithMax <- abs(check_midpoint - all_stats_max[[i]][i])
+        check_midpoint <- all_stats_midpoints[[x]][x]
+        distWithMax <- abs(check_midpoint - all_stats_max[[x]][x])
         distWithMedianMidpoints <- check_midpoint -
             stats::median(all_stats_midpoint_nl)
-
         if(distWithMax > distWithMedianMidpoints){
-            ## outlier
-            out_cl_idx <- c(out_cl_idx, i)
+            x
         }else{
-            # do nothing
+            NA
         }
-    }
+    }, FUN.VALUE = numeric(1))
+    out_cl_idx <- temp[which(!is.na(temp))]
+    ##
     return(out_cl_idx)
 }
 ## =============================================================================
@@ -372,7 +371,7 @@ seqs_str <- function(res, iter = NULL, cl = NULL, ord = FALSE){
 ## return indices of outliers by comparing ranges or IQRs
 ## This func is a joint version of earlier separate funcs for each case
 .compare_iqr_or_range <- function(clustwise_matlist, qual_cl_idx,
-                                  zscore_thresh = 5, iqr = TRUE){
+                                zscore_thresh = 5, iqr = TRUE){
     ncl <- ncol(clustwise_matlist[[1]])
     all_range_or_iqr <- lapply(clustwise_matlist, function(x){
         ## get column-wise ranges
@@ -389,7 +388,7 @@ seqs_str <- function(res, iter = NULL, cl = NULL, ord = FALSE){
     all_range_or_iqr_mad <- stats::mad(all_range_or_iqr_vec)
     range_or_iqr_zscore <-
         (all_range_or_iqr_vec -
-             stats::median(all_range_or_iqr_vec))/all_range_or_iqr_mad
+            stats::median(all_range_or_iqr_vec))/all_range_or_iqr_mad
     ##
     out_idx <- which(range_or_iqr_zscore > zscore_thresh)
     if(length(out_idx) > 0){
@@ -405,11 +404,10 @@ seqs_str <- function(res, iter = NULL, cl = NULL, ord = FALSE){
 
 .assign_samples_to_clusters <- function(clusterMembershipsVec, nClusters,
                                         iChunksColl, iChunkIdx) {
-    returnClusterAsList <- vector("list", nClusters)
-    for (i in seq_along(returnClusterAsList)) {
-        returnClusterAsList[[i]] <-
-            iChunksColl[[iChunkIdx]][clusterMembershipsVec == i]
-    }
+    ##
+    returnClusterAsList <- lapply(seq_len(nClusters), function(x){
+        iChunksColl[[iChunkIdx]][clusterMembershipsVec == x]
+    })
     return(returnClusterAsList)
 }
 ## =============================================================================
@@ -419,15 +417,15 @@ seqs_str <- function(res, iter = NULL, cl = NULL, ord = FALSE){
 #' given clustering of the existing clusters
 #'
 #' @description Collate sequences original divided across n clusters into a
-#'  new set of m clusters. These m clusters obtained by clustering the original
-#'  n clusters.
+#'  new set of m clusters. These `m` clusters obtained by clustering the
+#'  original `n` clusters.
 #' Assume a collection of 100 sequences across seven existing
 #' clusters. These seven clusters are collated to obtain three resulting
 #' clusters. Collating 100 sequences distributed across the seven clusters into
-#' the resulting three clusters can be achieved with collate clusters
+#' the resulting three clusters can be achieved with collate clusters.
 #'
 #' @param to_clust A list giving clustering of factors. In other words this is
-#' the clustering of clusters of sequences given in orig_clust
+#' the clustering of clusters of sequences given in `orig_clust`
 #' @param orig_clust  A list of sequence IDs in existing clusters
 #'
 #' @return A list with sequence IDs collated by the specified clustering
@@ -457,13 +455,12 @@ collate_clusters <- function(to_clust, orig_clust) {
         nClusters <- length(to_clust)
         clustSizes <- unlist(lapply(to_clust, length))
         ##
-        collClAssign <- vector("list", nClusters)
-        for(clustIdx in seq_along(collClAssign)){
-            temp <- unlist(lapply(to_clust[[clustIdx]], function(x){
-                orig_clust[[x]]
+        collClAssign <- lapply(seq_len(nClusters), function(x){
+            temp <- unlist(lapply(to_clust[[x]], function(y){
+                orig_clust[[y]]
             }))
-            collClAssign[[clustIdx]] <- temp
-        }
+            temp
+        })
         ##
         return(collClAssign)
     }
@@ -524,6 +521,7 @@ collate_clusters <- function(to_clust, orig_clust) {
     ## order that will be returned by levels (in get_seqs_clusters_in_list fn)
     candidateClustLabels <- sort(as.character(seq_len(nClusters)))
     newSeqsClustLabels <- oldSeqsClustLabels
+
     for (i in seq_len(nClusters)) {
         needUpdateIdx <- collatedClustAssignments[[i]]
         newSeqsClustLabels[needUpdateIdx] <-
@@ -531,6 +529,7 @@ collate_clusters <- function(to_clust, orig_clust) {
                         paste0(candidateClustLabels[i])}, character(1)
                 )
     }
+    ##
     .assert_seqArchR_seqsClustLabels(newSeqsClustLabels)
     return(newSeqsClustLabels)
 }
@@ -568,11 +567,9 @@ collate_clusters <- function(to_clust, orig_clust) {
             }
         }
         ##
-        preparedChunks <- vector("list", length(chunkStarts))
-        for (i in seq_along(chunkStarts)) {
-            preparedChunks[[i]] <-
-                total_set[seq(chunkStarts[i],chunkEnds[i],by=1)]
-        }
+        preparedChunks <- lapply(seq_along(chunkStarts), function(x){
+            total_set[seq(chunkStarts[x],chunkEnds[x],by=1)]
+        })
         ##
     } else {
         preparedChunks <- vector("list", 1)
@@ -634,7 +631,7 @@ collate_clusters <- function(to_clust, orig_clust) {
                                         minClusters = 2,
                                         parentChunks = NULL,
                                         returnOrder = FALSE,
-                                        ...) {
+                                        ...){
     ##
     .assert_seqArchR_featSampMatrix(globFactorsMat, feat = TRUE)
     .assert_seqArchR_flags(flags)
@@ -652,9 +649,12 @@ collate_clusters <- function(to_clust, orig_clust) {
         .msg_pstr("Cluster order by ", linkage," linkage w/ ",
             distMethod, " distance:", flg=dbg)
         .msg_pstr("New order: ", .msg_print(ord), flg=dbg)
-        for(k in seq_len(length(ord)-1)){
-            .msg_pstr(paste(paste(ord[k], ord[k+1], sep=", "), "=",
-                    gfDisMat[ord[k], ord[k+1]], collapse="\n"), flg=dbg)
+        if(dbg){
+            invisible(lapply(seq_len(length(ord)-1), function(k){
+                .msg_pstr(paste(paste(ord[k], ord[k+1], sep=", "), "=",
+                                gfDisMat[ord[k], ord[k+1]], collapse="\n"),
+                        flg=dbg)
+            }))
         }
         .msg_pstr("New order: ", .msg_print(ord), flg=dbg)
         if(returnOrder) return(temp_hclust)
@@ -684,58 +684,35 @@ collate_clusters <- function(to_clust, orig_clust) {
     ##
     if(vec_ver){
         element_lengths <- unlist(lapply(nodeList, length))
-        if(any(element_lengths != 1)){
-            .msg_pstr("Needs unfurling...", flg=vrbs)
-            new_list <- vector("list", sum(element_lengths))
-            iter1_new <- 0
-            iter2_old <- 1
-            while(iter2_old <= length(nodeList)){
-                if(length(nodeList[[iter2_old]]) == 1){
-                    iter1_new <- iter1_new + 1
-                    new_list[[iter1_new]] <- nodeList[[iter2_old]]
-                }else{
-                    for(i in seq_along(nodeList[[iter2_old]])){
-                        iter1_new <- iter1_new + 1
-                        new_list[[iter1_new]] <- nodeList[[iter2_old]][[i]]
-                    }
-                }
-                iter2_old <- iter2_old + 1
-            }
-            return(new_list)
-
-        }else{
-            .msg_pstr("No unfurling...", flg=vrbs)
-            return(nodeList)
-        }
     }else{
         element_lengths <- unlist(lapply(nodeList, function(elem){
             ifelse(is.list(elem), length(elem), 1)
-            # else 1
         }))
-        if(any(element_lengths != 1)){
-            .msg_pstr("Needs unfurling...", flg=vrbs)
-            new_list <- vector("list", sum(element_lengths))
-            iter1 <- 0
-            iter2 <- 1
-            while(iter2 <= length(nodeList)){
-                if(!is.list(nodeList[[iter2]])){
-                    iter1 <- iter1 + 1
-                    new_list[[iter1]] <- nodeList[[iter2]]
-                }else{
-                    for(i in seq_along(nodeList[[iter2]])){
-                        iter1 <- iter1 + 1
-                        new_list[[iter1]] <- nodeList[[iter2]][[i]]
-                    }
-                }
-                iter2 <- iter2 + 1
-            }
-            return(new_list)
-        }else{
-            .msg_pstr("No unfurling...", flg=vrbs)
-            return(nodeList)
-        }
     }
-
+    if(any(element_lengths != 1)){
+        .msg_pstr("Needs unfurling...", flg=vrbs)
+        new_list <- vector("list", sum(element_lengths))
+        iter1 <- 0
+        iter2 <- 1
+        while(iter2 <= length(nodeList)){
+            if((vec_ver && length(nodeList[[iter2]]) == 1) ||
+                (!vec_ver && !is.list(nodeList[[iter2]]))) {
+                iter1 <- iter1 + 1
+                new_list[[iter1]] <- nodeList[[iter2]]
+            }else{
+                iter1 <- iter1 + 1
+                stIdx <- iter1
+                enIdx <- (iter1 + length(nodeList[[iter2]]) - 1)
+                new_list[stIdx:enIdx] <- nodeList[[iter2]]
+                iter1 <- enIdx
+            }
+            iter2 <- iter2 + 1
+        } ## while ends
+        return(new_list)
+    }else{
+        .msg_pstr("No unfurling...", flg=vrbs)
+        return(nodeList)
+    }
 }
 ## =============================================================================
 
@@ -789,14 +766,14 @@ fetch_cutree_by_hc_order <- function(clust_list, cutree_res = NULL, hcorder){
 
     stopifnot(tail(cl_ends, 1) == length(hcorder))
 
-    clust_list_new <- vector("list", length(cl_lens))
-    for(x in seq_along(cl_starts)){
+    ## w/o for loop
+    clust_list_new <- lapply(seq_along(cl_starts), function(x){
         adjust_idx <- cl_order_idx[cl_starts[x]:cl_ends[x]]
         if(x > 1){
             adjust_idx <- cl_order_idx[ cl_starts[x]:cl_ends[x] ] - cl_ends[x-1]
         }
-        clust_list_new[[x]][ adjust_idx ] <- clust_list[[x]]
-    }
+        clust_list[[x]][order(adjust_idx)]
+    })
 
     stopifnot(length(unlist(clust_list_new)) == length(hcorder))
     stopifnot(length(unique(unlist(clust_list_new))) == length(hcorder))
@@ -943,15 +920,15 @@ fetch_cutree_by_hc_order <- function(clust_list, cutree_res = NULL, hcorder){
 }
 ## =============================================================================
 
-.detect_just_for_sake_clust <- function(cheight_idx, cl_list, vrbs=FALSE){
-    upd_cl_list <- cl_list
-    cl_lens <- lapply(cl_list, length)
-    if(cheight_idx == 1 && length(which(cl_lens == 2)) == 1){
-        .msg_pstr("just for sake clustering detected!", flg=vrbs)
-        upd_cl_list <- .unfurl_nodeList(cl_list, vec_ver=TRUE, vrbs)
-    }
-    upd_cl_list
-}
+# .detect_just_for_sake_clust <- function(cheight_idx, cl_list, vrbs=FALSE){
+#     upd_cl_list <- cl_list
+#     cl_lens <- lapply(cl_list, length)
+#     if(cheight_idx == 1 && length(which(cl_lens == 2)) == 1){
+#         .msg_pstr("just for sake clustering detected!", flg=vrbs)
+#         upd_cl_list <- .unfurl_nodeList(cl_list, vec_ver=TRUE, vrbs)
+#     }
+#     upd_cl_list
+# }
 ## =============================================================================
 
 .check_and_uncollate_siblings <- function(clust_list, parentChunks, verbose){
@@ -1065,13 +1042,13 @@ fetch_cutree_by_hc_order <- function(clust_list, cutree_res = NULL, hcorder){
 
 
 .regularizeMat <- function(basisMat, topN = 10){
-    basisMat2 <- basisMat
-    for(i in seq_len(ncol(basisMat))){
-        asVec <- as.vector(basisMat[,i])
-        threshold <- utils::tail(utils::head(
-            sort(asVec, decreasing = TRUE), topN),1)
-        basisMat2[(basisMat[,i] < threshold), i] <- 0.0
-    }
+    basisMat2 <- apply(basisMat, MARGIN = 2, function(x){
+        sorted <- sort(x, decreasing = TRUE)
+        pickTopN <- sorted[seq_len(topN)]
+        threshold <- pickTopN[topN]
+        x[x < threshold] <- 0.0
+        x
+    })
     return(basisMat2)
 }
 ## =============================================================================
