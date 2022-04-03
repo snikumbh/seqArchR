@@ -9,7 +9,7 @@ collate_clusters(to_clust, orig_clust)
 }
 \arguments{
 \item{to_clust}{A list giving clustering of factors. In other words this is
-the clustering of clusters of sequences given in orig_clust}
+the clustering of clusters of sequences given in `orig_clust`}
 
 \item{orig_clust}{A list of sequence IDs in existing clusters}
 }
@@ -18,12 +18,12 @@ A list with sequence IDs collated by the specified clustering
 }
 \description{
 Collate sequences original divided across n clusters into a
- new set of m clusters. These m clusters obtained by clustering the original
- n clusters.
+ new set of m clusters. These `m` clusters obtained by clustering the
+ original `n` clusters.
 Assume a collection of 100 sequences across seven existing
 clusters. These seven clusters are collated to obtain three resulting
 clusters. Collating 100 sequences distributed across the seven clusters into
-the resulting three clusters can be achieved with collate clusters
+the resulting three clusters can be achieved with collate clusters.
 }
 \examples{
 
