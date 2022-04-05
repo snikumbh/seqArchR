@@ -226,7 +226,6 @@ performSearchForK <- function(X, cvfolds, startVal, endVal, step = 1,
                                     cgfglinear = TRUE,
                                     coarse_step = 10,
                                     askParsimony = FALSE,
-                                    # monolinear = FALSE,
                                     debugFlag = FALSE,
                                     verboseFlag = TRUE,
                                     bpparam) {
@@ -254,178 +253,164 @@ performSearchForK <- function(X, cvfolds, startVal, endVal, step = 1,
     ## Get cross-validation folds
     cvfolds <- .generate_folds(dim(X), kFolds)
     ##
-    # if (parallelDo) {
-        #######################
-        #### New strategy
-        if(returnBestK) {
-            ##
-            set_verbose <- ifelse(debugFlag, 2, ifelse(verboseFlag, 1, 0))
-            if(cgfglinear){
-                # .msg_pstr("Coarse-fine grained binary search", flg=vrbs)
-                prev_df <- NULL
-                #go_fine <- FALSE
-                ## when either lo or hi values are best, so we need to perform
-                ## a fine-grained search
-                #eureka <- FALSE
-                ## to note when the mid value happens to be
-                ## the best
-                #coarse_step <- 10
-                mi <- seq(coarse_step, max(param_ranges$k_vals), by=coarse_step)
-                lo <- mi-1
-                hi <- mi+1
-                stopifnot(length(lo) == length(mi) && length(lo) == length(hi))
-                ## For loop for coarse-grained search
-                prev_best_K <- -1
-                best_K <- 0
-                for (kCGIdx in seq_along(lo)){
-                    searchReturnCoarse <- performSearchForK(X = X,
-                        cvfolds = cvfolds,
-                        startVal = lo[kCGIdx],
-                        endVal = hi[kCGIdx],
-                        step = 1,
-                        prev_best_K = prev_best_K,
-                        best_K = best_K,
-                        prev_df = prev_df,
-                        param_ranges,
-                        # parallelDo = parallelDo,
-                        bpparam = bpparam,
-                        kFolds = kFolds, nRuns = nRuns,
-                        set_verbose = set_verbose)
-                    best_K <- searchReturnCoarse$best_K
-                    prev_best_K <- searchReturnCoarse$prev_best_K
-                    prev_df <- searchReturnCoarse$return_df
 
-                    if(best_K == mi[kCGIdx]){
-                        ## Work done, leave loop?
-                        .msg_pstr("mi value is best", flg=dbg)
-                        if(askParsimony){
-                            ## When mi value is chosen as best, in order for
-                            ## the 1-SE rule, it would be a good idea compute
-                            ## q2 values for at least 5 consecutive values of
-                            ## K less than mi.
-                            ## This means that, in thise case, we would set
-                            ## fgIL to (mi-5)
-                            ## Then, the 1-SE rule could lead to choosing a
-                            ## smaller value.
-                            ##
-                            #go_fine <- TRUE
-                            ## Scenario when the mi value is best, first check
-                            ## the 1-SE rule,
-                            ## What is the value chosen by this rule?
-                            ## Does it already include values from the previous
-                            ## triplet, if any?
-                            ## If yes, we may need computations for a few
-                            ## consecutive values below that value
-                            # idx_best <- as.numeric(which.max(
-                            # unlist(coarse_prev_df["q2_vals"])))
-                            # threshold <- coarse_prev_df[idx_best, "q2"] -
-                            #   coarse_prev_df[idx_best, "SE"]
-                            #
-                            ## TODO
-                            fgIL <- max(mi[kCGIdx]-5, 1)
-                            ## shield against setting 0
-                            fgOL <- max(lo[kCGIdx]-1, 1)
-                            .msg_range(fgIL, fgOL, vrbs)
-                        }else{
-                            ## Added to handle case when 1-SE rule is not
-                            ## applied
-                            ##
-                            fgIL <- max(mi[kCGIdx]-1, 1)
-                            ## shield against setting 0
-                            fgOL <- max(mi[kCGIdx]-1, 1)
-                            .msg_range(fgIL, fgOL, vrbs)
-                        }
-                        break
-                        ##
-                    } else if(best_K == lo[kCGIdx]){
-                        if (best_K == min(lo)){ ## fgIL is 1
-                            .msg_pstr("min(lo) is best", flg=dbg)
-                            fgIL <- 1
-                            fgOL <- min(lo)-1
-                            .msg_range(fgIL, fgOL, vrbs)
-                            break
-                        } else{
-                            ## go fine over interval (hi[kCGIdx]+1 , lo[kCGIdx])
-                            .msg_pstr("lo value is best", flg=dbg)
-                            fgOL <- lo[kCGIdx]-1    # fine-grained search outer
-                            fgIL <- hi[kCGIdx-1]+1  # and inner limit
-                            .msg_range(fgIL, fgOL, vrbs)
-                            break
-                        }
-                        ##
-                    } else if(kCGIdx > 1 && best_K == hi[kCGIdx-1]){
-                        .msg_pstr("prev hi is best", flg=dbg)
-                        fgIL <- hi[kCGIdx-1]+1
-                        fgOL <- lo[kCGIdx]-1
-                        .msg_range(fgIL, fgOL, vrbs)
-                        break
-                    }
-                    else if(best_K == hi[kCGIdx]){
-                        ## best_K is == hi, go to next coarse-grained iteration
-                        .msg_pstr("Next interval of coarse-grained grid",
-                                    flg=vrbs)
-
-                    }
-                }
-                ## Fine-grained search
-                searchReturnFine <- performSearchForK( X = X,
+    #######################
+    #### New strategy
+    if(returnBestK) {
+        ##
+        set_verbose <- ifelse(debugFlag, 2, ifelse(verboseFlag, 1, 0))
+        if(cgfglinear){
+            prev_df <- NULL
+            ## when either lo or hi values are best, so we need to perform
+            ## a fine-grained search
+            ## to note when the mid value happens to be
+            ## the best
+            mi <- seq(coarse_step, max(param_ranges$k_vals), by=coarse_step)
+            lo <- mi-1
+            hi <- mi+1
+            stopifnot(length(lo) == length(mi) && length(lo) == length(hi))
+            ## For loop for coarse-grained search
+            prev_best_K <- -1
+            best_K <- 0
+            for (kCGIdx in seq_along(lo)){
+                searchReturnCoarse <- performSearchForK(X = X,
                     cvfolds = cvfolds,
-                    startVal = fgIL,
-                    endVal = fgOL,
+                    startVal = lo[kCGIdx],
+                    endVal = hi[kCGIdx],
                     step = 1,
-                    prev_best_K = -1,
-                    best_K = 0,
-                    prev_df = NULL,
+                    prev_best_K = prev_best_K,
+                    best_K = best_K,
+                    prev_df = prev_df,
                     param_ranges,
-                    kFolds = kFolds, nRuns = nRuns, bpparam = bpparam,
+
+                    bpparam = bpparam,
+                    kFolds = kFolds, nRuns = nRuns,
                     set_verbose = set_verbose)
-                best_K <- searchReturnFine$best_K
-                fine_prev_df <- searchReturnFine$return_df
+                best_K <- searchReturnCoarse$best_K
+                prev_best_K <- searchReturnCoarse$prev_best_K
+                prev_df <- searchReturnCoarse$return_df
 
-                combined_df <- rbind(prev_df, fine_prev_df)
-                best_K <- .get_best_K(combined_df, parsimony = askParsimony)
-                ## Ensure chosen value is not the lower boundary
-                kValsInDF <- as.numeric(unlist(combined_df["k_vals"]))
-                if(best_K != 1 && !any((best_K-1) - kValsInDF == 0)){
-                    .msg_pstr("Chosen best K is lowest in the range tested.",
-                        "Making sure...", flg=vrbs)
-                    attemptCount <- 1
-                    makeSureK <- best_K
-                    while(makeSureK != 1 &&
-                            !any((makeSureK-1) - kValsInDF == 0)){
-                        # Ensure the new value is not already computed
-                        fgIL <- max(best_K - 1*attemptCount, 1)
-                        fgOL <- fgIL
+                if(best_K == mi[kCGIdx]){
+                    ## Work done, leave loop?
+                    .msg_pstr("mi value is best", flg=dbg)
+                    if(askParsimony){
+                        ## When mi value is chosen as best, in order for
+                        ## the 1-SE rule, it would be a good idea compute
+                        ## q2 values for at least 5 consecutive values of
+                        ## K less than mi.
+                        ## This means that, in thise case, we would set
+                        ## the variable fgIL to (mi-5)
+                        ## Then, the 1-SE rule could lead to choosing a
+                        ## smaller value.
+                        ##
+                        ## Scenario when the mi value is best, first check
+                        ## the 1-SE rule,
+                        ## What is the value chosen by this rule?
+                        ## Does it already include values from the previous
+                        ## triplet, if any?
+                        ## If yes, we may need computations for a few
+                        ## consecutive values below that value
+                        #
+                        ## TODO
+                        fgIL <- max(mi[kCGIdx]-5, 1)
+                        ## shield against setting 0
+                        fgOL <- max(lo[kCGIdx]-1, 1)
                         .msg_range(fgIL, fgOL, vrbs)
-                        searchReturnFine <-
-                            performSearchForK( X = X,
-                                cvfolds = cvfolds,
-                                startVal = fgIL,
-                                endVal = fgOL,
-                                step = 1,
-                                prev_best_K = -1,
-                                best_K = 0,
-                                prev_df = combined_df,
-                                param_ranges = param_ranges,
-                                kFolds = kFolds,
-                                nRuns = nRuns, bpparam = bpparam,
-                                set_verbose = set_verbose)
-                        # temp_best_K <- searchReturnFine$best_K
-                        combined_df <- searchReturnFine$return_df
-
-                        makeSureK <- .get_best_K(combined_df,
-                                                    parsimony = askParsimony)
-
-                        attemptCount <- attemptCount + 1
-                        kValsInDF <- as.numeric(unlist(combined_df["k_vals"]))
+                    }else{
+                        ## Added to handle case when 1-SE rule is not
+                        ## applied
+                        ##
+                        fgIL <- max(mi[kCGIdx]-1, 1)
+                        ## shield against setting 0
+                        fgOL <- max(mi[kCGIdx]-1, 1)
+                        .msg_range(fgIL, fgOL, vrbs)
                     }
-                    best_K <- makeSureK
-                    .msg_pstr("Made sure, best K is: ", best_K, flg=dbg)
+                    break
+                    ##
+                } else if(best_K == lo[kCGIdx]){
+                    if (best_K == min(lo)){ ## fgIL is 1
+                        .msg_pstr("min(lo) is best", flg=dbg)
+                        fgIL <- 1
+                        fgOL <- min(lo)-1
+                        .msg_range(fgIL, fgOL, vrbs)
+                        break
+                    } else{
+                        ## go fine over interval (hi[kCGIdx]+1 , lo[kCGIdx])
+                        .msg_pstr("lo value is best", flg=dbg)
+                        fgOL <- lo[kCGIdx]-1    # fine-grained search outer
+                        fgIL <- hi[kCGIdx-1]+1  # and inner limit
+                        .msg_range(fgIL, fgOL, vrbs)
+                        break
+                    }
+                    ##
+                } else if(kCGIdx > 1 && best_K == hi[kCGIdx-1]){
+                    .msg_pstr("prev hi is best", flg=dbg)
+                    fgIL <- hi[kCGIdx-1]+1
+                    fgOL <- lo[kCGIdx]-1
+                    .msg_range(fgIL, fgOL, vrbs)
+                    break
                 }
-
+                else if(best_K == hi[kCGIdx]){
+                    ## best_K is equal to hi, go to next coarse-grained iteration
+                    .msg_pstr("Next interval of coarse-grained grid",
+                                flg=vrbs)
+                }
             }
+            ## Fine-grained search
+            searchReturnFine <- performSearchForK( X = X,
+                cvfolds = cvfolds,
+                startVal = fgIL,
+                endVal = fgOL,
+                step = 1,
+                prev_best_K = -1,
+                best_K = 0,
+                prev_df = NULL,
+                param_ranges,
+                kFolds = kFolds, nRuns = nRuns, bpparam = bpparam,
+                set_verbose = set_verbose)
+            best_K <- searchReturnFine$best_K
+            fine_prev_df <- searchReturnFine$return_df
+            combined_df <- rbind(prev_df, fine_prev_df)
+            best_K <- .get_best_K(combined_df, parsimony = askParsimony)
+            ## Ensure chosen value is not the lower boundary
+            kValsInDF <- as.numeric(unlist(combined_df["k_vals"]))
+            if(best_K != 1 && !any((best_K-1) - kValsInDF == 0)){
+                .msg_pstr("Chosen best K is lowest in the range tested.",
+                    "Making sure...", flg=vrbs)
+                attemptCount <- 1
+                makeSureK <- best_K
+                while(makeSureK != 1 &&
+                        !any((makeSureK-1) - kValsInDF == 0)){
+                    # Ensure the new value is not already computed
+                    fgIL <- max(best_K - 1*attemptCount, 1)
+                    fgOL <- fgIL
+                    .msg_range(fgIL, fgOL, vrbs)
+                    searchReturnFine <-
+                        performSearchForK( X = X,
+                            cvfolds = cvfolds,
+                            startVal = fgIL,
+                            endVal = fgOL,
+                            step = 1,
+                            prev_best_K = -1,
+                            best_K = 0,
+                            prev_df = combined_df,
+                            param_ranges = param_ranges,
+                            kFolds = kFolds,
+                            nRuns = nRuns, bpparam = bpparam,
+                            set_verbose = set_verbose)
+                    combined_df <- searchReturnFine$return_df
+                    makeSureK <- .get_best_K(combined_df,
+                                                parsimony = askParsimony)
+                    attemptCount <- attemptCount + 1
+                    kValsInDF <- as.numeric(unlist(combined_df["k_vals"]))
+                }
+                best_K <- makeSureK
+                .msg_pstr("Made sure, best K is: ", best_K, flg=dbg)
+            }
+
         }
-    # }
+    }
+
     if(best_K == max(param_ranges$k_vals)){
         cli::cli_alert_warning(c("Best K: {best_K} is already the maximum ",
                                 "value for K specified. Try increasing ",
@@ -456,8 +441,6 @@ performSearchForK <- function(X, cvfolds, startVal, endVal, step = 1,
     ##
     seed_val_list <- get_n_seeds(n = nRuns)
     ##
-    ## check_par_conditions func not needed any more?
-    # check_par_conditions(nCores=nCores)
     ##
     nmf_result_list <- BiocParallel::bplapply(seq_len(nRuns),
                                     FUN  = function(x) {

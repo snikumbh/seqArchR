@@ -789,9 +789,6 @@ perform_setup <- function(config, total_itr, o_dir, fresh,
 process_innerChunk <- function(test_itr, innerChunksColl, config, lenOC,
                             seqs_ohe_mat, set_parsimony, outerChunkIdx,
                             bpparam){
-    # globFactors <- vector("list", length(innerChunksColl))
-    # globClustAssignments <- vector("list", length(innerChunksColl))
-    # nClustEachIC <- rep(0, length(innerChunksColl))
 
     nmfResultEachIC <- lapply(seq_along(innerChunksColl), function(x){
         innerChunkIdx <- x
