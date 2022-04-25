@@ -1,3 +1,7 @@
+# seqArchR 0.99.339
+
+* seqArchR available on Bioconductor
+
 # seqArchR 0.99.0
 
 ## New features
