@@ -12,13 +12,13 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/v4-shims.min.css" integrity="sha256-wZjR52fzng1pJHwx4aV2AO3yyTOXrcDW7jBpJtTwVxw=" crossorigin="anonymous">
 <!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><!-- headroom.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script><!-- pkgdown --><link href="pkgdown.css" rel="stylesheet">
 <script src="pkgdown.js"></script><meta property="og:title" content="Identify Different Architectures of Sequence Elements">
-<meta property="og:description" content="\code{seqArchR} enables unsupervised discovery of _de novo_ clusters 
+<meta property="og:description" content="seqArchR enables unsupervised discovery of _de novo_ clusters 
     with characteristic sequence architectures characterized by 
     position-specific motifs or composition of stretches of nucleotides, 
-    e.g., CG-richness. \code{seqArchR} does _not_ require any specifications 
+    e.g., CG-richness. seqArchR does _not_ require any specifications 
     w.r.t. the number of clusters, the length of any individual motifs, or 
     the distance between motifs if and when they occur in pairs/groups; it 
-    directly detects them from the data. \code{seqArchR} uses non-negative 
+    directly detects them from the data. seqArchR uses non-negative 
     matrix factorization (NMF) as its backbone, and employs a chunking-based 
     iterative procedure that enables processing of large sequence collections 
     efficiently. Wrapper functions are provided for visualizing cluster 
@@ -26,12 +26,12 @@
 <!-- mathjax --><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js" integrity="sha256-nvJJv9wWKEm88qvoQl9ekL2J+k/RWIsaSScxxlsrv8k=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/config/TeX-AMS-MML_HTMLorMML.js" integrity="sha256-84DKXVJXs0/F8OTMzX4UR909+jtl4G7SPypPavF+GfA=" crossorigin="anonymous"></script><!--[if lt IE 9]>
 <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
 <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
-<![endif]--><!-- Global site tag (gtag.js) - Google Analytics --><script async src="https://www.googletagmanager.com/gtag/js?id=UA-67848084-3"></script><script>
+<![endif]--><!-- Global site tag (gtag.js) - Google Analytics --><script async src="https://www.googletagmanager.com/gtag/js?id=G-9TC8HQS6CJ"></script><script>
   window.dataLayer = window.dataLayer || [];
   function gtag(){dataLayer.push(arguments);}
   gtag('js', new Date());
 
-  gtag('config', 'UA-67848084-3');
+  gtag('config', 'G-9TC8HQS6CJ');
 </script>
 </head>
 <body data-spy="scroll" data-target="#toc">
@@ -49,7 +49,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="index.html">seqArchR</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.99.335</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.99.340</span>
       </span>
     </div>
 
@@ -101,14 +101,14 @@
 
 <p>Note: <em>This package is currently under development. So, please bear with me while I put the final blocks together. Thanks for your understanding!</em></p>
 <p>seqArchR is an unsupervised, non-negative matrix factorization (NMF)-based algorithm for discovery of sequence architectures de novo. Below is a schematic of seqArchR’s algorithm.</p>
-<p><img src="reference/figures/seqArchR_algorithm_1080p_cropped.gif" width="550" align="center"></p>
+<p><img src="https://github.com/snikumbh/seqArchR/blob/main/vignettes/seqArchR_algorithm_1080p_cropped.gif" width="550" align="center"></p>
 <div class="section level2">
 <h2 id="installation">Installation<a class="anchor" aria-label="anchor" href="#installation"></a>
 </h2>
 <div class="section level3">
 <h3 id="python-scikit-learn-dependency">Python scikit-learn dependency<a class="anchor" aria-label="anchor" href="#python-scikit-learn-dependency"></a>
 </h3>
-<p>This package requires the Python module scikit-learn. See installation instructions <a href="https://scikit-learn.org/stable/install.html" class="external-link">here</a>.</p>
+<p>This package requires the Python module scikit-learn. Please see installation instructions <a href="https://scikit-learn.org/stable/install.html" class="external-link">here</a>.</p>
 </div>
 <div class="section level3">
 <h3 id="to-install-this-package-use">To install this package, use<a class="anchor" aria-label="anchor" href="#to-install-this-package-use"></a>
@@ -119,62 +119,58 @@
 <span class="op">}</span>
 
 <span class="fu">remotes</span><span class="fu">::</span><span class="fu"><a href="https://remotes.r-lib.org/reference/install_github.html" class="external-link">install_github</a></span><span class="op">(</span><span class="st">"snikumbh/seqArchR"</span>, build_vignettes <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></code></pre></div>
-<p>If the above command produces errors, see this troubleshooting <a href="https://github.com/snikumbh/seqArchR#troubleshooting-installation" class="external-link">note</a> below.</p>
 </div>
 <div class="section level3">
 <h3 id="usage">Usage<a class="anchor" aria-label="anchor" href="#usage"></a>
 </h3>
-<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1"></a><span class="co"># load package</span></span>
-<span id="cb2-2"><a href="#cb2-2"></a><span class="kw">library</span>(seqArchR)</span>
-<span id="cb2-3"><a href="#cb2-3"></a><span class="kw">library</span>(Biostrings)</span>
-<span id="cb2-4"><a href="#cb2-4"></a></span>
-<span id="cb2-5"><a href="#cb2-5"></a></span>
-<span id="cb2-6"><a href="#cb2-6"></a><span class="co"># Creation of one-hot encoded data matrix from FASTA file</span></span>
-<span id="cb2-7"><a href="#cb2-7"></a><span class="co"># You can use your own FASTA file instead</span></span>
-<span id="cb2-8"><a href="#cb2-8"></a>inputFastaFilename &lt;-<span class="st"> </span><span class="kw">system.file</span>(<span class="st">"extdata"</span>, <span class="st">"example_data.fa"</span>, </span>
-<span id="cb2-9"><a href="#cb2-9"></a>                                  <span class="dt">package =</span> <span class="st">"seqArchR"</span>, </span>
-<span id="cb2-10"><a href="#cb2-10"></a>                                  <span class="dt">mustWork =</span> <span class="ot">TRUE</span>)</span>
-<span id="cb2-11"><a href="#cb2-11"></a></span>
-<span id="cb2-12"><a href="#cb2-12"></a><span class="co"># Specifying dinuc generates dinucleotide features</span></span>
-<span id="cb2-13"><a href="#cb2-13"></a>inputSeqsMat &lt;-<span class="st"> </span>seqArchR<span class="op">::</span><span class="kw">prepare_data_from_FASTA</span>(inputFastaFilename,</span>
-<span id="cb2-14"><a href="#cb2-14"></a>                                                  <span class="dt">sinuc_or_dinuc =</span> <span class="st">"dinuc"</span>)</span>
-<span id="cb2-15"><a href="#cb2-15"></a></span>
-<span id="cb2-16"><a href="#cb2-16"></a>inputSeqsRaw &lt;-<span class="st"> </span>seqArchR<span class="op">::</span><span class="kw">prepare_data_from_FASTA</span>(inputFastaFilename, </span>
-<span id="cb2-17"><a href="#cb2-17"></a>                                               <span class="dt">raw_seq =</span> <span class="ot">TRUE</span>)</span>
-<span id="cb2-18"><a href="#cb2-18"></a></span>
-<span id="cb2-19"><a href="#cb2-19"></a>nSeqs &lt;-<span class="st"> </span><span class="kw">length</span>(inputSeqsRaw)</span>
-<span id="cb2-20"><a href="#cb2-20"></a>positions &lt;-<span class="st"> </span><span class="kw">seq</span>(<span class="dv">1</span>, Biostrings<span class="op">::</span><span class="kw">width</span>(inputSeqsRaw[<span class="dv">1</span>]))</span>
-<span id="cb2-21"><a href="#cb2-21"></a></span>
-<span id="cb2-22"><a href="#cb2-22"></a><span class="co"># Set seqArchR configuration</span></span>
-<span id="cb2-23"><a href="#cb2-23"></a><span class="co"># Most arguments have default values</span></span>
-<span id="cb2-24"><a href="#cb2-24"></a>seqArchRconfig &lt;-<span class="st"> </span>seqArchR<span class="op">::</span><span class="kw">set_config</span>(</span>
-<span id="cb2-25"><a href="#cb2-25"></a>        <span class="dt">parallelize =</span> <span class="ot">TRUE</span>,</span>
-<span id="cb2-26"><a href="#cb2-26"></a>        <span class="dt">n_cores =</span> <span class="dv">4</span>,</span>
-<span id="cb2-27"><a href="#cb2-27"></a>        <span class="dt">n_iterations =</span> <span class="dv">100</span>,</span>
-<span id="cb2-28"><a href="#cb2-28"></a>        <span class="dt">k_min =</span> <span class="dv">1</span>,</span>
-<span id="cb2-29"><a href="#cb2-29"></a>        <span class="dt">k_max =</span> <span class="dv">20</span>,</span>
-<span id="cb2-30"><a href="#cb2-30"></a>        <span class="dt">mod_sel_type =</span> <span class="st">"stability"</span>,</span>
-<span id="cb2-31"><a href="#cb2-31"></a>        <span class="dt">bound =</span> <span class="dv">10</span><span class="op">^-</span><span class="dv">8</span>,</span>
-<span id="cb2-32"><a href="#cb2-32"></a>        <span class="dt">inner_chunk_size =</span> <span class="dv">500</span>,</span>
-<span id="cb2-33"><a href="#cb2-33"></a>        <span class="dt">flags =</span> <span class="kw">list</span>(<span class="dt">debug =</span> <span class="ot">FALSE</span>, <span class="dt">time =</span> <span class="ot">TRUE</span>, <span class="dt">verbose =</span> <span class="ot">TRUE</span>,</span>
-<span id="cb2-34"><a href="#cb2-34"></a>                     <span class="dt">plot =</span> <span class="ot">FALSE</span>)</span>
-<span id="cb2-35"><a href="#cb2-35"></a></span>
-<span id="cb2-36"><a href="#cb2-36"></a><span class="co">#</span></span>
-<span id="cb2-37"><a href="#cb2-37"></a><span class="co">### Call/Run seqArchR</span></span>
-<span id="cb2-38"><a href="#cb2-38"></a>seqArchRresult &lt;-<span class="st"> </span>seqArchR<span class="op">::</span><span class="kw">seqArchR</span>(<span class="dt">config =</span> seqArchRconfig,</span>
-<span id="cb2-39"><a href="#cb2-39"></a>                               <span class="dt">seqs_ohe_mat =</span> inputSeqsMat,</span>
-<span id="cb2-40"><a href="#cb2-40"></a>                               <span class="dt">seqs_raw =</span> inputSeqsRaw,</span>
-<span id="cb2-41"><a href="#cb2-41"></a>                               <span class="dt">seqs_pos =</span> positions,</span>
-<span id="cb2-42"><a href="#cb2-42"></a>                               <span class="dt">threshold_itr =</span> <span class="dv">2</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="co"># load package</span>
+<span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://snikumbh.github.io/seqArchR/" class="external-link">seqArchR</a></span><span class="op">)</span>
+<span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://bioconductor.org/packages/Biostrings" class="external-link">Biostrings</a></span><span class="op">)</span>
+
+
+<span class="co"># Creation of one-hot encoded data matrix from FASTA file</span>
+<span class="co"># You can use your own FASTA file instead</span>
+<span class="va">inputFastaFilename</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"extdata"</span>, <span class="st">"example_data.fa"</span>, 
+                                  package <span class="op">=</span> <span class="st">"seqArchR"</span>, 
+                                  mustWork <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>
+
+<span class="co"># Specifying dinuc generates dinucleotide features</span>
+<span class="va">inputSeqsMat</span> <span class="op">&lt;-</span> <span class="fu">seqArchR</span><span class="fu">::</span><span class="fu"><a href="reference/prepare_data_from_FASTA.html">prepare_data_from_FASTA</a></span><span class="op">(</span><span class="va">inputFastaFilename</span>,
+                                                  sinuc_or_dinuc <span class="op">=</span> <span class="st">"dinuc"</span><span class="op">)</span>
+
+<span class="va">inputSeqsRaw</span> <span class="op">&lt;-</span> <span class="fu">seqArchR</span><span class="fu">::</span><span class="fu"><a href="reference/prepare_data_from_FASTA.html">prepare_data_from_FASTA</a></span><span class="op">(</span><span class="va">inputFastaFilename</span>, 
+                                               raw_seq <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>
+
+<span class="va">nSeqs</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/length.html" class="external-link">length</a></span><span class="op">(</span><span class="va">inputSeqsRaw</span><span class="op">)</span>
+<span class="va">positions</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html" class="external-link">seq</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fu">Biostrings</span><span class="fu">::</span><span class="fu">width</span><span class="op">(</span><span class="va">inputSeqsRaw</span><span class="op">[</span><span class="fl">1</span><span class="op">]</span><span class="op">)</span><span class="op">)</span>
+
+<span class="co"># Set seqArchR configuration</span>
+<span class="co"># Most arguments have default values</span>
+<span class="va">seqArchRconfig</span> <span class="op">&lt;-</span> <span class="fu">seqArchR</span><span class="fu">::</span><span class="fu"><a href="reference/set_config.html">set_config</a></span><span class="op">(</span>
+        parallelize <span class="op">=</span> <span class="cn">TRUE</span>,
+        n_cores <span class="op">=</span> <span class="fl">2</span>,
+        n_runs <span class="op">=</span> <span class="fl">100</span>,
+        k_min <span class="op">=</span> <span class="fl">1</span>,
+        k_max <span class="op">=</span> <span class="fl">20</span>,
+        mod_sel_type <span class="op">=</span> <span class="st">"stability"</span>,
+        bound <span class="op">=</span> <span class="fl">10</span><span class="op">^</span><span class="op">-</span><span class="fl">6</span>,
+        chunk_size <span class="op">=</span> <span class="fl">100</span>,
+    result_aggl <span class="op">=</span> <span class="st">"ward.D"</span>,
+    result_dist <span class="op">=</span> <span class="st">"euclid"</span>,
+        flags <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>debug <span class="op">=</span> <span class="cn">FALSE</span>, time <span class="op">=</span> <span class="cn">TRUE</span>, verbose <span class="op">=</span> <span class="cn">TRUE</span>,
+                     plot <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span>
+        <span class="op">)</span>
+
+<span class="co">#</span>
+<span class="co">### Call/Run seqArchR</span>
+<span class="va">seqArchRresult</span> <span class="op">&lt;-</span> <span class="fu">seqArchR</span><span class="fu">::</span><span class="fu"><a href="reference/seqArchR.html">seqArchR</a></span><span class="op">(</span>config <span class="op">=</span> <span class="va">seqArchRconfig</span>,
+                               seqs_ohe_mat <span class="op">=</span> <span class="va">inputSeqsMat</span>,
+                               seqs_raw <span class="op">=</span> <span class="va">inputSeqsRaw</span>,
+                               seqs_pos <span class="op">=</span> <span class="va">positions</span>,
+                               total_itr <span class="op">=</span> <span class="fl">2</span>,
+                   set_ocollation <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/pkg/S4Vectors/man/Vector-class.html" class="external-link">c</a></span><span class="op">(</span><span class="cn">TRUE</span>, <span class="cn">FALSE</span><span class="op">)</span><span class="op">)</span></code></pre></div>
 </div>
-</div>
-<div class="section level2">
-<h2 id="troubleshooting-installation">Troubleshooting Installation<a class="anchor" aria-label="anchor" href="#troubleshooting-installation"></a>
-</h2>
-<ol style="list-style-type: decimal">
-<li>Error during installation (with <code><a href="https://remotes.r-lib.org/reference/install_github.html" class="external-link">remotes::install_github</a></code> or <code>devtools::install_github</code>. If the error occurs during <code>** testing if installed package can be loaded</code>, try adding the <code>--no-test-load</code> option as <code>remotes::install_github("snikumbh/seqArchR", INSTALL_opts = c("--no-test-load"))</code>
-</li>
-</ol>
 </div>
 </div>
 <div class="section level1">
@@ -189,6 +185,7 @@
     <div class="links">
 <h2 data-toc-skip>Links</h2>
 <ul class="list-unstyled">
+<li><a href="https://www.bioconductor.org/packages/seqArchR" class="external-link">View on Bioconductor</a></li>
 <li><a href="https://github.com/snikumbh/seqArchR/" class="external-link">Browse source code</a></li>
 <li><a href="https://github.com/snikumbh/seqArchR/issues" class="external-link">Report a bug</a></li>
 </ul>
@@ -215,15 +212,15 @@
 <h2 data-toc-skip>Developers</h2>
 <ul class="list-unstyled">
 <li>Sarvesh Nikumbh <br><small class="roles"> Author, maintainer, copyright holder </small> <a href="https://orcid.org/0000-0003-3163-4447" target="orcid.widget" aria-label="ORCID" class="external-link"><span class="fab fa-orcid orcid" aria-hidden="true"></span></a> </li>
-<li><a href="authors.html">More about authors...</a></li>
 </ul>
 </div>
 
 <div class="dev-status">
 <h2 data-toc-skip>Dev status</h2>
 <ul class="list-unstyled">
-<li><a href="https://github.com/snikumbh/seqArchR/actions" class="external-link"><img src="https://github.com/snikumbh/seqArchR/workflows/R-CMD-check/badge.svg" alt="R build status"></a></li>
+<li><a href="https://zenodo.org/badge/latestdoi/188449833" class="external-link"><img src="https://zenodo.org/badge/188449833.svg" alt="DOI"></a></li>
 <li><a href="https://codecov.io/gh/snikumbh/seqArchR" class="external-link"><img src="https://codecov.io/gh/snikumbh/seqArchR/branch/main/graph/badge.svg?token=NEjCGuOUlW" alt="codecov"></a></li>
+<li><a href="https://github.com/snikumbh/seqArchR/actions" class="external-link"><img src="https://github.com/snikumbh/seqArchR/workflows/R-CMD-check/badge.svg" alt="R build status"></a></li>
 </ul>
 </div>
 

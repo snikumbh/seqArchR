@@ -8,12 +8,12 @@ of stretches of nucleotides, e.g., CG-richness, etc.
 Call this function to process a data set using seqArchR."><!-- mathjax --><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js" integrity="sha256-nvJJv9wWKEm88qvoQl9ekL2J+k/RWIsaSScxxlsrv8k=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/config/TeX-AMS-MML_HTMLorMML.js" integrity="sha256-84DKXVJXs0/F8OTMzX4UR909+jtl4G7SPypPavF+GfA=" crossorigin="anonymous"></script><!--[if lt IE 9]>
 <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
 <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
-<![endif]--><!-- Global site tag (gtag.js) - Google Analytics --><script async src="https://www.googletagmanager.com/gtag/js?id=UA-67848084-3"></script><script>
+<![endif]--><!-- Global site tag (gtag.js) - Google Analytics --><script async src="https://www.googletagmanager.com/gtag/js?id=G-9TC8HQS6CJ"></script><script>
   window.dataLayer = window.dataLayer || [];
   function gtag(){dataLayer.push(arguments);}
   gtag('js', new Date());
 
-  gtag('config', 'UA-67848084-3');
+  gtag('config', 'G-9TC8HQS6CJ');
 </script></head><body data-spy="scroll" data-target="#toc">
     
 
@@ -29,7 +29,7 @@ Call this function to process a data set using seqArchR."><!-- mathjax --><scrip
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">seqArchR</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.99.335</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.99.340</span>
       </span>
     </div>
 
@@ -204,12 +204,9 @@ functions.</p>
 
 <ul><li><p><code><a href="plot_arch_for_clusters.html">plot_arch_for_clusters</a></code></p></li>
 <li><p><code><a href="plot_ggseqlogo_of_seqs.html">plot_ggseqlogo_of_seqs</a></code></p></li>
-<li><p><code><a href="viz_bas_vec_heatmap_seqlogo.html">viz_bas_vec_heatmap</a></code></p></li>
-<li><p><code><a href="viz_bas_vec_heatmap_seqlogo.html">viz_bas_vec_seqlogo</a></code></p></li>
-<li><p><code><a href="viz_bas_vec_heatmap_seqlogo.html">viz_bas_vec_heatmap_seqlogo</a></code></p></li>
+<li><p><code><a href="viz_bas_vec.html">viz_bas_vec</a></code></p></li>
 <li><p><code><a href="viz_seqs_acgt_mat.html">viz_seqs_acgt_mat</a></code></p></li>
-<li><p><code><a href="plot_ggseqlogo.html">plot_ggseqlogo</a></code></p></li>
-<li><p><code><a href="plot_ggheatmap.html">plot_ggheatmap</a></code></p></li>
+<li><p><code><a href="viz_pwm.html">viz_pwm</a></code></p></li>
 </ul></div>
 
     <div id="ref-examples">
@@ -247,7 +244,7 @@ functions.</p>
 <span class="r-in">                          seqs_raw <span class="op">=</span> <span class="va">inputSeqsRaw</span>,</span>
 <span class="r-in">                          seqs_pos <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html" class="external-link">seq</a></span><span class="op">(</span><span class="fl">1</span>,<span class="fl">100</span>,by<span class="op">=</span><span class="fl">1</span><span class="op">)</span>,</span>
 <span class="r-in">                          total_itr <span class="op">=</span> <span class="fl">2</span>,</span>
-<span class="r-in">                          set_ocollation <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="cn">TRUE</span>, <span class="cn">FALSE</span><span class="op">)</span><span class="op">)</span></span>
+<span class="r-in">                          set_ocollation <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/pkg/S4Vectors/man/Vector-class.html" class="external-link">c</a></span><span class="op">(</span><span class="cn">TRUE</span>, <span class="cn">FALSE</span><span class="op">)</span><span class="op">)</span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> ── Setting up ──────────────────────────────────────────────────────────────────</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">ℹ</span> Parallelization: Yes</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">ℹ</span> Model selection by factor stability</span>
@@ -258,51 +255,51 @@ functions.</p>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> ── <span style="font-weight: bold;">Outer chunk 1 of 1 [Size: 200]</span> ──</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> ── Inner chunk 1 of 2 [Size: 100] </span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Checking K =2</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Checking K =3</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Checking K =4</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Checking K = 2</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Checking K = 3</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Checking K = 4</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">ℹ</span> Best K for this chunk: 3</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> ── Inner chunk 2 of 2 [Size: 100] </span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Checking K =2</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Checking K =3</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Checking K =4</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Checking K = 2</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Checking K = 3</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Checking K = 4</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">ℹ</span> Best K for this chunk: 3</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BB00;">✔</span> 1 of 1 outer chunk complete</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BB00;">✔</span> 1 of 2 iterations complete</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> → Iteration 1 completed: 1m 9.8s</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> → Time ellapsed since start: 1m 10.5s</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> → Iteration 1 completed: 1m 31.8s</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> → Time ellapsed since start: 1m 32.2s</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">──</span> <span style="font-weight: bold;">Iteration 2 of 2 [3 chunks]</span> <span style="color: #00BBBB;">─────────────────────────────────────────────────</span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> ── <span style="font-weight: bold;">Outer chunk 1 of 3 [Size: 50]</span> ──</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> ── Inner chunk 1 of 1 [Size: 50] </span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Checking K =2</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Checking K =3</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Checking K =4</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Checking K = 2</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Checking K = 3</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Checking K = 4</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">ℹ</span> Best K for this chunk: 3</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BB00;">✔</span> 1 of 3 outer chunks complete</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> ── <span style="font-weight: bold;">Outer chunk 2 of 3 [Size: 98]</span> ──</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> ── Inner chunk 1 of 1 [Size: 98] </span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Checking K =2</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Checking K =3</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Checking K = 2</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Checking K = 3</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">ℹ</span> Best K for this chunk: 2</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BB00;">✔</span> 2 of 3 outer chunks complete</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> ── <span style="font-weight: bold;">Outer chunk 3 of 3 [Size: 52]</span> ──</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> ── Inner chunk 1 of 1 [Size: 52] </span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Checking K =2</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Checking K = 2</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">ℹ</span> Best K for this chunk: 1</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BB00;">✔</span> 3 of 3 outer chunks complete</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BB00;">✔</span> 2 of 2 iterations complete</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> → Iteration 2 completed: 1m 13.9s</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> → Time ellapsed since start: 2m 24.4s</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> → Iteration 2 completed: 2m 32.6s</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> → Time ellapsed since start: 4m 4.9s</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> ── seqArchR exiting</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> 2m 24.4s ───────────────────────────────────────────────────</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> 4m 4.9s ────────────────────────────────────────────────────</span>
 <span class="r-in"></span>
 <span class="r-in"></span>
 </code></pre></div>
