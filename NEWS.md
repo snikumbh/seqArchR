@@ -1,3 +1,9 @@
+# seqArchR 1.1.1
+
+* (User-facing) Fixed: Too many warnings from Python's scikit-learn were 
+  being printed to console (warning about an expected change in future 
+  scikit-learn version)
+
 # seqArchR 0.99.339
 
 * seqArchR available on Bioconductor
