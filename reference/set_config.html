@@ -23,7 +23,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">seqArchR</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.99.340</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.1.0</span>
       </span>
     </div>
 
@@ -71,24 +71,24 @@
     </div>
 
     <div id="ref-usage">
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">set_config</span><span class="op">(</span>
-  chunk_size <span class="op">=</span> <span class="fl">500</span>,
-  k_min <span class="op">=</span> <span class="fl">1</span>,
-  k_max <span class="op">=</span> <span class="fl">50</span>,
-  mod_sel_type <span class="op">=</span> <span class="st">"stability"</span>,
-  bound <span class="op">=</span> <span class="fl">10</span><span class="op">^</span><span class="op">-</span><span class="fl">6</span>,
-  cv_folds <span class="op">=</span> <span class="fl">5</span>,
-  parallelize <span class="op">=</span> <span class="cn">FALSE</span>,
-  n_cores <span class="op">=</span> <span class="cn">NA</span>,
-  n_runs <span class="op">=</span> <span class="fl">100</span>,
-  alpha_base <span class="op">=</span> <span class="fl">0</span>,
-  alpha_pow <span class="op">=</span> <span class="fl">1</span>,
-  min_size <span class="op">=</span> <span class="fl">25</span>,
-  result_aggl <span class="op">=</span> <span class="st">"complete"</span>,
-  result_dist <span class="op">=</span> <span class="st">"euclid"</span>,
-  checkpointing <span class="op">=</span> <span class="cn">TRUE</span>,
-  flags <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>debug <span class="op">=</span> <span class="cn">FALSE</span>, time <span class="op">=</span> <span class="cn">FALSE</span>, verbose <span class="op">=</span> <span class="cn">TRUE</span>, plot <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span>
-<span class="op">)</span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">set_config</span><span class="op">(</span></span>
+<span>  chunk_size <span class="op">=</span> <span class="fl">500</span>,</span>
+<span>  k_min <span class="op">=</span> <span class="fl">1</span>,</span>
+<span>  k_max <span class="op">=</span> <span class="fl">50</span>,</span>
+<span>  mod_sel_type <span class="op">=</span> <span class="st">"stability"</span>,</span>
+<span>  bound <span class="op">=</span> <span class="fl">10</span><span class="op">^</span><span class="op">-</span><span class="fl">6</span>,</span>
+<span>  cv_folds <span class="op">=</span> <span class="fl">5</span>,</span>
+<span>  parallelize <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>  n_cores <span class="op">=</span> <span class="cn">NA</span>,</span>
+<span>  n_runs <span class="op">=</span> <span class="fl">100</span>,</span>
+<span>  alpha_base <span class="op">=</span> <span class="fl">0</span>,</span>
+<span>  alpha_pow <span class="op">=</span> <span class="fl">1</span>,</span>
+<span>  min_size <span class="op">=</span> <span class="fl">25</span>,</span>
+<span>  result_aggl <span class="op">=</span> <span class="st">"complete"</span>,</span>
+<span>  result_dist <span class="op">=</span> <span class="st">"euclid"</span>,</span>
+<span>  checkpointing <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>  flags <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>debug <span class="op">=</span> <span class="cn">FALSE</span>, time <span class="op">=</span> <span class="cn">FALSE</span>, verbose <span class="op">=</span> <span class="cn">TRUE</span>, plot <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
+<span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div id="arguments">
@@ -96,61 +96,89 @@
     <dl><dt>chunk_size</dt>
 <dd><p>Numeric. Specify the size of the inner chunks of
 sequences.</p></dd>
+
+
 <dt>k_min</dt>
 <dd><p>Numeric. Specify the minimum of the range of values to be tested
 for number of NMF basis vectors. Default is 1.</p></dd>
+
+
 <dt>k_max</dt>
 <dd><p>Numeric. Specify the maximum of the range of values to be tested
 for number of NMF basis vectors. Default is 50.</p></dd>
+
+
 <dt>mod_sel_type</dt>
 <dd><p>Character. Specify the model selection strategy to
 be used. Default is 'stability'. Another option is 'cv', short for
 cross-validation. Warning: The cross-validation approach can be time
 consuming and computationally expensive than the stability-based approach.</p></dd>
+
+
 <dt>bound</dt>
 <dd><p>Numeric. Specify the lower bound value as criterion for choosing
 the most appropriate number of NMF factors. Default is 1e-08.</p></dd>
+
+
 <dt>cv_folds</dt>
 <dd><p>Numeric. Specify the number of cross-validation folds used
 for model selection. Only used when mod_sel_type is set to 'cv'. Default
 value is 5.</p></dd>
+
+
 <dt>parallelize</dt>
 <dd><p>Logical. Specify whether to parallelize the procedure.
 Note that running seqArchR serially can be time consuming, especially when
 using cross-validation for model selection. See `n_cores`.
 Consider parallelizing with at least 2 or 4 cores.</p></dd>
+
+
 <dt>n_cores</dt>
 <dd><p>The number of cores to be used when `parallelize` is set
 to TRUE. If `parallelize` is FALSE, nCores is ignored.</p></dd>
+
+
 <dt>n_runs</dt>
 <dd><p>Numeric. Specify the number of bootstrapped runs
 to be performed with NMF. Default value is 100. When using cross-validation
 more than 100 iterations may be needed (upto 500).</p></dd>
+
+
 <dt>alpha_base, alpha_pow</dt>
 <dd><p>Specify the base and the power for computing
 'alpha' in performing model selection for NMF. alpha = alpha_base^alpha_pow.
 Alpha specifies the regularization for NMF. Default: 0 and 1 respectively.
 _Warning_: Currently, not used (for future).</p></dd>
+
+
 <dt>min_size</dt>
 <dd><p>Numeric. Specify the minimum number of sequences, such that
 any cluster/chunk of size less than or equal to it will not be further
 processed. Default is 25.</p></dd>
+
+
 <dt>result_aggl</dt>
 <dd><p>Character. Specify the agglomeration method to be used
 for final result collation with hierarchical clustering. Default is
 'complete' linkage. Possible values are those allowed with
 <code><a href="https://rdrr.io/r/stats/hclust.html" class="external-link">hclust</a></code>. Also see details below.</p></dd>
+
+
 <dt>result_dist</dt>
 <dd><p>Character. Specify the distance method to be used for
 final result collation with hierarchical clustering. Default is 'cor' for
 correlation. Possible values are those allowed with
 <code><a href="https://rdrr.io/r/stats/hclust.html" class="external-link">hclust</a></code>. Also see details below.</p></dd>
+
+
 <dt>checkpointing</dt>
 <dd><p>Logical. Specify whether to write intermediate
 checkpoints to disk as RDS files. Checkpoints and the final result are
 saved to disk provided the `o_dir` argument is set in <code><a href="seqArchR.html">seqArchR</a></code>.
 When `o_dir` argument is not provided or NULL, this is ignored.
 Default is TRUE.</p></dd>
+
+
 <dt>flags</dt>
 <dd><p>List with four logical elements as detailed.</p><dl><dt>debug</dt>
 <dd><p>Whether debug information for the run is printed</p></dd>
@@ -166,10 +194,13 @@ Default is TRUE.</p></dd>
 
 
 </dl></dd>
+
 </dl></div>
     <div id="value">
     <h2>Value</h2>
-    <p>A list with all params for seqArchR set</p>
+    
+
+<p>A list with all params for seqArchR set</p>
     </div>
     <div id="details">
     <h2>Details</h2>
@@ -180,21 +211,21 @@ on the data: 'inner_chunk_size', 'k_min', 'k_max', 'mod_sel_type',
 
     <div id="ref-examples">
     <h2>Examples</h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="co"># Set seqArchR configuration</span></span>
-<span class="r-in"><span class="va">seqArchRconfig</span> <span class="op">&lt;-</span> <span class="fu">seqArchR</span><span class="fu">::</span><span class="fu">set_config</span><span class="op">(</span></span>
-<span class="r-in">    chunk_size <span class="op">=</span> <span class="fl">100</span>,</span>
-<span class="r-in">    parallelize <span class="op">=</span> <span class="cn">TRUE</span>,</span>
-<span class="r-in">    n_cores <span class="op">=</span> <span class="fl">2</span>,</span>
-<span class="r-in">    n_runs <span class="op">=</span> <span class="fl">100</span>,</span>
-<span class="r-in">    k_min <span class="op">=</span> <span class="fl">1</span>,</span>
-<span class="r-in">    k_max <span class="op">=</span> <span class="fl">20</span>,</span>
-<span class="r-in">    mod_sel_type <span class="op">=</span> <span class="st">"stability"</span>,</span>
-<span class="r-in">    bound <span class="op">=</span> <span class="fl">10</span><span class="op">^</span><span class="op">-</span><span class="fl">8</span>,</span>
-<span class="r-in">    flags <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>debug <span class="op">=</span> <span class="cn">FALSE</span>, time <span class="op">=</span> <span class="cn">TRUE</span>, verbose <span class="op">=</span> <span class="cn">TRUE</span>,</span>
-<span class="r-in">        plot <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
-<span class="r-in"><span class="op">)</span></span>
-<span class="r-in"></span>
-<span class="r-in"></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="co"># Set seqArchR configuration</span></span></span>
+<span class="r-in"><span><span class="va">seqArchRconfig</span> <span class="op">&lt;-</span> <span class="fu">seqArchR</span><span class="fu">::</span><span class="fu">set_config</span><span class="op">(</span></span></span>
+<span class="r-in"><span>    chunk_size <span class="op">=</span> <span class="fl">100</span>,</span></span>
+<span class="r-in"><span>    parallelize <span class="op">=</span> <span class="cn">TRUE</span>,</span></span>
+<span class="r-in"><span>    n_cores <span class="op">=</span> <span class="fl">2</span>,</span></span>
+<span class="r-in"><span>    n_runs <span class="op">=</span> <span class="fl">100</span>,</span></span>
+<span class="r-in"><span>    k_min <span class="op">=</span> <span class="fl">1</span>,</span></span>
+<span class="r-in"><span>    k_max <span class="op">=</span> <span class="fl">20</span>,</span></span>
+<span class="r-in"><span>    mod_sel_type <span class="op">=</span> <span class="st">"stability"</span>,</span></span>
+<span class="r-in"><span>    bound <span class="op">=</span> <span class="fl">10</span><span class="op">^</span><span class="op">-</span><span class="fl">8</span>,</span></span>
+<span class="r-in"><span>    flags <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>debug <span class="op">=</span> <span class="cn">FALSE</span>, time <span class="op">=</span> <span class="cn">TRUE</span>, verbose <span class="op">=</span> <span class="cn">TRUE</span>,</span></span>
+<span class="r-in"><span>        plot <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span></span></span>
 </code></pre></div>
     </div>
   </div>
@@ -209,7 +240,7 @@ on the data: 'inner_chunk_size', 'k_min', 'k_max', 'mod_sel_type',
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.2.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.6.</p>
 </div>
 
       </footer></div>

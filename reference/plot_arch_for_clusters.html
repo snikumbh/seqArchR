@@ -26,7 +26,7 @@ architecture sequence logos are saved as a multi-page PDF."><!-- mathjax --><scr
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">seqArchR</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.99.340</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.1.0</span>
       </span>
     </div>
 
@@ -77,70 +77,89 @@ architecture sequence logos are saved as a multi-page PDF.</p>
     </div>
 
     <div id="ref-usage">
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">plot_arch_for_clusters</span><span class="op">(</span>
-  <span class="va">seqs</span>,
-  <span class="va">clust_list</span>,
-  pos_lab <span class="op">=</span> <span class="cn">NULL</span>,
-  xt_freq <span class="op">=</span> <span class="fl">5</span>,
-  set_titles <span class="op">=</span> <span class="cn">TRUE</span>,
-  pdf_width <span class="op">=</span> <span class="fl">11</span>,
-  pdf_height <span class="op">=</span> <span class="fl">2</span>,
-  pdf_name <span class="op">=</span> <span class="cn">NULL</span>,
-  show <span class="op">=</span> <span class="cn">FALSE</span>,
-  <span class="va">...</span>
-<span class="op">)</span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">plot_arch_for_clusters</span><span class="op">(</span></span>
+<span>  <span class="va">seqs</span>,</span>
+<span>  <span class="va">clust_list</span>,</span>
+<span>  pos_lab <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  xt_freq <span class="op">=</span> <span class="fl">5</span>,</span>
+<span>  set_titles <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>  pdf_width <span class="op">=</span> <span class="fl">11</span>,</span>
+<span>  pdf_height <span class="op">=</span> <span class="fl">2</span>,</span>
+<span>  pdf_name <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  show <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>  <span class="va">...</span></span>
+<span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div id="arguments">
     <h2>Arguments</h2>
     <dl><dt>seqs</dt>
 <dd><p>Sequences as a <code><a href="https://rdrr.io/pkg/Biostrings/man/XStringSet-class.html" class="external-link">DNAStringSet</a></code>.</p></dd>
+
+
 <dt>clust_list</dt>
 <dd><p>Clusters as a list of sequence IDs in each cluster.</p></dd>
+
+
 <dt>pos_lab</dt>
 <dd><p>Labels for sequence positions, should be of same
 length as that of the sequences. Default value is NULL, when the
 positions are labeled from 1 to the length of the sequences.</p></dd>
+
+
 <dt>xt_freq</dt>
 <dd><p>Frequency of x-axis ticks.</p></dd>
+
+
 <dt>set_titles</dt>
 <dd><p>Specify TRUE if titles are to be written for the plots.
 With FALSE, there are no titles for the plots. The title for each plot
 includes the current cluster number, total number of clusters, start and
 end sequence numbers in the collection.</p></dd>
+
+
 <dt>pdf_width, pdf_height</dt>
 <dd><p>Width and height in inches of the PDF file.
 Default values are 11 and 2.</p></dd>
+
+
 <dt>pdf_name</dt>
 <dd><p>Specify the PDF filename.</p></dd>
+
+
 <dt>show</dt>
 <dd><p>Set TRUE if plot should be immediately shown/plotted. Default is
 TRUE. By setting FALSE, one can simply collect the list of plots and use
 any other approach to arrange/display them. See examples.</p></dd>
+
+
 <dt>...</dt>
 <dd><p>Additional args passed to <code><a href="plot_ggseqlogo_of_seqs.html">plot_ggseqlogo_of_seqs</a></code>.</p></dd>
+
 </dl></div>
     <div id="value">
     <h2>Value</h2>
-    <p>A list of (ggplot2-based) sequence logo plots is returned. When a
+    
+
+<p>A list of (ggplot2-based) sequence logo plots is returned. When a
 valid file name is specified, the list of plots is also written to the PDF
 file (one plot per page).</p>
     </div>
 
     <div id="ref-examples">
     <h2>Examples</h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="va">res</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/readRDS.html" class="external-link">readRDS</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"extdata"</span>, <span class="st">"example_seqArchRresult.rds"</span>,</span>
-<span class="r-in">         package <span class="op">=</span> <span class="st">"seqArchR"</span>, mustWork <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co"># Default position labels 1 to length of the sequences.</span></span>
-<span class="r-in"><span class="co"># Can also set pos_lab based on biology, e.g., use -50 to 49 denoting</span></span>
-<span class="r-in"><span class="co"># 50 basepairs upstream and 49 downstream of the transcription start site</span></span>
-<span class="r-in"><span class="co"># located at position 0.</span></span>
-<span class="r-in"><span class="va">arch_pl</span> <span class="op">&lt;-</span> <span class="fu">plot_arch_for_clusters</span><span class="op">(</span>seqs <span class="op">=</span> <span class="fu"><a href="seqs_str.html">seqs_str</a></span><span class="op">(</span><span class="va">res</span><span class="op">)</span>,</span>
-<span class="r-in">                                  clust_list <span class="op">=</span> <span class="va">res</span><span class="op">$</span><span class="va">clustSol</span><span class="op">$</span><span class="va">clusters</span>,</span>
-<span class="r-in">                                  pos_lab <span class="op">=</span> <span class="cn">NULL</span>,</span>
-<span class="r-in">                                  pdf_name <span class="op">=</span> <span class="cn">NULL</span>,</span>
-<span class="r-in">                                  fixed_coord <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="va">res</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/readRDS.html" class="external-link">readRDS</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"extdata"</span>, <span class="st">"example_seqArchRresult.rds"</span>,</span></span>
+<span class="r-in"><span>         package <span class="op">=</span> <span class="st">"seqArchR"</span>, mustWork <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># Default position labels 1 to length of the sequences.</span></span></span>
+<span class="r-in"><span><span class="co"># Can also set pos_lab based on biology, e.g., use -50 to 49 denoting</span></span></span>
+<span class="r-in"><span><span class="co"># 50 basepairs upstream and 49 downstream of the transcription start site</span></span></span>
+<span class="r-in"><span><span class="co"># located at position 0.</span></span></span>
+<span class="r-in"><span><span class="va">arch_pl</span> <span class="op">&lt;-</span> <span class="fu">plot_arch_for_clusters</span><span class="op">(</span>seqs <span class="op">=</span> <span class="fu"><a href="seqs_str.html">seqs_str</a></span><span class="op">(</span><span class="va">res</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>                                  clust_list <span class="op">=</span> <span class="va">res</span><span class="op">$</span><span class="va">clustSol</span><span class="op">$</span><span class="va">clusters</span>,</span></span>
+<span class="r-in"><span>                                  pos_lab <span class="op">=</span> <span class="cn">NULL</span>,</span></span>
+<span class="r-in"><span>                                  pdf_name <span class="op">=</span> <span class="cn">NULL</span>,</span></span>
+<span class="r-in"><span>                                  fixed_coord <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></span>
 <span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>`guides(&lt;scale&gt; = FALSE)` is deprecated. Please use `guides(&lt;scale&gt; = "none")` instead.</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Scale for 'x' is already present. Adding another scale for 'x', which will</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> replace the existing scale.</span>
@@ -156,14 +175,14 @@ file (one plot per page).</p>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> replace the existing scale.</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Coordinate system already present. Adding new coordinate system, which will replace the existing one.</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Plot title:(3/3) Arch '3': 50 sequences (151-200)</span>
-<span class="r-in"></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co"># Using cowplot::plot_grid</span></span>
-<span class="r-in"><span class="va">arch_pl</span> <span class="op">&lt;-</span> <span class="fu">plot_arch_for_clusters</span><span class="op">(</span>seqs <span class="op">=</span> <span class="fu"><a href="seqs_str.html">seqs_str</a></span><span class="op">(</span><span class="va">res</span><span class="op">)</span>,</span>
-<span class="r-in">                                  clust_list <span class="op">=</span> <span class="va">res</span><span class="op">$</span><span class="va">clustSol</span><span class="op">$</span><span class="va">clusters</span>,</span>
-<span class="r-in">                                  pos_lab <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html" class="external-link">seq</a></span><span class="op">(</span><span class="fl">100</span><span class="op">)</span>,</span>
-<span class="r-in">                                  method <span class="op">=</span> <span class="st">"bits"</span>,</span>
-<span class="r-in">                                  pdf_name <span class="op">=</span> <span class="cn">NULL</span>, show <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># Using cowplot::plot_grid</span></span></span>
+<span class="r-in"><span><span class="va">arch_pl</span> <span class="op">&lt;-</span> <span class="fu">plot_arch_for_clusters</span><span class="op">(</span>seqs <span class="op">=</span> <span class="fu"><a href="seqs_str.html">seqs_str</a></span><span class="op">(</span><span class="va">res</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>                                  clust_list <span class="op">=</span> <span class="va">res</span><span class="op">$</span><span class="va">clustSol</span><span class="op">$</span><span class="va">clusters</span>,</span></span>
+<span class="r-in"><span>                                  pos_lab <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html" class="external-link">seq</a></span><span class="op">(</span><span class="fl">100</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>                                  method <span class="op">=</span> <span class="st">"bits"</span>,</span></span>
+<span class="r-in"><span>                                  pdf_name <span class="op">=</span> <span class="cn">NULL</span>, show <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></span>
 <span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>`guides(&lt;scale&gt; = FALSE)` is deprecated. Please use `guides(&lt;scale&gt; = "none")` instead.</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Scale for 'x' is already present. Adding another scale for 'x', which will</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> replace the existing scale.</span>
@@ -176,16 +195,16 @@ file (one plot per page).</p>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Scale for 'x' is already present. Adding another scale for 'x', which will</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> replace the existing scale.</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Plot title:(3/3) Arch '3': 50 sequences (151-200)</span>
-<span class="r-in"><span class="fu">cowplot</span><span class="fu">::</span><span class="fu"><a href="https://wilkelab.org/cowplot/reference/plot_grid.html" class="external-link">plot_grid</a></span><span class="op">(</span>plotlist <span class="op">=</span> <span class="va">arch_pl</span>, ncol<span class="op">=</span><span class="fl">1</span><span class="op">)</span></span>
+<span class="r-in"><span><span class="fu">cowplot</span><span class="fu">::</span><span class="fu"><a href="https://wilkelab.org/cowplot/reference/plot_grid.html" class="external-link">plot_grid</a></span><span class="op">(</span>plotlist <span class="op">=</span> <span class="va">arch_pl</span>, ncol<span class="op">=</span><span class="fl">1</span><span class="op">)</span></span></span>
 <span class="r-plt img"><img src="plot_arch_for_clusters-1.png" alt="" width="700" height="433"></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co"># Plotting architecture sequence logos with probability instead of</span></span>
-<span class="r-in"><span class="co"># information content</span></span>
-<span class="r-in"><span class="va">arch_pl</span> <span class="op">&lt;-</span> <span class="fu">plot_arch_for_clusters</span><span class="op">(</span>seqs <span class="op">=</span> <span class="fu"><a href="seqs_str.html">seqs_str</a></span><span class="op">(</span><span class="va">res</span><span class="op">)</span>,</span>
-<span class="r-in">                                  clust_list <span class="op">=</span> <span class="va">res</span><span class="op">$</span><span class="va">clustSol</span><span class="op">$</span><span class="va">clusters</span>,</span>
-<span class="r-in">                                  pos_lab <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html" class="external-link">seq</a></span><span class="op">(</span><span class="fl">100</span><span class="op">)</span>,</span>
-<span class="r-in">                                  method <span class="op">=</span> <span class="st">"prob"</span>,</span>
-<span class="r-in">                                  pdf_name <span class="op">=</span> <span class="cn">NULL</span>, show <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># Plotting architecture sequence logos with probability instead of</span></span></span>
+<span class="r-in"><span><span class="co"># information content</span></span></span>
+<span class="r-in"><span><span class="va">arch_pl</span> <span class="op">&lt;-</span> <span class="fu">plot_arch_for_clusters</span><span class="op">(</span>seqs <span class="op">=</span> <span class="fu"><a href="seqs_str.html">seqs_str</a></span><span class="op">(</span><span class="va">res</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>                                  clust_list <span class="op">=</span> <span class="va">res</span><span class="op">$</span><span class="va">clustSol</span><span class="op">$</span><span class="va">clusters</span>,</span></span>
+<span class="r-in"><span>                                  pos_lab <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html" class="external-link">seq</a></span><span class="op">(</span><span class="fl">100</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>                                  method <span class="op">=</span> <span class="st">"prob"</span>,</span></span>
+<span class="r-in"><span>                                  pdf_name <span class="op">=</span> <span class="cn">NULL</span>, show <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></span>
 <span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>`guides(&lt;scale&gt; = FALSE)` is deprecated. Please use `guides(&lt;scale&gt; = "none")` instead.</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Scale for 'x' is already present. Adding another scale for 'x', which will</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> replace the existing scale.</span>
@@ -198,9 +217,9 @@ file (one plot per page).</p>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Scale for 'x' is already present. Adding another scale for 'x', which will</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> replace the existing scale.</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Plot title:(3/3) Arch '3': 50 sequences (151-200)</span>
-<span class="r-in"><span class="fu">cowplot</span><span class="fu">::</span><span class="fu"><a href="https://wilkelab.org/cowplot/reference/plot_grid.html" class="external-link">plot_grid</a></span><span class="op">(</span>plotlist <span class="op">=</span> <span class="va">arch_pl</span>, ncol<span class="op">=</span><span class="fl">1</span><span class="op">)</span></span>
+<span class="r-in"><span><span class="fu">cowplot</span><span class="fu">::</span><span class="fu"><a href="https://wilkelab.org/cowplot/reference/plot_grid.html" class="external-link">plot_grid</a></span><span class="op">(</span>plotlist <span class="op">=</span> <span class="va">arch_pl</span>, ncol<span class="op">=</span><span class="fl">1</span><span class="op">)</span></span></span>
 <span class="r-plt img"><img src="plot_arch_for_clusters-2.png" alt="" width="700" height="433"></span>
-<span class="r-in"></span>
+<span class="r-in"><span></span></span>
 </code></pre></div>
     </div>
   </div>
@@ -215,7 +234,7 @@ file (one plot per page).</p>
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.2.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.6.</p>
 </div>
 
       </footer></div>

@@ -29,7 +29,7 @@ Call this function to process a data set using seqArchR."><!-- mathjax --><scrip
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">seqArchR</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.99.340</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.1.0</span>
       </span>
     </div>
 
@@ -82,17 +82,17 @@ of stretches of nucleotides, e.g., CG-richness, etc.</p>
     </div>
 
     <div id="ref-usage">
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">seqArchR</span><span class="op">(</span>
-  <span class="va">config</span>,
-  <span class="va">seqs_ohe_mat</span>,
-  <span class="va">seqs_raw</span>,
-  seqs_pos <span class="op">=</span> <span class="cn">NULL</span>,
-  total_itr <span class="op">=</span> <span class="cn">NULL</span>,
-  set_ocollation <span class="op">=</span> <span class="cn">NULL</span>,
-  fresh <span class="op">=</span> <span class="cn">TRUE</span>,
-  use_oc <span class="op">=</span> <span class="cn">NULL</span>,
-  o_dir <span class="op">=</span> <span class="cn">NULL</span>
-<span class="op">)</span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">seqArchR</span><span class="op">(</span></span>
+<span>  <span class="va">config</span>,</span>
+<span>  <span class="va">seqs_ohe_mat</span>,</span>
+<span>  <span class="va">seqs_raw</span>,</span>
+<span>  seqs_pos <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  total_itr <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  set_ocollation <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  fresh <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>  use_oc <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  o_dir <span class="op">=</span> <span class="cn">NULL</span></span>
+<span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div id="arguments">
@@ -100,23 +100,35 @@ of stretches of nucleotides, e.g., CG-richness, etc.</p>
     <dl><dt>config</dt>
 <dd><p>seqArchR configuration object as returned by
 <code><a href="set_config.html">set_config</a></code>. This is a required argument.</p></dd>
+
+
 <dt>seqs_ohe_mat</dt>
 <dd><p>A matrix of one-hot encoded sequences with sequences
 along columns. This is a required argument.</p></dd>
+
+
 <dt>seqs_raw</dt>
 <dd><p>A <code><a href="https://rdrr.io/pkg/Biostrings/man/XStringSet-class.html" class="external-link">DNAStringSet</a></code> object. The FASTA
 sequences as a DNAStringSet object. This argument required argument.</p></dd>
+
+
 <dt>seqs_pos</dt>
 <dd><p>Vector. Specify the tick labels for sequence positions.
 Default is NULL.</p></dd>
+
+
 <dt>total_itr</dt>
 <dd><p>Numeric. Specify the number of iterations to perform. This
 should be greater than zero. Default is NULL.</p></dd>
+
+
 <dt>set_ocollation</dt>
 <dd><p>Logical vector. A logical vector of length `total_itr`
 specifying for every iteration of seqArchR if collation of clusters from
 outer chunks should be performed. TRUE denotes clusters are collated,
 FALSE otherwise.</p></dd>
+
+
 <dt>fresh</dt>
 <dd><p>Logical. Specify if this is (not) a fresh run. Because
 seqArchR enables checkpointing, it is possible to perform additional
@@ -129,22 +141,29 @@ perform a third, the arguments `fresh` and `use_oc` can be used. Simply set
 the earlier result to `use_oc`. As of v0.1.3, with this setting, seqArchR
 returns a new result object as if the additional iteration performed is the
 only iteration.</p></dd>
+
+
 <dt>use_oc</dt>
 <dd><p>List. Clusters to be further processed with seqArchR. These can
 be from a previous seqArchR result (in which case use
 <code><a href="get_seqs_clust_list.html">get_seqs_clust_list</a></code> function), or simply clusters from any
 other method.
 Warning: This has not been rigorously tested yet (v0.1.3).</p></dd>
+
+
 <dt>o_dir</dt>
 <dd><p>Character. Specify the output directory with its path. seqArchR
 will create this directory. If a directory with the given name exists at the
 given location, seqArchR will add a suffix to the directory name. This
 change is reported to the user. Default is NULL. When NULL, just the result
 is returned, and no plots or checkpoints or result is written to disk.</p></dd>
+
 </dl></div>
     <div id="value">
     <h2>Value</h2>
-    <p>A nested list of elements as follows:</p><dl><dt>seqsClustLabels</dt>
+    
+
+<p>A nested list of elements as follows:</p><dl><dt>seqsClustLabels</dt>
 <dd><p>A list with cluster labels for all sequences per
 iteration of seqArchR. The cluster labels as stored as characters.</p></dd>
 
@@ -211,40 +230,40 @@ functions.</p>
 
     <div id="ref-examples">
     <h2>Examples</h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co"># Here,we re-use the example input sequences and one-hot encoded matrix</span></span>
-<span class="r-in"><span class="co"># shipped with seqArchR. Please see examples in the corresponding man pages</span></span>
-<span class="r-in"><span class="co"># for generating a one-hot encoded input matrix from raw FASTA sequences</span></span>
-<span class="r-in"><span class="co"># in `prepare_data_from_FASTA`</span></span>
-<span class="r-in"><span class="co">#</span></span>
-<span class="r-in"><span class="va">inputSeqsMat</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/readRDS.html" class="external-link">readRDS</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"extdata"</span>, <span class="st">"tssSinuc.rds"</span>,</span>
-<span class="r-in">                             package <span class="op">=</span> <span class="st">"seqArchR"</span>, mustWork <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="va">inputSeqsRaw</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/readRDS.html" class="external-link">readRDS</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"extdata"</span>, <span class="st">"tssSeqsRaw.rds"</span>,</span>
-<span class="r-in">                             package <span class="op">=</span> <span class="st">"seqArchR"</span>, mustWork <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co"># Set seqArchR configuration</span></span>
-<span class="r-in"><span class="va">seqArchRconfig</span> <span class="op">&lt;-</span> <span class="fu">seqArchR</span><span class="fu">::</span><span class="fu"><a href="set_config.html">set_config</a></span><span class="op">(</span></span>
-<span class="r-in">    parallelize <span class="op">=</span> <span class="cn">TRUE</span>,</span>
-<span class="r-in">    n_cores <span class="op">=</span> <span class="fl">2</span>,</span>
-<span class="r-in">    n_runs <span class="op">=</span> <span class="fl">100</span>,</span>
-<span class="r-in">    k_min <span class="op">=</span> <span class="fl">1</span>,</span>
-<span class="r-in">    k_max <span class="op">=</span> <span class="fl">20</span>,</span>
-<span class="r-in">    mod_sel_type <span class="op">=</span> <span class="st">"stability"</span>,</span>
-<span class="r-in">    bound <span class="op">=</span> <span class="fl">10</span><span class="op">^</span><span class="op">-</span><span class="fl">8</span>,</span>
-<span class="r-in">    chunk_size <span class="op">=</span> <span class="fl">100</span>,</span>
-<span class="r-in">    flags <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>debug <span class="op">=</span> <span class="cn">FALSE</span>, time <span class="op">=</span> <span class="cn">TRUE</span>, verbose <span class="op">=</span> <span class="cn">TRUE</span>,</span>
-<span class="r-in">        plot <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
-<span class="r-in"><span class="op">)</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co"># Run seqArchR</span></span>
-<span class="r-in"><span class="va">seqArchRresult</span> <span class="op">&lt;-</span> <span class="fu">seqArchR</span><span class="fu">::</span><span class="fu">seqArchR</span><span class="op">(</span>config <span class="op">=</span> <span class="va">seqArchRconfig</span>,</span>
-<span class="r-in">                          seqs_ohe_mat <span class="op">=</span> <span class="va">inputSeqsMat</span>,</span>
-<span class="r-in">                          seqs_raw <span class="op">=</span> <span class="va">inputSeqsRaw</span>,</span>
-<span class="r-in">                          seqs_pos <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html" class="external-link">seq</a></span><span class="op">(</span><span class="fl">1</span>,<span class="fl">100</span>,by<span class="op">=</span><span class="fl">1</span><span class="op">)</span>,</span>
-<span class="r-in">                          total_itr <span class="op">=</span> <span class="fl">2</span>,</span>
-<span class="r-in">                          set_ocollation <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/pkg/S4Vectors/man/Vector-class.html" class="external-link">c</a></span><span class="op">(</span><span class="cn">TRUE</span>, <span class="cn">FALSE</span><span class="op">)</span><span class="op">)</span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># Here,we re-use the example input sequences and one-hot encoded matrix</span></span></span>
+<span class="r-in"><span><span class="co"># shipped with seqArchR. Please see examples in the corresponding man pages</span></span></span>
+<span class="r-in"><span><span class="co"># for generating a one-hot encoded input matrix from raw FASTA sequences</span></span></span>
+<span class="r-in"><span><span class="co"># in `prepare_data_from_FASTA`</span></span></span>
+<span class="r-in"><span><span class="co">#</span></span></span>
+<span class="r-in"><span><span class="va">inputSeqsMat</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/readRDS.html" class="external-link">readRDS</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"extdata"</span>, <span class="st">"tssSinuc.rds"</span>,</span></span>
+<span class="r-in"><span>                             package <span class="op">=</span> <span class="st">"seqArchR"</span>, mustWork <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="va">inputSeqsRaw</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/readRDS.html" class="external-link">readRDS</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"extdata"</span>, <span class="st">"tssSeqsRaw.rds"</span>,</span></span>
+<span class="r-in"><span>                             package <span class="op">=</span> <span class="st">"seqArchR"</span>, mustWork <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># Set seqArchR configuration</span></span></span>
+<span class="r-in"><span><span class="va">seqArchRconfig</span> <span class="op">&lt;-</span> <span class="fu">seqArchR</span><span class="fu">::</span><span class="fu"><a href="set_config.html">set_config</a></span><span class="op">(</span></span></span>
+<span class="r-in"><span>    parallelize <span class="op">=</span> <span class="cn">TRUE</span>,</span></span>
+<span class="r-in"><span>    n_cores <span class="op">=</span> <span class="fl">2</span>,</span></span>
+<span class="r-in"><span>    n_runs <span class="op">=</span> <span class="fl">100</span>,</span></span>
+<span class="r-in"><span>    k_min <span class="op">=</span> <span class="fl">1</span>,</span></span>
+<span class="r-in"><span>    k_max <span class="op">=</span> <span class="fl">20</span>,</span></span>
+<span class="r-in"><span>    mod_sel_type <span class="op">=</span> <span class="st">"stability"</span>,</span></span>
+<span class="r-in"><span>    bound <span class="op">=</span> <span class="fl">10</span><span class="op">^</span><span class="op">-</span><span class="fl">8</span>,</span></span>
+<span class="r-in"><span>    chunk_size <span class="op">=</span> <span class="fl">100</span>,</span></span>
+<span class="r-in"><span>    flags <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>debug <span class="op">=</span> <span class="cn">FALSE</span>, time <span class="op">=</span> <span class="cn">TRUE</span>, verbose <span class="op">=</span> <span class="cn">TRUE</span>,</span></span>
+<span class="r-in"><span>        plot <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># Run seqArchR</span></span></span>
+<span class="r-in"><span><span class="va">seqArchRresult</span> <span class="op">&lt;-</span> <span class="fu">seqArchR</span><span class="fu">::</span><span class="fu">seqArchR</span><span class="op">(</span>config <span class="op">=</span> <span class="va">seqArchRconfig</span>,</span></span>
+<span class="r-in"><span>                          seqs_ohe_mat <span class="op">=</span> <span class="va">inputSeqsMat</span>,</span></span>
+<span class="r-in"><span>                          seqs_raw <span class="op">=</span> <span class="va">inputSeqsRaw</span>,</span></span>
+<span class="r-in"><span>                          seqs_pos <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html" class="external-link">seq</a></span><span class="op">(</span><span class="fl">1</span>,<span class="fl">100</span>,by<span class="op">=</span><span class="fl">1</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>                          total_itr <span class="op">=</span> <span class="fl">2</span>,</span></span>
+<span class="r-in"><span>                          set_ocollation <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="cn">TRUE</span>, <span class="cn">FALSE</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> ── Setting up ──────────────────────────────────────────────────────────────────</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">ℹ</span> Parallelization: Yes</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">ℹ</span> Model selection by factor stability</span>
@@ -267,8 +286,8 @@ functions.</p>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">ℹ</span> Best K for this chunk: 3</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BB00;">✔</span> 1 of 1 outer chunk complete</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BB00;">✔</span> 1 of 2 iterations complete</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> → Iteration 1 completed: 1m 31.8s</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> → Time ellapsed since start: 1m 32.2s</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> → Iteration 1 completed: 59.8s</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> → Time ellapsed since start: 1m 0.3s</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">──</span> <span style="font-weight: bold;">Iteration 2 of 2 [3 chunks]</span> <span style="color: #00BBBB;">─────────────────────────────────────────────────</span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> </span>
@@ -296,12 +315,12 @@ functions.</p>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">ℹ</span> Best K for this chunk: 1</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BB00;">✔</span> 3 of 3 outer chunks complete</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BB00;">✔</span> 2 of 2 iterations complete</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> → Iteration 2 completed: 2m 32.6s</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> → Time ellapsed since start: 4m 4.9s</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> → Iteration 2 completed: 1m 20s</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> → Time ellapsed since start: 2m 20.3s</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> ── seqArchR exiting</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> 4m 4.9s ────────────────────────────────────────────────────</span>
-<span class="r-in"></span>
-<span class="r-in"></span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> 2m 20.3s ───────────────────────────────────────────────────</span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span></span></span>
 </code></pre></div>
     </div>
   </div>
@@ -316,7 +335,7 @@ functions.</p>
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.2.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.6.</p>
 </div>
 
       </footer></div>

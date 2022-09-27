@@ -25,7 +25,7 @@ visualization., or as a single heatmap or as a single sequence logo."><!-- mathj
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">seqArchR</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.99.340</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.1.0</span>
       </span>
     </div>
 
@@ -75,50 +75,67 @@ visualization., or as a single heatmap or as a single sequence logo.</p>
     </div>
 
     <div id="ref-usage">
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">viz_bas_vec</span><span class="op">(</span>
-  <span class="va">feat_mat</span>,
-  ptype <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/pkg/S4Vectors/man/Vector-class.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"heatmap"</span>, <span class="st">"seqlogo"</span><span class="op">)</span>,
-  method <span class="op">=</span> <span class="st">"bits"</span>,
-  pos_lab <span class="op">=</span> <span class="cn">NULL</span>,
-  pdf_name <span class="op">=</span> <span class="cn">NULL</span>,
-  add_pseudo_counts <span class="op">=</span> <span class="cn">FALSE</span>,
-  sinuc_or_dinuc <span class="op">=</span> <span class="st">"sinuc"</span>,
-  fixed_coord <span class="op">=</span> <span class="cn">FALSE</span>
-<span class="op">)</span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">viz_bas_vec</span><span class="op">(</span></span>
+<span>  <span class="va">feat_mat</span>,</span>
+<span>  ptype <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"heatmap"</span>, <span class="st">"seqlogo"</span><span class="op">)</span>,</span>
+<span>  method <span class="op">=</span> <span class="st">"bits"</span>,</span>
+<span>  pos_lab <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  pdf_name <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  add_pseudo_counts <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>  sinuc_or_dinuc <span class="op">=</span> <span class="st">"sinuc"</span>,</span>
+<span>  fixed_coord <span class="op">=</span> <span class="cn">FALSE</span></span>
+<span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div id="arguments">
     <h2>Arguments</h2>
     <dl><dt>feat_mat</dt>
 <dd><p>The features matrix (basis vectors matrix) from seqArchR.</p></dd>
+
+
 <dt>ptype</dt>
 <dd><p>Character vector of length one or two. Specify just one of
 "heatmap" or "seqlogo" to visualize the basis vectors as such, or specify
 a vector of length two for plotting both, heatmap and seqlogo. These are
 then arranged one below the other, the first on top and the second under it.</p></dd>
+
+
 <dt>method</dt>
 <dd><p>Specify either of "custom", "bits", or "probability" for
 plotting sequence logo. Default is "bits".</p></dd>
+
+
 <dt>pos_lab</dt>
 <dd><p>Labels for sequence positions, should be of same
 length as that of the sequences. Default value is NULL, when the
 positions are labeled from 1 to the length of the sequences.</p></dd>
+
+
 <dt>pdf_name</dt>
 <dd><p>Filename to save the plot, also provide the extension.</p></dd>
+
+
 <dt>add_pseudo_counts</dt>
 <dd><p>Logical, taking values TRUE or FALSE, default
 set to FALSE. Setting it to TRUE will enable adding pseudo-counts to the
 features matrix.</p></dd>
+
+
 <dt>sinuc_or_dinuc</dt>
 <dd><p>"sinuc" or "dinuc" for choosing between mono- and
 dinucleotide profiles respectively.</p></dd>
+
+
 <dt>fixed_coord</dt>
 <dd><p>Set this to TRUE to use a fixed aspect ratio for the
 plot irrestive of the width and height of the PDF. Default is FALSE.</p></dd>
+
 </dl></div>
     <div id="value">
     <h2>Value</h2>
-    <p>nothing</p>
+    
+
+<p>nothing</p>
     </div>
     <div id="see-also">
     <h2>See also</h2>
@@ -129,13 +146,13 @@ plot irrestive of the width and height of the PDF. Default is FALSE.</p></dd>
 
     <div id="ref-examples">
     <h2>Examples</h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="va">res</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/readRDS.html" class="external-link">readRDS</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"extdata"</span>, <span class="st">"example_seqArchRresult.rds"</span>,</span>
-<span class="r-in">         package <span class="op">=</span> <span class="st">"seqArchR"</span>, mustWork <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co"># Visualize basis vectors at iteration 1 of seqArchR result as heatmap and</span></span>
-<span class="r-in"><span class="co"># sequence logo</span></span>
-<span class="r-in"><span class="fu">viz_bas_vec</span><span class="op">(</span>feat_mat <span class="op">=</span> <span class="fu"><a href="get_clBasVec.html">get_clBasVec_m</a></span><span class="op">(</span><span class="va">res</span>,iter<span class="op">=</span><span class="fl">1</span><span class="op">)</span>, sinuc_or_dinuc <span class="op">=</span> <span class="st">"dinuc"</span>,</span>
-<span class="r-in">                ptype <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/pkg/S4Vectors/man/Vector-class.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"heatmap"</span>, <span class="st">"seqlogo"</span><span class="op">)</span><span class="op">)</span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="va">res</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/readRDS.html" class="external-link">readRDS</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"extdata"</span>, <span class="st">"example_seqArchRresult.rds"</span>,</span></span>
+<span class="r-in"><span>         package <span class="op">=</span> <span class="st">"seqArchR"</span>, mustWork <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># Visualize basis vectors at iteration 1 of seqArchR result as heatmap and</span></span></span>
+<span class="r-in"><span><span class="co"># sequence logo</span></span></span>
+<span class="r-in"><span><span class="fu">viz_bas_vec</span><span class="op">(</span>feat_mat <span class="op">=</span> <span class="fu"><a href="get_clBasVec.html">get_clBasVec_m</a></span><span class="op">(</span><span class="va">res</span>,iter<span class="op">=</span><span class="fl">1</span><span class="op">)</span>, sinuc_or_dinuc <span class="op">=</span> <span class="st">"dinuc"</span>,</span></span>
+<span class="r-in"><span>                ptype <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"heatmap"</span>, <span class="st">"seqlogo"</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>`guides(&lt;scale&gt; = FALSE)` is deprecated. Please use `guides(&lt;scale&gt; = "none")` instead.</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Scale for 'x' is already present. Adding another scale for 'x', which will</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> replace the existing scale.</span>
@@ -154,11 +171,11 @@ plot irrestive of the width and height of the PDF. Default is FALSE.</p></dd>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [[3]]</span>
 <span class="r-plt img"><img src="viz_bas_vec-3.png" alt="" width="700" height="433"></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-in"></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co"># Visualize basis vectors at iteration 1 of seqArchR result as sequence logos</span></span>
-<span class="r-in"><span class="fu">viz_bas_vec</span><span class="op">(</span>feat_mat <span class="op">=</span> <span class="fu"><a href="get_clBasVec.html">get_clBasVec_m</a></span><span class="op">(</span><span class="va">res</span>,iter<span class="op">=</span><span class="fl">1</span><span class="op">)</span>, ptype <span class="op">=</span> <span class="st">"seqlogo"</span>,</span>
-<span class="r-in">                 sinuc_or_dinuc <span class="op">=</span> <span class="st">"dinuc"</span><span class="op">)</span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># Visualize basis vectors at iteration 1 of seqArchR result as sequence logos</span></span></span>
+<span class="r-in"><span><span class="fu">viz_bas_vec</span><span class="op">(</span>feat_mat <span class="op">=</span> <span class="fu"><a href="get_clBasVec.html">get_clBasVec_m</a></span><span class="op">(</span><span class="va">res</span>,iter<span class="op">=</span><span class="fl">1</span><span class="op">)</span>, ptype <span class="op">=</span> <span class="st">"seqlogo"</span>,</span></span>
+<span class="r-in"><span>                 sinuc_or_dinuc <span class="op">=</span> <span class="st">"dinuc"</span><span class="op">)</span></span></span>
 <span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>`guides(&lt;scale&gt; = FALSE)` is deprecated. Please use `guides(&lt;scale&gt; = "none")` instead.</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Scale for 'x' is already present. Adding another scale for 'x', which will</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> replace the existing scale.</span>
@@ -177,15 +194,15 @@ plot irrestive of the width and height of the PDF. Default is FALSE.</p></dd>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [[3]]</span>
 <span class="r-plt img"><img src="viz_bas_vec-6.png" alt="" width="700" height="433"></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-in"></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co"># Visualizing basis vector for a single cluster as a heatmap</span></span>
-<span class="r-in"><span class="fu">viz_bas_vec</span><span class="op">(</span>feat_mat <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/matrix.html" class="external-link">as.matrix</a></span><span class="op">(</span><span class="fu"><a href="get_clBasVec.html">get_clBasVec_m</a></span><span class="op">(</span><span class="va">res</span>,iter<span class="op">=</span><span class="fl">1</span><span class="op">)</span><span class="op">[</span>,<span class="fl">3</span><span class="op">]</span><span class="op">)</span>,</span>
-<span class="r-in">                 ptype <span class="op">=</span> <span class="st">"heatmap"</span>, sinuc_or_dinuc <span class="op">=</span> <span class="st">"dinuc"</span><span class="op">)</span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># Visualizing basis vector for a single cluster as a heatmap</span></span></span>
+<span class="r-in"><span><span class="fu">viz_bas_vec</span><span class="op">(</span>feat_mat <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/matrix.html" class="external-link">as.matrix</a></span><span class="op">(</span><span class="fu"><a href="get_clBasVec.html">get_clBasVec_m</a></span><span class="op">(</span><span class="va">res</span>,iter<span class="op">=</span><span class="fl">1</span><span class="op">)</span><span class="op">[</span>,<span class="fl">3</span><span class="op">]</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>                 ptype <span class="op">=</span> <span class="st">"heatmap"</span>, sinuc_or_dinuc <span class="op">=</span> <span class="st">"dinuc"</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [[1]]</span>
 <span class="r-plt img"><img src="viz_bas_vec-7.png" alt="" width="700" height="433"></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-in"></span>
+<span class="r-in"><span></span></span>
 </code></pre></div>
     </div>
   </div>
@@ -200,7 +217,7 @@ plot irrestive of the width and height of the PDF. Default is FALSE.</p></dd>
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.2.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.6.</p>
 </div>
 
       </footer></div>

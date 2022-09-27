@@ -29,7 +29,7 @@ for mono- and dinucleotide features respectively."><!-- mathjax --><script src="
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">seqArchR</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.99.340</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.1.0</span>
       </span>
     </div>
 
@@ -83,7 +83,7 @@ for mono- and dinucleotide features respectively.</p>
     </div>
 
     <div id="ref-usage">
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">prepare_data_from_FASTA</span><span class="op">(</span><span class="va">fasta_fname</span>, raw_seq <span class="op">=</span> <span class="cn">FALSE</span>, sinuc_or_dinuc <span class="op">=</span> <span class="st">"sinuc"</span><span class="op">)</span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">prepare_data_from_FASTA</span><span class="op">(</span><span class="va">fasta_fname</span>, raw_seq <span class="op">=</span> <span class="cn">FALSE</span>, sinuc_or_dinuc <span class="op">=</span> <span class="st">"sinuc"</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div id="arguments">
@@ -91,15 +91,22 @@ for mono- and dinucleotide features respectively.</p>
     <dl><dt>fasta_fname</dt>
 <dd><p>Provide the name (with complete path) of the input
 FASTA file.</p></dd>
+
+
 <dt>raw_seq</dt>
 <dd><p>TRUE or FALSE, set this to TRUE if you want the raw sequences.</p></dd>
+
+
 <dt>sinuc_or_dinuc</dt>
 <dd><p>character string, 'sinuc' or 'dinuc' to select for
 mono- or dinucleotide profiles.</p></dd>
+
 </dl></div>
     <div id="value">
     <h2>Value</h2>
-    <p>A sparse matrix of sequences represented with one-hot-encoding.</p>
+    
+
+<p>A sparse matrix of sequences represented with one-hot-encoding.</p>
     </div>
     <div id="see-also">
     <h2>See also</h2>
@@ -111,28 +118,28 @@ DNAStringSet object</p>
 
     <div id="ref-examples">
     <h2>Examples</h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"></span>
-<span class="r-in"><span class="va">fname</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"extdata"</span>, <span class="st">"example_data.fa.gz"</span>,</span>
-<span class="r-in">                        package <span class="op">=</span> <span class="st">"seqArchR"</span>, mustWork <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co"># mononucleotides feature matrix</span></span>
-<span class="r-in"><span class="va">rawSeqs</span> <span class="op">&lt;-</span> <span class="fu">prepare_data_from_FASTA</span><span class="op">(</span>fasta_fname <span class="op">=</span> <span class="va">fname</span>,</span>
-<span class="r-in">                        sinuc_or_dinuc <span class="op">=</span> <span class="st">"sinuc"</span><span class="op">)</span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="va">fname</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"extdata"</span>, <span class="st">"example_data.fa.gz"</span>,</span></span>
+<span class="r-in"><span>                        package <span class="op">=</span> <span class="st">"seqArchR"</span>, mustWork <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># mononucleotides feature matrix</span></span></span>
+<span class="r-in"><span><span class="va">rawSeqs</span> <span class="op">&lt;-</span> <span class="fu">prepare_data_from_FASTA</span><span class="op">(</span>fasta_fname <span class="op">=</span> <span class="va">fname</span>,</span></span>
+<span class="r-in"><span>                        sinuc_or_dinuc <span class="op">=</span> <span class="st">"sinuc"</span><span class="op">)</span></span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Sequences OK, </span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Read 200 sequences</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Generating dinucleotide profiles</span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co"># dinucleotides feature matrix</span></span>
-<span class="r-in"><span class="va">rawSeqs</span> <span class="op">&lt;-</span> <span class="fu">prepare_data_from_FASTA</span><span class="op">(</span>fasta_fname <span class="op">=</span> <span class="va">fname</span>,</span>
-<span class="r-in">                        sinuc_or_dinuc <span class="op">=</span> <span class="st">"dinuc"</span><span class="op">)</span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># dinucleotides feature matrix</span></span></span>
+<span class="r-in"><span><span class="va">rawSeqs</span> <span class="op">&lt;-</span> <span class="fu">prepare_data_from_FASTA</span><span class="op">(</span>fasta_fname <span class="op">=</span> <span class="va">fname</span>,</span></span>
+<span class="r-in"><span>                        sinuc_or_dinuc <span class="op">=</span> <span class="st">"dinuc"</span><span class="op">)</span></span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Sequences OK, </span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Read 200 sequences</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Generating dinucleotide profiles</span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co"># FASTA sequences as a Biostrings::DNAStringSet object</span></span>
-<span class="r-in"><span class="va">rawSeqs</span> <span class="op">&lt;-</span> <span class="fu">prepare_data_from_FASTA</span><span class="op">(</span>fasta_fname <span class="op">=</span> <span class="va">fname</span>,</span>
-<span class="r-in">                        raw_seq <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
-<span class="r-in"></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># FASTA sequences as a Biostrings::DNAStringSet object</span></span></span>
+<span class="r-in"><span><span class="va">rawSeqs</span> <span class="op">&lt;-</span> <span class="fu">prepare_data_from_FASTA</span><span class="op">(</span>fasta_fname <span class="op">=</span> <span class="va">fname</span>,</span></span>
+<span class="r-in"><span>                        raw_seq <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
 </code></pre></div>
     </div>
   </div>
@@ -147,7 +154,7 @@ DNAStringSet object</p>
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.2.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.6.</p>
 </div>
 
       </footer></div>

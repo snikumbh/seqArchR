@@ -24,7 +24,7 @@ clusters from seqArchR's given iteration."><!-- mathjax --><script src="https://
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">seqArchR</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.99.340</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.1.0</span>
       </span>
     </div>
 
@@ -73,65 +73,88 @@ clusters from seqArchR's given iteration.</p>
     </div>
 
     <div id="ref-usage">
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">collate_seqArchR_result</span><span class="op">(</span>
-  <span class="va">result</span>,
-  iter <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/length.html" class="external-link">length</a></span><span class="op">(</span><span class="va">result</span><span class="op">$</span><span class="va">seqsClustLabels</span><span class="op">)</span>,
-  clust_method <span class="op">=</span> <span class="st">"hc"</span>,
-  aggl_method <span class="op">=</span> <span class="st">"ward.D"</span>,
-  dist_method <span class="op">=</span> <span class="st">"euclid"</span>,
-  regularize <span class="op">=</span> <span class="cn">FALSE</span>,
-  topn <span class="op">=</span> <span class="fl">50</span>,
-  collate <span class="op">=</span> <span class="cn">TRUE</span>,
-  return_order <span class="op">=</span> <span class="cn">FALSE</span>,
-  flags <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>debugFlag <span class="op">=</span> <span class="cn">FALSE</span>, verboseFlag <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>,
-  <span class="va">...</span>
-<span class="op">)</span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">collate_seqArchR_result</span><span class="op">(</span></span>
+<span>  <span class="va">result</span>,</span>
+<span>  iter <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/length.html" class="external-link">length</a></span><span class="op">(</span><span class="va">result</span><span class="op">$</span><span class="va">seqsClustLabels</span><span class="op">)</span>,</span>
+<span>  clust_method <span class="op">=</span> <span class="st">"hc"</span>,</span>
+<span>  aggl_method <span class="op">=</span> <span class="st">"ward.D"</span>,</span>
+<span>  dist_method <span class="op">=</span> <span class="st">"euclid"</span>,</span>
+<span>  regularize <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>  topn <span class="op">=</span> <span class="fl">50</span>,</span>
+<span>  collate <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>  return_order <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>  flags <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>debugFlag <span class="op">=</span> <span class="cn">FALSE</span>, verboseFlag <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>,</span>
+<span>  <span class="va">...</span></span>
+<span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div id="arguments">
     <h2>Arguments</h2>
     <dl><dt>result</dt>
 <dd><p>The seqArchR result object.</p></dd>
+
+
 <dt>iter</dt>
 <dd><p>Specify clusters at which iteration of seqArchR are to be
 reordered/collated. Default is the last iteration of the seqArchR result
 object.</p></dd>
+
+
 <dt>clust_method</dt>
 <dd><p>Specify 'hc' for hierarchical clustering. Currently, only
 hierarchical clustering is supported.</p></dd>
+
+
 <dt>aggl_method</dt>
 <dd><p>One of linkage values as specified for hierarchical
 clustering with <code><a href="https://rdrr.io/r/stats/hclust.html" class="external-link">hclust</a></code>. Default is 'ward.D'.</p></dd>
+
+
 <dt>dist_method</dt>
 <dd><p>Distance measure to be used with hierarchical clustering.
 Available options are "euclid" (default), "cor" for correlation, "cosangle"
 for cosine angle.</p></dd>
+
+
 <dt>regularize</dt>
 <dd><p>Logical. Specify TRUE if regularization is to be performed
 before comparison. Default is FALSE. Also see argument 'topN'.</p></dd>
+
+
 <dt>topn</dt>
 <dd><p>Use only the top N dimensions of each basis vector for
 comparing them. Note that since each basis vector has 4L or 16L (mono- or
 dinucleotides) dimensions, each dimension is a combination of nucleotide and
 its position in the sequence. This argument selects the top N dimensions of
 the basis vector. This is ignored when argument 'regularize' is FALSE.</p></dd>
+
+
 <dt>collate</dt>
 <dd><p>Logical. Specify TRUE if collation using
 hierarchical agglomerative clustering is to be performed, otherwise FALSE.</p></dd>
+
+
 <dt>return_order</dt>
 <dd><p>Logical. Use this argument when you want hierarchical
 clustering to be performed but not collation of clusters. Therefore,
 setting return_order to TRUE will return the hierarchical clustering
 object itself. This enables custom downstream processing/analysis.</p></dd>
+
+
 <dt>flags</dt>
 <dd><p>Pass the flags object similar to the flags in configuration
 of the seqArchR result object.</p></dd>
+
+
 <dt>...</dt>
 <dd><p>ignored</p></dd>
+
 </dl></div>
     <div id="value">
     <h2>Value</h2>
-    <p>When `collate` is TRUE, a list with the following elements is
+    
+
+<p>When `collate` is TRUE, a list with the following elements is
 returned:</p><dl><dt>basisVectorsCLust</dt>
 <dd><p>A list storing collation information of the
 basis vectors, i.e, IDs of basis vectors that were collated into one.</p></dd>
@@ -147,27 +170,29 @@ collated clustering.</p></dd>
 </dl><p>When 'collate' is FALSE,
 it returns the already existing basis vectors, each as singleton clusters.
 The sequence cluster labels and sequence clusters are also handled
-accordingly. All are available as part of the same list as the earlier case.
-When 'return_order' is set to TRUE, the hierarchical clustering result is
+accordingly. All are available as part of the same list as the earlier case.</p>
+
+
+<p>When 'return_order' is set to TRUE, the hierarchical clustering result is
 returned instead.</p>
     </div>
 
     <div id="ref-examples">
     <h2>Examples</h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="va">res</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/readRDS.html" class="external-link">readRDS</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"extdata"</span>, <span class="st">"example_seqArchRresult.rds"</span>,</span>
-<span class="r-in">         package <span class="op">=</span> <span class="st">"seqArchR"</span>, mustWork <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co"># While the default settings for collation use Euclidean distance and</span></span>
-<span class="r-in"><span class="co"># ward.D agglomeration, one can choose to use different settings, say,</span></span>
-<span class="r-in"><span class="co"># correlation distance and complete linkage, and also regularizing to use</span></span>
-<span class="r-in"><span class="co"># only top 50 dimensions (nucleotide-positions combinations)</span></span>
-<span class="r-in"><span class="va">collated_res</span> <span class="op">&lt;-</span> <span class="fu">collate_seqArchR_result</span><span class="op">(</span>result <span class="op">=</span> <span class="va">res</span>, iter <span class="op">=</span> <span class="fl">2</span>,</span>
-<span class="r-in">                        aggl_method <span class="op">=</span> <span class="st">"complete"</span>, dist_method <span class="op">=</span> <span class="st">"cor"</span>,</span>
-<span class="r-in">                        regularize <span class="op">=</span> <span class="cn">TRUE</span>, topn <span class="op">=</span> <span class="fl">50</span><span class="op">)</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="fu"><a href="https://rdrr.io/r/base/names.html" class="external-link">names</a></span><span class="op">(</span><span class="va">collated_res</span><span class="op">)</span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="va">res</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/readRDS.html" class="external-link">readRDS</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"extdata"</span>, <span class="st">"example_seqArchRresult.rds"</span>,</span></span>
+<span class="r-in"><span>         package <span class="op">=</span> <span class="st">"seqArchR"</span>, mustWork <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># While the default settings for collation use Euclidean distance and</span></span></span>
+<span class="r-in"><span><span class="co"># ward.D agglomeration, one can choose to use different settings, say,</span></span></span>
+<span class="r-in"><span><span class="co"># correlation distance and complete linkage, and also regularizing to use</span></span></span>
+<span class="r-in"><span><span class="co"># only top 50 dimensions (nucleotide-positions combinations)</span></span></span>
+<span class="r-in"><span><span class="va">collated_res</span> <span class="op">&lt;-</span> <span class="fu">collate_seqArchR_result</span><span class="op">(</span>result <span class="op">=</span> <span class="va">res</span>, iter <span class="op">=</span> <span class="fl">2</span>,</span></span>
+<span class="r-in"><span>                        aggl_method <span class="op">=</span> <span class="st">"complete"</span>, dist_method <span class="op">=</span> <span class="st">"cor"</span>,</span></span>
+<span class="r-in"><span>                        regularize <span class="op">=</span> <span class="cn">TRUE</span>, topn <span class="op">=</span> <span class="fl">50</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/names.html" class="external-link">names</a></span><span class="op">(</span><span class="va">collated_res</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] "basisVectorsClust" "clusters"          "seqsClustLabels"  </span>
-<span class="r-in"></span>
+<span class="r-in"><span></span></span>
 </code></pre></div>
     </div>
   </div>
@@ -182,7 +207,7 @@ returned instead.</p>
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.2.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.6.</p>
 </div>
 
       </footer></div>

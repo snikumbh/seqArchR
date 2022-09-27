@@ -24,7 +24,7 @@ sequences, this function plots the sequence logo."><!-- mathjax --><script src="
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">seqArchR</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.99.340</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.1.0</span>
       </span>
     </div>
 
@@ -73,15 +73,15 @@ sequences, this function plots the sequence logo.</p>
     </div>
 
     <div id="ref-usage">
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">plot_ggseqlogo_of_seqs</span><span class="op">(</span>
-  <span class="va">seqs</span>,
-  pos_lab <span class="op">=</span> <span class="cn">NULL</span>,
-  xt_freq <span class="op">=</span> <span class="fl">5</span>,
-  method <span class="op">=</span> <span class="st">"bits"</span>,
-  title <span class="op">=</span> <span class="cn">NULL</span>,
-  bits_yax <span class="op">=</span> <span class="st">"full"</span>,
-  fixed_coord <span class="op">=</span> <span class="cn">FALSE</span>
-<span class="op">)</span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">plot_ggseqlogo_of_seqs</span><span class="op">(</span></span>
+<span>  <span class="va">seqs</span>,</span>
+<span>  pos_lab <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  xt_freq <span class="op">=</span> <span class="fl">5</span>,</span>
+<span>  method <span class="op">=</span> <span class="st">"bits"</span>,</span>
+<span>  title <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  bits_yax <span class="op">=</span> <span class="st">"full"</span>,</span>
+<span>  fixed_coord <span class="op">=</span> <span class="cn">FALSE</span></span>
+<span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div id="arguments">
@@ -89,30 +89,45 @@ sequences, this function plots the sequence logo.</p>
     <dl><dt>seqs</dt>
 <dd><p>Collection of sequences as a
 <code><a href="https://rdrr.io/pkg/Biostrings/man/XStringSet-class.html" class="external-link">DNAStringSet</a></code> object.</p></dd>
+
+
 <dt>pos_lab</dt>
 <dd><p>Labels for sequence positions, should be of same
 length as that of the sequences. Default value is NULL, when the
 positions are labeled from 1 to the length of the sequences.</p></dd>
+
+
 <dt>xt_freq</dt>
 <dd><p>Specify the frequency of the x-axis ticks.</p></dd>
+
+
 <dt>method</dt>
 <dd><p>Specify either 'bits' for information content or
 'prob' for probability.</p></dd>
+
+
 <dt>title</dt>
 <dd><p>The title for the plot. Deafult is NULL.</p></dd>
+
+
 <dt>bits_yax</dt>
 <dd><p>Specify 'full' if the information content y-axis limits
 should be 0-2 or 'auto' for a suitable limit. The 'auto' setting adjusts
 the y-axis limits according to the maximum information content of the
 sequence logo. Default is 'full'.</p></dd>
+
+
 <dt>fixed_coord</dt>
 <dd><p>Specify TRUE if the aspect ratio of the plot should be
 fixed, FALSE otherwise. Default is TRUE. When `method` argument is set to
 'bits', ratio is 4, when 'prob', ratio is 6.</p></dd>
+
 </dl></div>
     <div id="value">
     <h2>Value</h2>
-    <p>A sequence logo plot of the given DNA sequences.</p>
+    
+
+<p>A sequence logo plot of the given DNA sequences.</p>
     </div>
     <div id="see-also">
     <h2>See also</h2>
@@ -122,32 +137,32 @@ sequence logo plots as a list.</p></div>
 
     <div id="ref-examples">
     <h2>Examples</h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="va">res</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/readRDS.html" class="external-link">readRDS</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"extdata"</span>, <span class="st">"example_seqArchRresult.rds"</span>,</span>
-<span class="r-in">         package <span class="op">=</span> <span class="st">"seqArchR"</span>, mustWork <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co"># Default, using information content on y-axis</span></span>
-<span class="r-in"><span class="va">pl</span> <span class="op">&lt;-</span> <span class="fu">plot_ggseqlogo_of_seqs</span><span class="op">(</span>seqs <span class="op">=</span> <span class="fu"><a href="seqs_str.html">seqs_str</a></span><span class="op">(</span><span class="va">res</span>, iter<span class="op">=</span><span class="fl">1</span>, cl<span class="op">=</span><span class="fl">3</span><span class="op">)</span>,</span>
-<span class="r-in">                             pos_lab <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html" class="external-link">seq_len</a></span><span class="op">(</span><span class="fl">100</span><span class="op">)</span>, title <span class="op">=</span> <span class="cn">NULL</span>,</span>
-<span class="r-in">                             fixed_coord <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="va">res</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/readRDS.html" class="external-link">readRDS</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"extdata"</span>, <span class="st">"example_seqArchRresult.rds"</span>,</span></span>
+<span class="r-in"><span>         package <span class="op">=</span> <span class="st">"seqArchR"</span>, mustWork <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># Default, using information content on y-axis</span></span></span>
+<span class="r-in"><span><span class="va">pl</span> <span class="op">&lt;-</span> <span class="fu">plot_ggseqlogo_of_seqs</span><span class="op">(</span>seqs <span class="op">=</span> <span class="fu"><a href="seqs_str.html">seqs_str</a></span><span class="op">(</span><span class="va">res</span>, iter<span class="op">=</span><span class="fl">1</span>, cl<span class="op">=</span><span class="fl">3</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>                             pos_lab <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html" class="external-link">seq_len</a></span><span class="op">(</span><span class="fl">100</span><span class="op">)</span>, title <span class="op">=</span> <span class="cn">NULL</span>,</span></span>
+<span class="r-in"><span>                             fixed_coord <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></span>
 <span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>`guides(&lt;scale&gt; = FALSE)` is deprecated. Please use `guides(&lt;scale&gt; = "none")` instead.</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Scale for 'x' is already present. Adding another scale for 'x', which will</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> replace the existing scale.</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Coordinate system already present. Adding new coordinate system, which will replace the existing one.</span>
-<span class="r-in"><span class="va">pl</span></span>
+<span class="r-in"><span><span class="va">pl</span></span></span>
 <span class="r-plt img"><img src="plot_ggseqlogo_of_seqs-1.png" alt="" width="700" height="433"></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co"># Using probability instead of information content</span></span>
-<span class="r-in"><span class="va">pl</span> <span class="op">&lt;-</span> <span class="fu">plot_ggseqlogo_of_seqs</span><span class="op">(</span>seqs <span class="op">=</span> <span class="fu"><a href="seqs_str.html">seqs_str</a></span><span class="op">(</span><span class="va">res</span>, iter<span class="op">=</span><span class="fl">1</span>, cl<span class="op">=</span><span class="fl">3</span><span class="op">)</span>,</span>
-<span class="r-in">                             pos_lab <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html" class="external-link">seq_len</a></span><span class="op">(</span><span class="fl">100</span><span class="op">)</span>, title <span class="op">=</span> <span class="st">""</span>,</span>
-<span class="r-in">                             method <span class="op">=</span> <span class="st">"prob"</span>, fixed_coord <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># Using probability instead of information content</span></span></span>
+<span class="r-in"><span><span class="va">pl</span> <span class="op">&lt;-</span> <span class="fu">plot_ggseqlogo_of_seqs</span><span class="op">(</span>seqs <span class="op">=</span> <span class="fu"><a href="seqs_str.html">seqs_str</a></span><span class="op">(</span><span class="va">res</span>, iter<span class="op">=</span><span class="fl">1</span>, cl<span class="op">=</span><span class="fl">3</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>                             pos_lab <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html" class="external-link">seq_len</a></span><span class="op">(</span><span class="fl">100</span><span class="op">)</span>, title <span class="op">=</span> <span class="st">""</span>,</span></span>
+<span class="r-in"><span>                             method <span class="op">=</span> <span class="st">"prob"</span>, fixed_coord <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></span>
 <span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>`guides(&lt;scale&gt; = FALSE)` is deprecated. Please use `guides(&lt;scale&gt; = "none")` instead.</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Scale for 'x' is already present. Adding another scale for 'x', which will</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> replace the existing scale.</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Coordinate system already present. Adding new coordinate system, which will replace the existing one.</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Plot title:</span>
-<span class="r-in"><span class="va">pl</span></span>
+<span class="r-in"><span><span class="va">pl</span></span></span>
 <span class="r-plt img"><img src="plot_ggseqlogo_of_seqs-2.png" alt="" width="700" height="433"></span>
-<span class="r-in"></span>
+<span class="r-in"><span></span></span>
 </code></pre></div>
     </div>
   </div>
@@ -162,7 +177,7 @@ sequence logo plots as a list.</p></div>
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.2.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.6.</p>
 </div>
 
       </footer></div>

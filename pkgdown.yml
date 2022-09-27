@@ -1,9 +1,9 @@
 pandoc: 2.7.3
-pkgdown: 2.0.2
+pkgdown: 2.0.6
 pkgdown_sha: ~
 articles:
   seqArchR: seqArchR.html
-last_built: 2022-04-25T13:18Z
+last_built: 2022-09-27T13:40Z
 urls:
   reference: http://snikumbh.github.io/seqArchR/reference
   article: http://snikumbh.github.io/seqArchR/articles

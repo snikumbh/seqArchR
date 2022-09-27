@@ -39,7 +39,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">seqArchR</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.99.340</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.1.0</span>
       </span>
     </div>
 
@@ -87,7 +87,7 @@
       <h1 data-toc-skip>Example usage of <em>seqArchR</em> on simulated DNA sequences</h1>
                         <h4 data-toc-skip class="author">Sarvesh Nikumbh</h4>
             
-            <h4 data-toc-skip class="date">2022-04-25</h4>
+            <h4 data-toc-skip class="date">2022-09-27</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/snikumbh/seqArchR/blob/HEAD/vignettes/seqArchR.Rmd" class="external-link"><code>vignettes/seqArchR.Rmd</code></a></small>
       <div class="hidden name"><code>seqArchR.Rmd</code></div>
@@ -119,11 +119,11 @@
 <p><em>seqArchR</em> requires the Python module scikit-learn. Please see installation instructions <a href="https://scikit-learn.org/stable/install.html" class="external-link">here</a>.</p>
 <p><em>seqArchR</em> is available on Bioconductor, and can be installed using:</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
-<code class="sourceCode R">
-<span class="kw">if</span> <span class="op">(</span><span class="op">!</span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">require</a></span><span class="op">(</span><span class="st">"BiocManager"</span>, quietly <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span>
-    <span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="st">"BiocManager"</span><span class="op">)</span>
-
-<span class="fu">BiocManager</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/BiocManager/man/install.html" class="external-link">install</a></span><span class="op">(</span><span class="st">"seqArchR"</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span></span>
+<span><span class="kw">if</span> <span class="op">(</span><span class="op">!</span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">require</a></span><span class="op">(</span><span class="st">"BiocManager"</span>, quietly <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span></span>
+<span>    <span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="st">"BiocManager"</span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu">BiocManager</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/BiocManager/man/install.html" class="external-link">install</a></span><span class="op">(</span><span class="st">"seqArchR"</span><span class="op">)</span></span></code></pre></div>
 <p>In case of any errors, please consider looking up: <a href="https://github.com/snikumbh/seqArchR" class="external-link">https://github.com/snikumbh/seqArchR</a>. If none of the already noted points with regards to troubleshooting <em>seqArchR</em>’s installation help, please file a <a href="https://github.com/snikumbh/seqArchR/issues/new" class="external-link">new issue</a>.</p>
 </div>
 </div>
@@ -131,36 +131,36 @@
 <h2 id="working-with-seqarchr">Working with <em>seqArchR</em><a class="anchor" aria-label="anchor" href="#working-with-seqarchr"></a>
 </h2>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="co"># Load seqArchR</span>
-<span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://snikumbh.github.io/seqArchR/" class="external-link">seqArchR</a></span><span class="op">)</span>
-<span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://bioconductor.org/packages/Biostrings" class="external-link">Biostrings</a></span>, quietly <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; Attaching package: 'BiocGenerics'</span>
-<span class="co">#&gt; The following objects are masked from 'package:stats':</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt;     IQR, mad, sd, var, xtabs</span>
-<span class="co">#&gt; The following objects are masked from 'package:base':</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt;     anyDuplicated, append, as.data.frame, basename, cbind, colnames,</span>
-<span class="co">#&gt;     dirname, do.call, duplicated, eval, evalq, Filter, Find, get, grep,</span>
-<span class="co">#&gt;     grepl, intersect, is.unsorted, lapply, Map, mapply, match, mget,</span>
-<span class="co">#&gt;     order, paste, pmax, pmax.int, pmin, pmin.int, Position, rank,</span>
-<span class="co">#&gt;     rbind, Reduce, rownames, sapply, setdiff, sort, table, tapply,</span>
-<span class="co">#&gt;     union, unique, unsplit, which.max, which.min</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; Attaching package: 'S4Vectors'</span>
-<span class="co">#&gt; The following objects are masked from 'package:base':</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt;     expand.grid, I, unname</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; Attaching package: 'Biostrings'</span>
-<span class="co">#&gt; The following object is masked from 'package:base':</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt;     strsplit</span>
-
-
-<span class="co"># Set seed for reproducibility</span>
-<span class="fu"><a href="https://rdrr.io/r/base/Random.html" class="external-link">set.seed</a></span><span class="op">(</span><span class="fl">1234</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="co"># Load seqArchR</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://snikumbh.github.io/seqArchR/" class="external-link">seqArchR</a></span><span class="op">)</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://bioconductor.org/packages/Biostrings" class="external-link">Biostrings</a></span>, quietly <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; Attaching package: 'BiocGenerics'</span></span>
+<span><span class="co">#&gt; The following objects are masked from 'package:stats':</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt;     IQR, mad, sd, var, xtabs</span></span>
+<span><span class="co">#&gt; The following objects are masked from 'package:base':</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt;     anyDuplicated, append, as.data.frame, basename, cbind, colnames,</span></span>
+<span><span class="co">#&gt;     dirname, do.call, duplicated, eval, evalq, Filter, Find, get, grep,</span></span>
+<span><span class="co">#&gt;     grepl, intersect, is.unsorted, lapply, Map, mapply, match, mget,</span></span>
+<span><span class="co">#&gt;     order, paste, pmax, pmax.int, pmin, pmin.int, Position, rank,</span></span>
+<span><span class="co">#&gt;     rbind, Reduce, rownames, sapply, setdiff, sort, table, tapply,</span></span>
+<span><span class="co">#&gt;     union, unique, unsplit, which.max, which.min</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; Attaching package: 'S4Vectors'</span></span>
+<span><span class="co">#&gt; The following objects are masked from 'package:base':</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt;     expand.grid, I, unname</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; Attaching package: 'Biostrings'</span></span>
+<span><span class="co">#&gt; The following object is masked from 'package:base':</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt;     strsplit</span></span>
+<span></span>
+<span></span>
+<span><span class="co"># Set seed for reproducibility</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/Random.html" class="external-link">set.seed</a></span><span class="op">(</span><span class="fl">1234</span><span class="op">)</span></span></code></pre></div>
 <div class="section level3">
 <h3 id="synthetic-data-explained">Synthetic data explained<a class="anchor" aria-label="anchor" href="#synthetic-data-explained"></a>
 </h3>
@@ -224,47 +224,47 @@
 <p>The function <code><a href="../reference/prepare_data_from_FASTA.html">seqArchR::prepare_data_from_FASTA()</a></code> enables one-hot-encoding the DNA sequences in the given FASTA file. The one-hot-encoded sequences are returned as a sparse matrix with as many columns as the number of sequences in the FASTA file and (sequence length x <span class="math inline">\(4^{2}\)</span>) rows when dinucleotide profiles is selected. The number of rows will be (sequence length x <span class="math inline">\(4\)</span>) when mononucleotide profiles is selected. See the <code>sinuc_or_dinuc</code> argument.</p>
 <p>Upon setting the logical argument <code>rawSeq</code> to <code>TRUE</code>, the function returns the raw sequences as a <code><a href="https://rdrr.io/pkg/Biostrings/man/XStringSet-class.html" class="external-link">Biostrings::DNAStringSet</a></code> object, with <code>FALSE</code> it returns the column-wise one-hot encoded representation as noted above. When <code>raw_seq</code> is <code>TRUE</code>, <code>sinuc_or_dinuc</code> argument is ignored.</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="co"># Creation of one-hot encoded data matrix from FASTA file</span>
-<span class="va">inputFname</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"extdata"</span>, <span class="st">"example_data.fa.gz"</span>, 
-                                  package <span class="op">=</span> <span class="st">"seqArchR"</span>, 
-                                  mustWork <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>
-
-<span class="co"># Specifying `dinuc` generates dinucleotide features</span>
-<span class="va">inputSeqsMat</span> <span class="op">&lt;-</span> <span class="fu">seqArchR</span><span class="fu">::</span><span class="fu"><a href="../reference/prepare_data_from_FASTA.html">prepare_data_from_FASTA</a></span><span class="op">(</span>fasta_fname <span class="op">=</span> <span class="va">inputFname</span>,
-                                                  sinuc_or_dinuc <span class="op">=</span> <span class="st">"dinuc"</span><span class="op">)</span>
-<span class="co">#&gt; Sequences OK,</span>
-<span class="co">#&gt; Read 200 sequences</span>
-<span class="co">#&gt; Generating dinucleotide profiles</span>
-
-<span class="va">inputSeqsRaw</span> <span class="op">&lt;-</span> <span class="fu">seqArchR</span><span class="fu">::</span><span class="fu"><a href="../reference/prepare_data_from_FASTA.html">prepare_data_from_FASTA</a></span><span class="op">(</span>fasta_fname <span class="op">=</span> <span class="va">inputFname</span>, 
-                                               raw_seq <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>
-
-<span class="va">nSeqs</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/length.html" class="external-link">length</a></span><span class="op">(</span><span class="va">inputSeqsRaw</span><span class="op">)</span>
-<span class="va">positions</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html" class="external-link">seq</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fu">Biostrings</span><span class="fu">::</span><span class="fu">width</span><span class="op">(</span><span class="va">inputSeqsRaw</span><span class="op">[</span><span class="fl">1</span><span class="op">]</span><span class="op">)</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="co"># Creation of one-hot encoded data matrix from FASTA file</span></span>
+<span><span class="va">inputFname</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"extdata"</span>, <span class="st">"example_data.fa.gz"</span>, </span>
+<span>                                  package <span class="op">=</span> <span class="st">"seqArchR"</span>, </span>
+<span>                                  mustWork <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># Specifying `dinuc` generates dinucleotide features</span></span>
+<span><span class="va">inputSeqsMat</span> <span class="op">&lt;-</span> <span class="fu">seqArchR</span><span class="fu">::</span><span class="fu"><a href="../reference/prepare_data_from_FASTA.html">prepare_data_from_FASTA</a></span><span class="op">(</span>fasta_fname <span class="op">=</span> <span class="va">inputFname</span>,</span>
+<span>                                                  sinuc_or_dinuc <span class="op">=</span> <span class="st">"dinuc"</span><span class="op">)</span></span>
+<span><span class="co">#&gt; Sequences OK,</span></span>
+<span><span class="co">#&gt; Read 200 sequences</span></span>
+<span><span class="co">#&gt; Generating dinucleotide profiles</span></span>
+<span></span>
+<span><span class="va">inputSeqsRaw</span> <span class="op">&lt;-</span> <span class="fu">seqArchR</span><span class="fu">::</span><span class="fu"><a href="../reference/prepare_data_from_FASTA.html">prepare_data_from_FASTA</a></span><span class="op">(</span>fasta_fname <span class="op">=</span> <span class="va">inputFname</span>, </span>
+<span>                                               raw_seq <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">nSeqs</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/length.html" class="external-link">length</a></span><span class="op">(</span><span class="va">inputSeqsRaw</span><span class="op">)</span></span>
+<span><span class="va">positions</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html" class="external-link">seq</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fu">Biostrings</span><span class="fu">::</span><span class="fu">width</span><span class="op">(</span><span class="va">inputSeqsRaw</span><span class="op">[</span><span class="fl">1</span><span class="op">]</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 </div>
 <div class="section level4">
 <h4 id="reading-input-as-a-dnastringset-object">Reading input as a DNAStringSet object<a class="anchor" aria-label="anchor" href="#reading-input-as-a-dnastringset-object"></a>
 </h4>
 <p>If you already have a <code><a href="https://rdrr.io/pkg/Biostrings/man/XStringSet-class.html" class="external-link">Biostrings::DNAStringSet</a></code> object, you can use the <code><a href="../reference/get_one_hot_encoded_seqs.html">seqArchR::get_one_hot_encoded_seqs()</a></code> function which directly accepts a <code><a href="https://rdrr.io/pkg/Biostrings/man/XStringSet-class.html" class="external-link">Biostrings::DNAStringSet</a></code> object.</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="co"># Creation of one-hot encoded data matrix from a DNAStringSet object</span>
-<span class="va">inputSeqs_direct</span> <span class="op">&lt;-</span> <span class="fu">seqArchR</span><span class="fu">::</span><span class="fu"><a href="../reference/get_one_hot_encoded_seqs.html">get_one_hot_encoded_seqs</a></span><span class="op">(</span>seqs <span class="op">=</span> <span class="va">inputSeqsRaw</span>, 
-                                                  sinuc_or_dinuc <span class="op">=</span> <span class="st">"dinuc"</span><span class="op">)</span>
-<span class="co">#&gt; Generating dinucleotide profiles</span>
-
-<span class="fu"><a href="https://rdrr.io/r/base/identical.html" class="external-link">identical</a></span><span class="op">(</span><span class="va">inputSeqs_direct</span>, <span class="va">inputSeqsMat</span><span class="op">)</span>
-<span class="co">#&gt; [1] TRUE</span></code></pre></div>
+<code class="sourceCode R"><span><span class="co"># Creation of one-hot encoded data matrix from a DNAStringSet object</span></span>
+<span><span class="va">inputSeqs_direct</span> <span class="op">&lt;-</span> <span class="fu">seqArchR</span><span class="fu">::</span><span class="fu"><a href="../reference/get_one_hot_encoded_seqs.html">get_one_hot_encoded_seqs</a></span><span class="op">(</span>seqs <span class="op">=</span> <span class="va">inputSeqsRaw</span>, </span>
+<span>                                                  sinuc_or_dinuc <span class="op">=</span> <span class="st">"dinuc"</span><span class="op">)</span></span>
+<span><span class="co">#&gt; Generating dinucleotide profiles</span></span>
+<span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/identical.html" class="external-link">identical</a></span><span class="op">(</span><span class="va">inputSeqs_direct</span>, <span class="va">inputSeqsMat</span><span class="op">)</span></span>
+<span><span class="co">#&gt; [1] TRUE</span></span></code></pre></div>
 </div>
 </div>
 <div class="section level3">
 <h3 id="visualize-input-sequences-as-an-image">Visualize input sequences as an image<a class="anchor" aria-label="anchor" href="#visualize-input-sequences-as-an-image"></a>
 </h3>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="co"># Visualize the sequences in a image matrix where the DNA bases are </span>
-<span class="co"># assigned fixed colors</span>
-
-<span class="fu">seqArchR</span><span class="fu">::</span><span class="fu"><a href="../reference/viz_seqs_acgt_mat.html">viz_seqs_acgt_mat</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/character.html" class="external-link">as.character</a></span><span class="op">(</span><span class="va">inputSeqsRaw</span><span class="op">)</span>, 
-                          pos_lab <span class="op">=</span> <span class="va">positions</span>, save_fname <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="co"># Visualize the sequences in a image matrix where the DNA bases are </span></span>
+<span><span class="co"># assigned fixed colors</span></span>
+<span></span>
+<span><span class="fu">seqArchR</span><span class="fu">::</span><span class="fu"><a href="../reference/viz_seqs_acgt_mat.html">viz_seqs_acgt_mat</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/character.html" class="external-link">as.character</a></span><span class="op">(</span><span class="va">inputSeqsRaw</span><span class="op">)</span>, </span>
+<span>                          pos_lab <span class="op">=</span> <span class="va">positions</span>, save_fname <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span></span></code></pre></div>
 <p><img src="seqArchR_files/figure-html/plot-seqs-1.png" width="384"></p>
 </div>
 <div class="section level3">
@@ -272,35 +272,35 @@
 </h3>
 <p>Setup seqArchR configuration as follows.</p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="co"># Set seqArchR configuration</span>
-<span class="va">seqArchRconfig</span> <span class="op">&lt;-</span> <span class="fu">seqArchR</span><span class="fu">::</span><span class="fu"><a href="../reference/set_config.html">set_config</a></span><span class="op">(</span>
-        parallelize <span class="op">=</span> <span class="cn">TRUE</span>,
-        n_cores <span class="op">=</span> <span class="fl">2</span>,
-        n_runs <span class="op">=</span> <span class="fl">100</span>,
-        k_min <span class="op">=</span> <span class="fl">1</span>,
-        k_max <span class="op">=</span> <span class="fl">20</span>,
-        mod_sel_type <span class="op">=</span> <span class="st">"stability"</span>,
-        bound <span class="op">=</span> <span class="fl">10</span><span class="op">^</span><span class="op">-</span><span class="fl">6</span>,
-        chunk_size <span class="op">=</span> <span class="fl">100</span>,
-        result_aggl <span class="op">=</span> <span class="st">"ward.D"</span>, 
-        result_dist <span class="op">=</span> <span class="st">"euclid"</span>,
-        flags <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>debug <span class="op">=</span> <span class="cn">FALSE</span>, time <span class="op">=</span> <span class="cn">TRUE</span>, verbose <span class="op">=</span> <span class="cn">TRUE</span>,
-                     plot <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span>
-<span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="co"># Set seqArchR configuration</span></span>
+<span><span class="va">seqArchRconfig</span> <span class="op">&lt;-</span> <span class="fu">seqArchR</span><span class="fu">::</span><span class="fu"><a href="../reference/set_config.html">set_config</a></span><span class="op">(</span></span>
+<span>        parallelize <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>        n_cores <span class="op">=</span> <span class="fl">2</span>,</span>
+<span>        n_runs <span class="op">=</span> <span class="fl">100</span>,</span>
+<span>        k_min <span class="op">=</span> <span class="fl">1</span>,</span>
+<span>        k_max <span class="op">=</span> <span class="fl">20</span>,</span>
+<span>        mod_sel_type <span class="op">=</span> <span class="st">"stability"</span>,</span>
+<span>        bound <span class="op">=</span> <span class="fl">10</span><span class="op">^</span><span class="op">-</span><span class="fl">6</span>,</span>
+<span>        chunk_size <span class="op">=</span> <span class="fl">100</span>,</span>
+<span>        result_aggl <span class="op">=</span> <span class="st">"ward.D"</span>, </span>
+<span>        result_dist <span class="op">=</span> <span class="st">"euclid"</span>,</span>
+<span>        flags <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>debug <span class="op">=</span> <span class="cn">FALSE</span>, time <span class="op">=</span> <span class="cn">TRUE</span>, verbose <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>                     plot <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
+<span><span class="op">)</span></span></code></pre></div>
 <p>Once the configuration is setup, call the <code><a href="../reference/seqArchR.html">seqArchR::seqArchR()</a></code> function with user-specified number of iterations.</p>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="co"># Call/Run seqArchR</span>
-<span class="va">seqArchRresult</span> <span class="op">&lt;-</span> <span class="fu">seqArchR</span><span class="fu">::</span><span class="fu"><a href="../reference/seqArchR.html">seqArchR</a></span><span class="op">(</span>config <span class="op">=</span> <span class="va">seqArchRconfig</span>,
-                            seqs_ohe_mat <span class="op">=</span> <span class="va">inputSeqsMat</span>,
-                            seqs_raw <span class="op">=</span> <span class="va">inputSeqsRaw</span>,
-                            seqs_pos <span class="op">=</span> <span class="va">positions</span>,
-                            total_itr <span class="op">=</span> <span class="fl">2</span>,
-                            set_ocollation <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/pkg/S4Vectors/man/Vector-class.html" class="external-link">c</a></span><span class="op">(</span><span class="cn">TRUE</span>, <span class="cn">FALSE</span><span class="op">)</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="co"># Call/Run seqArchR</span></span>
+<span><span class="va">seqArchRresult</span> <span class="op">&lt;-</span> <span class="fu">seqArchR</span><span class="fu">::</span><span class="fu"><a href="../reference/seqArchR.html">seqArchR</a></span><span class="op">(</span>config <span class="op">=</span> <span class="va">seqArchRconfig</span>,</span>
+<span>                            seqs_ohe_mat <span class="op">=</span> <span class="va">inputSeqsMat</span>,</span>
+<span>                            seqs_raw <span class="op">=</span> <span class="va">inputSeqsRaw</span>,</span>
+<span>                            seqs_pos <span class="op">=</span> <span class="va">positions</span>,</span>
+<span>                            total_itr <span class="op">=</span> <span class="fl">2</span>,</span>
+<span>                            set_ocollation <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="cn">TRUE</span>, <span class="cn">FALSE</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 </div>
 <div class="section level3">
 <h3 id="understanding-the-result-object-from-seqarchr">Understanding the result object from <em>seqArchR</em><a class="anchor" aria-label="anchor" href="#understanding-the-result-object-from-seqarchr"></a>
 </h3>
-<p>In the version 0.99.340, <em>seqArchR</em> naively returns a result object which is a nested list of seven elements. These include:</p>
+<p>In the version 1.1.0, <em>seqArchR</em> naively returns a result object which is a nested list of seven elements. These include:</p>
 <ul>
 <li>the sequence cluster labels per iteration [<code>seqsClustLabels</code>];</li>
 <li>the collection of NMF basis vectors per iteration [<code>clustBasisVectors</code>]: each is a list of two elements <code>nBasisVectors</code> and <code>basisVectors</code>;</li>
@@ -315,77 +315,77 @@
 </h4>
 <p><em>seqArchR</em> stores the NMF basis vectors corresponding to each cluster in every iteration in the variable <code>clustBasisVectors</code>. <code>clustBasisVectors</code> is a numbered list corresponding to the number of iterations performed. This is then again a list holding two pieces of information: the number of basis vectors (<code>nBasisVectors</code>) and the basis vectors (<code>basisVectors</code>).</p>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
-<code class="sourceCode R">
-<span class="co"># Basis vectors at iteration 2</span>
-<span class="fu">seqArchR</span><span class="fu">::</span><span class="fu"><a href="../reference/get_clBasVec.html">get_clBasVec_k</a></span><span class="op">(</span><span class="va">seqArchRresult</span>, iter<span class="op">=</span><span class="fl">2</span><span class="op">)</span>
-<span class="co">#&gt; [1] 4</span>
-
-<span class="va">i2_bv</span> <span class="op">&lt;-</span> <span class="fu">seqArchR</span><span class="fu">::</span><span class="fu"><a href="../reference/get_clBasVec.html">get_clBasVec_m</a></span><span class="op">(</span><span class="va">seqArchRresult</span>, iter<span class="op">=</span><span class="fl">2</span><span class="op">)</span>
-<span class="fu"><a href="https://rdrr.io/r/base/dim.html" class="external-link">dim</a></span><span class="op">(</span><span class="va">i2_bv</span><span class="op">)</span>
-<span class="co">#&gt; [1] 1600    4</span>
-<span class="fu"><a href="https://rdrr.io/pkg/S4Vectors/man/Vector-class.html" class="external-link">head</a></span><span class="op">(</span><span class="va">i2_bv</span><span class="op">)</span>
-<span class="co">#&gt;             [,1]       [,2]       [,3]       [,4]</span>
-<span class="co">#&gt; [1,] 0.120740995 0.07407753 0.05168607 0.08186580</span>
-<span class="co">#&gt; [2,] 0.087066440 0.08679174 0.02486037 0.07917296</span>
-<span class="co">#&gt; [3,] 0.080389797 0.03793642 0.05076204 0.05196331</span>
-<span class="co">#&gt; [4,] 0.074610342 0.04276400 0.09945618 0.05334238</span>
-<span class="co">#&gt; [5,] 0.080347189 0.11747636 0.07484865 0.10758754</span>
-<span class="co">#&gt; [6,] 0.007201571 0.11872570 0.05051104 0.10543655</span></code></pre></div>
+<code class="sourceCode R"><span></span>
+<span><span class="co"># Basis vectors at iteration 2</span></span>
+<span><span class="fu">seqArchR</span><span class="fu">::</span><span class="fu"><a href="../reference/get_clBasVec.html">get_clBasVec_k</a></span><span class="op">(</span><span class="va">seqArchRresult</span>, iter<span class="op">=</span><span class="fl">2</span><span class="op">)</span></span>
+<span><span class="co">#&gt; [1] 4</span></span>
+<span></span>
+<span><span class="va">i2_bv</span> <span class="op">&lt;-</span> <span class="fu">seqArchR</span><span class="fu">::</span><span class="fu"><a href="../reference/get_clBasVec.html">get_clBasVec_m</a></span><span class="op">(</span><span class="va">seqArchRresult</span>, iter<span class="op">=</span><span class="fl">2</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/dim.html" class="external-link">dim</a></span><span class="op">(</span><span class="va">i2_bv</span><span class="op">)</span></span>
+<span><span class="co">#&gt; [1] 1600    4</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">i2_bv</span><span class="op">)</span></span>
+<span><span class="co">#&gt;             [,1]       [,2]       [,3]       [,4]</span></span>
+<span><span class="co">#&gt; [1,] 0.120740995 0.07407753 0.05168607 0.08186580</span></span>
+<span><span class="co">#&gt; [2,] 0.087066440 0.08679174 0.02486037 0.07917296</span></span>
+<span><span class="co">#&gt; [3,] 0.080389797 0.03793642 0.05076204 0.05196331</span></span>
+<span><span class="co">#&gt; [4,] 0.074610342 0.04276400 0.09945618 0.05334238</span></span>
+<span><span class="co">#&gt; [5,] 0.080347189 0.11747636 0.07484865 0.10758754</span></span>
+<span><span class="co">#&gt; [6,] 0.007201571 0.11872570 0.05051104 0.10543655</span></span></code></pre></div>
 <p>The NMF basis vectors can be visualized as a heatmap and/or sequence logo using <a href="https://snikumbh.github.io/seqArchR/reference/viz_bas_vec_heatmap_seqlogo.html" class="external-link">viz_bas_vec_heat_seqlogo</a> function.</p>
 </div>
 <div class="section level4">
 <h4 id="basis-vectors-at-iteration-1">Basis vectors at iteration 1<a class="anchor" aria-label="anchor" href="#basis-vectors-at-iteration-1"></a>
 </h4>
 <div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu">seqArchR</span><span class="fu">::</span><span class="fu"><a href="../reference/viz_bas_vec.html">viz_bas_vec</a></span><span class="op">(</span>feat_mat <span class="op">=</span> <span class="fu"><a href="../reference/get_clBasVec.html">get_clBasVec_m</a></span><span class="op">(</span><span class="va">seqArchRresult</span>, <span class="fl">1</span><span class="op">)</span>, 
-                      ptype <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/pkg/S4Vectors/man/Vector-class.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"heatmap"</span>, <span class="st">"seqlogo"</span><span class="op">)</span>, method <span class="op">=</span> <span class="st">"bits"</span>, 
-                      sinuc_or_dinuc <span class="op">=</span> <span class="st">"dinuc"</span><span class="op">)</span>
-<span class="co">#&gt; Warning: `guides(&lt;scale&gt; = FALSE)` is deprecated. Please use `guides(&lt;scale&gt; =</span>
-<span class="co">#&gt; "none")` instead.</span>
-<span class="co">#&gt; Scale for 'x' is already present. Adding another scale for 'x', which will</span>
-<span class="co">#&gt; replace the existing scale.</span>
-<span class="co">#&gt; Warning: `guides(&lt;scale&gt; = FALSE)` is deprecated. Please use `guides(&lt;scale&gt; =</span>
-<span class="co">#&gt; "none")` instead.</span>
-<span class="co">#&gt; Scale for 'x' is already present. Adding another scale for 'x', which will</span>
-<span class="co">#&gt; replace the existing scale.</span>
-<span class="co">#&gt; Warning: `guides(&lt;scale&gt; = FALSE)` is deprecated. Please use `guides(&lt;scale&gt; =</span>
-<span class="co">#&gt; "none")` instead.</span>
-<span class="co">#&gt; Scale for 'x' is already present. Adding another scale for 'x', which will</span>
-<span class="co">#&gt; replace the existing scale.</span>
-<span class="co">#&gt; [[1]]</span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu">seqArchR</span><span class="fu">::</span><span class="fu"><a href="../reference/viz_bas_vec.html">viz_bas_vec</a></span><span class="op">(</span>feat_mat <span class="op">=</span> <span class="fu"><a href="../reference/get_clBasVec.html">get_clBasVec_m</a></span><span class="op">(</span><span class="va">seqArchRresult</span>, <span class="fl">1</span><span class="op">)</span>, </span>
+<span>                      ptype <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"heatmap"</span>, <span class="st">"seqlogo"</span><span class="op">)</span>, method <span class="op">=</span> <span class="st">"bits"</span>, </span>
+<span>                      sinuc_or_dinuc <span class="op">=</span> <span class="st">"dinuc"</span><span class="op">)</span></span>
+<span><span class="co">#&gt; Warning: `guides(&lt;scale&gt; = FALSE)` is deprecated. Please use `guides(&lt;scale&gt; =</span></span>
+<span><span class="co">#&gt; "none")` instead.</span></span>
+<span><span class="co">#&gt; Scale for 'x' is already present. Adding another scale for 'x', which will</span></span>
+<span><span class="co">#&gt; replace the existing scale.</span></span>
+<span><span class="co">#&gt; Warning: `guides(&lt;scale&gt; = FALSE)` is deprecated. Please use `guides(&lt;scale&gt; =</span></span>
+<span><span class="co">#&gt; "none")` instead.</span></span>
+<span><span class="co">#&gt; Scale for 'x' is already present. Adding another scale for 'x', which will</span></span>
+<span><span class="co">#&gt; replace the existing scale.</span></span>
+<span><span class="co">#&gt; Warning: `guides(&lt;scale&gt; = FALSE)` is deprecated. Please use `guides(&lt;scale&gt; =</span></span>
+<span><span class="co">#&gt; "none")` instead.</span></span>
+<span><span class="co">#&gt; Scale for 'x' is already present. Adding another scale for 'x', which will</span></span>
+<span><span class="co">#&gt; replace the existing scale.</span></span>
+<span><span class="co">#&gt; [[1]]</span></span></code></pre></div>
 <p><img src="seqArchR_files/figure-html/viz-BV-1-1.png" width="2400"></p>
-<pre><code><span class="co">#&gt; </span>
-<span class="co">#&gt; [[2]]</span></code></pre>
+<pre><code><span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; [[2]]</span></span></code></pre>
 <p><img src="seqArchR_files/figure-html/viz-BV-1-2.png" width="2400"></p>
-<pre><code><span class="co">#&gt; </span>
-<span class="co">#&gt; [[3]]</span></code></pre>
+<pre><code><span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; [[3]]</span></span></code></pre>
 <p><img src="seqArchR_files/figure-html/viz-BV-1-3.png" width="2400"></p>
 </div>
 <div class="section level4">
 <h4 id="basis-vectors-at-iteration-2">Basis vectors at iteration 2<a class="anchor" aria-label="anchor" href="#basis-vectors-at-iteration-2"></a>
 </h4>
 <div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu">seqArchR</span><span class="fu">::</span><span class="fu"><a href="../reference/viz_bas_vec.html">viz_bas_vec</a></span><span class="op">(</span>feat_mat <span class="op">=</span> <span class="fu"><a href="../reference/get_clBasVec.html">get_clBasVec_m</a></span><span class="op">(</span><span class="va">seqArchRresult</span>, <span class="fl">2</span><span class="op">)</span>, 
-                      ptype <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/pkg/S4Vectors/man/Vector-class.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"heatmap"</span>, <span class="st">"seqlogo"</span><span class="op">)</span>, method <span class="op">=</span> <span class="st">"bits"</span>, 
-                      sinuc_or_dinuc <span class="op">=</span> <span class="st">"dinuc"</span><span class="op">)</span>
-<span class="co">#&gt; Scale for 'x' is already present. Adding another scale for 'x', which will</span>
-<span class="co">#&gt; replace the existing scale.</span>
-<span class="co">#&gt; Scale for 'x' is already present. Adding another scale for 'x', which will</span>
-<span class="co">#&gt; replace the existing scale.</span>
-<span class="co">#&gt; Scale for 'x' is already present. Adding another scale for 'x', which will</span>
-<span class="co">#&gt; replace the existing scale.</span>
-<span class="co">#&gt; Scale for 'x' is already present. Adding another scale for 'x', which will</span>
-<span class="co">#&gt; replace the existing scale.</span>
-<span class="co">#&gt; [[1]]</span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu">seqArchR</span><span class="fu">::</span><span class="fu"><a href="../reference/viz_bas_vec.html">viz_bas_vec</a></span><span class="op">(</span>feat_mat <span class="op">=</span> <span class="fu"><a href="../reference/get_clBasVec.html">get_clBasVec_m</a></span><span class="op">(</span><span class="va">seqArchRresult</span>, <span class="fl">2</span><span class="op">)</span>, </span>
+<span>                      ptype <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"heatmap"</span>, <span class="st">"seqlogo"</span><span class="op">)</span>, method <span class="op">=</span> <span class="st">"bits"</span>, </span>
+<span>                      sinuc_or_dinuc <span class="op">=</span> <span class="st">"dinuc"</span><span class="op">)</span></span>
+<span><span class="co">#&gt; Scale for 'x' is already present. Adding another scale for 'x', which will</span></span>
+<span><span class="co">#&gt; replace the existing scale.</span></span>
+<span><span class="co">#&gt; Scale for 'x' is already present. Adding another scale for 'x', which will</span></span>
+<span><span class="co">#&gt; replace the existing scale.</span></span>
+<span><span class="co">#&gt; Scale for 'x' is already present. Adding another scale for 'x', which will</span></span>
+<span><span class="co">#&gt; replace the existing scale.</span></span>
+<span><span class="co">#&gt; Scale for 'x' is already present. Adding another scale for 'x', which will</span></span>
+<span><span class="co">#&gt; replace the existing scale.</span></span>
+<span><span class="co">#&gt; [[1]]</span></span></code></pre></div>
 <p><img src="seqArchR_files/figure-html/viz-BV-2-1.png" width="2400"></p>
-<pre><code><span class="co">#&gt; </span>
-<span class="co">#&gt; [[2]]</span></code></pre>
+<pre><code><span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; [[2]]</span></span></code></pre>
 <p><img src="seqArchR_files/figure-html/viz-BV-2-2.png" width="2400"></p>
-<pre><code><span class="co">#&gt; </span>
-<span class="co">#&gt; [[3]]</span></code></pre>
+<pre><code><span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; [[3]]</span></span></code></pre>
 <p><img src="seqArchR_files/figure-html/viz-BV-2-3.png" width="2400"></p>
-<pre><code><span class="co">#&gt; </span>
-<span class="co">#&gt; [[4]]</span></code></pre>
+<pre><code><span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; [[4]]</span></span></code></pre>
 <p><img src="seqArchR_files/figure-html/viz-BV-2-4.png" width="2400"></p>
 </div>
 <div class="section level4">
@@ -393,18 +393,18 @@
 </h4>
 <p>The clustered output from <em>seqArchR</em> can again be visualized as a matrix. Use the <a href="seqs_str">https://snikumbh.github.io/seqArchR/reference/seqs_str.html</a> function to fetch sequences by clusters at any iteration and call <code>seqArchR::viz_seqs_as_acgt_mat</code> as shown.</p>
 <div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">
-<code class="sourceCode R">
-<span class="fu">seqArchR</span><span class="fu">::</span><span class="fu"><a href="../reference/viz_seqs_acgt_mat.html">viz_seqs_acgt_mat</a></span><span class="op">(</span><span class="fu"><a href="../reference/seqs_str.html">seqs_str</a></span><span class="op">(</span><span class="va">seqArchRresult</span>, iter <span class="op">=</span> <span class="fl">1</span>, ord <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>,
-                                  pos_lab <span class="op">=</span> <span class="va">positions</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span></span>
+<span><span class="fu">seqArchR</span><span class="fu">::</span><span class="fu"><a href="../reference/viz_seqs_acgt_mat.html">viz_seqs_acgt_mat</a></span><span class="op">(</span><span class="fu"><a href="../reference/seqs_str.html">seqs_str</a></span><span class="op">(</span><span class="va">seqArchRresult</span>, iter <span class="op">=</span> <span class="fl">1</span>, ord <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>,</span>
+<span>                                  pos_lab <span class="op">=</span> <span class="va">positions</span><span class="op">)</span></span></code></pre></div>
 <div class="figure">
 <img src="seqArchR_files/figure-html/clust-itr1-1.png" alt="Clusters at iteration 1" width="384"><p class="caption">
 Clusters at iteration 1
 </p>
 </div>
 <div class="sourceCode" id="cb17"><pre class="downlit sourceCode r">
-<code class="sourceCode R">
-<span class="fu">seqArchR</span><span class="fu">::</span><span class="fu"><a href="../reference/viz_seqs_acgt_mat.html">viz_seqs_acgt_mat</a></span><span class="op">(</span><span class="fu"><a href="../reference/seqs_str.html">seqs_str</a></span><span class="op">(</span><span class="va">seqArchRresult</span>, iter <span class="op">=</span> <span class="fl">2</span>, ord <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>,
-                                  pos_lab <span class="op">=</span> <span class="va">positions</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span></span>
+<span><span class="fu">seqArchR</span><span class="fu">::</span><span class="fu"><a href="../reference/viz_seqs_acgt_mat.html">viz_seqs_acgt_mat</a></span><span class="op">(</span><span class="fu"><a href="../reference/seqs_str.html">seqs_str</a></span><span class="op">(</span><span class="va">seqArchRresult</span>, iter <span class="op">=</span> <span class="fl">2</span>, ord <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>,</span>
+<span>                                  pos_lab <span class="op">=</span> <span class="va">positions</span><span class="op">)</span></span></code></pre></div>
 <div class="figure">
 <img src="seqArchR_files/figure-html/clust-itr2-1.png" alt="Clusters at iteration 2" width="384"><p class="caption">
 Clusters at iteration 2
@@ -423,50 +423,50 @@ Clusters at iteration 2
 <h2 id="session-info">Session Info<a class="anchor" aria-label="anchor" href="#session-info"></a>
 </h2>
 <div class="sourceCode" id="cb18"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/utils/sessionInfo.html" class="external-link">sessionInfo</a></span><span class="op">(</span><span class="op">)</span>
-<span class="co">#&gt; R version 4.2.0 (2022-04-22)</span>
-<span class="co">#&gt; Platform: x86_64-apple-darwin17.0 (64-bit)</span>
-<span class="co">#&gt; Running under: macOS Big Sur/Monterey 10.16</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; Matrix products: default</span>
-<span class="co">#&gt; BLAS:   /Library/Frameworks/R.framework/Versions/4.2/Resources/lib/libRblas.0.dylib</span>
-<span class="co">#&gt; LAPACK: /Library/Frameworks/R.framework/Versions/4.2/Resources/lib/libRlapack.dylib</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; locale:</span>
-<span class="co">#&gt; [1] en_US.UTF-8/en_US.UTF-8/en_US.UTF-8/C/en_US.UTF-8/en_US.UTF-8</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; attached base packages:</span>
-<span class="co">#&gt; [1] stats4    stats     graphics  grDevices utils     datasets  methods  </span>
-<span class="co">#&gt; [8] base     </span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; other attached packages:</span>
-<span class="co">#&gt; [1] Biostrings_2.63.3    GenomeInfoDb_1.31.10 XVector_0.35.0      </span>
-<span class="co">#&gt; [4] IRanges_2.29.1       S4Vectors_0.33.17    BiocGenerics_0.41.2 </span>
-<span class="co">#&gt; [7] seqArchR_0.99.340    BiocStyle_2.23.1    </span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; loaded via a namespace (and not attached):</span>
-<span class="co">#&gt;  [1] Rcpp_1.0.8.3           lattice_0.20-45        prettyunits_1.1.1     </span>
-<span class="co">#&gt;  [4] ggseqlogo_0.1          rprojroot_2.0.3        digest_0.6.29         </span>
-<span class="co">#&gt;  [7] utf8_1.2.2             plyr_1.8.7             R6_2.5.1              </span>
-<span class="co">#&gt; [10] evaluate_0.15          highr_0.9              ggplot2_3.3.5         </span>
-<span class="co">#&gt; [13] pillar_1.7.0           zlibbioc_1.41.0        rlang_1.0.2           </span>
-<span class="co">#&gt; [16] jquerylib_0.1.4        Matrix_1.4-1           rmarkdown_2.13        </span>
-<span class="co">#&gt; [19] pkgdown_2.0.2          labeling_0.4.2         textshaping_0.3.6     </span>
-<span class="co">#&gt; [22] desc_1.4.1             BiocParallel_1.29.21   stringr_1.4.0         </span>
-<span class="co">#&gt; [25] RCurl_1.98-1.6         munsell_0.5.0          compiler_4.2.0        </span>
-<span class="co">#&gt; [28] xfun_0.30              pkgconfig_2.0.3        systemfonts_1.0.4     </span>
-<span class="co">#&gt; [31] htmltools_0.5.2        tibble_3.1.6           GenomeInfoDbData_1.2.8</span>
-<span class="co">#&gt; [34] bookdown_0.26          fansi_1.0.3            crayon_1.5.1          </span>
-<span class="co">#&gt; [37] bitops_1.0-7           grid_4.2.0             jsonlite_1.8.0        </span>
-<span class="co">#&gt; [40] gtable_0.3.0           lifecycle_1.0.1        magrittr_2.0.3        </span>
-<span class="co">#&gt; [43] scales_1.2.0           cli_3.3.0              stringi_1.7.6         </span>
-<span class="co">#&gt; [46] cachem_1.0.6           farver_2.1.0           reshape2_1.4.4        </span>
-<span class="co">#&gt; [49] fs_1.5.2               bslib_0.3.1            ellipsis_0.3.2        </span>
-<span class="co">#&gt; [52] ragg_1.2.2             vctrs_0.4.1            cowplot_1.1.1         </span>
-<span class="co">#&gt; [55] tools_4.2.0            glue_1.6.2             purrr_0.3.4           </span>
-<span class="co">#&gt; [58] parallel_4.2.0         fastmap_1.1.0          yaml_2.3.5            </span>
-<span class="co">#&gt; [61] colorspace_2.0-3       BiocManager_1.30.17    memoise_2.0.1         </span>
-<span class="co">#&gt; [64] knitr_1.38             sass_0.4.1</span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/sessionInfo.html" class="external-link">sessionInfo</a></span><span class="op">(</span><span class="op">)</span></span>
+<span><span class="co">#&gt; R version 4.2.1 (2022-06-23)</span></span>
+<span><span class="co">#&gt; Platform: x86_64-apple-darwin17.0 (64-bit)</span></span>
+<span><span class="co">#&gt; Running under: macOS Big Sur ... 10.16</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; Matrix products: default</span></span>
+<span><span class="co">#&gt; BLAS:   /Library/Frameworks/R.framework/Versions/4.2/Resources/lib/libRblas.0.dylib</span></span>
+<span><span class="co">#&gt; LAPACK: /Library/Frameworks/R.framework/Versions/4.2/Resources/lib/libRlapack.dylib</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; locale:</span></span>
+<span><span class="co">#&gt; [1] en_US.UTF-8/en_US.UTF-8/en_US.UTF-8/C/en_US.UTF-8/en_US.UTF-8</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; attached base packages:</span></span>
+<span><span class="co">#&gt; [1] stats4    stats     graphics  grDevices utils     datasets  methods  </span></span>
+<span><span class="co">#&gt; [8] base     </span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; other attached packages:</span></span>
+<span><span class="co">#&gt; [1] Biostrings_2.64.1   GenomeInfoDb_1.32.4 XVector_0.36.0     </span></span>
+<span><span class="co">#&gt; [4] IRanges_2.30.1      S4Vectors_0.34.0    BiocGenerics_0.42.0</span></span>
+<span><span class="co">#&gt; [7] seqArchR_1.1.0      BiocStyle_2.24.0   </span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; loaded via a namespace (and not attached):</span></span>
+<span><span class="co">#&gt;  [1] Rcpp_1.0.9             lattice_0.20-45        prettyunits_1.1.1     </span></span>
+<span><span class="co">#&gt;  [4] ggseqlogo_0.1          rprojroot_2.0.3        digest_0.6.29         </span></span>
+<span><span class="co">#&gt;  [7] utf8_1.2.2             plyr_1.8.7             R6_2.5.1              </span></span>
+<span><span class="co">#&gt; [10] evaluate_0.16          highr_0.9              ggplot2_3.3.6         </span></span>
+<span><span class="co">#&gt; [13] pillar_1.8.1           zlibbioc_1.42.0        rlang_1.0.6           </span></span>
+<span><span class="co">#&gt; [16] jquerylib_0.1.4        Matrix_1.4-1           rmarkdown_2.16        </span></span>
+<span><span class="co">#&gt; [19] pkgdown_2.0.6          labeling_0.4.2         textshaping_0.3.6     </span></span>
+<span><span class="co">#&gt; [22] desc_1.4.2             BiocParallel_1.30.3    stringr_1.4.1         </span></span>
+<span><span class="co">#&gt; [25] RCurl_1.98-1.8         munsell_0.5.0          compiler_4.2.1        </span></span>
+<span><span class="co">#&gt; [28] xfun_0.33              pkgconfig_2.0.3        systemfonts_1.0.4     </span></span>
+<span><span class="co">#&gt; [31] htmltools_0.5.3        tibble_3.1.8           GenomeInfoDbData_1.2.8</span></span>
+<span><span class="co">#&gt; [34] bookdown_0.29          codetools_0.2-18       fansi_1.0.3           </span></span>
+<span><span class="co">#&gt; [37] crayon_1.5.1           bitops_1.0-7           grid_4.2.1            </span></span>
+<span><span class="co">#&gt; [40] jsonlite_1.8.0         gtable_0.3.1           lifecycle_1.0.2       </span></span>
+<span><span class="co">#&gt; [43] magrittr_2.0.3         scales_1.2.1           cli_3.4.1             </span></span>
+<span><span class="co">#&gt; [46] stringi_1.7.8          cachem_1.0.6           farver_2.1.1          </span></span>
+<span><span class="co">#&gt; [49] reshape2_1.4.4         fs_1.5.2               bslib_0.4.0           </span></span>
+<span><span class="co">#&gt; [52] ragg_1.2.2             vctrs_0.4.1            cowplot_1.1.1         </span></span>
+<span><span class="co">#&gt; [55] tools_4.2.1            glue_1.6.2             purrr_0.3.4           </span></span>
+<span><span class="co">#&gt; [58] parallel_4.2.1         fastmap_1.1.0          yaml_2.3.5            </span></span>
+<span><span class="co">#&gt; [61] colorspace_2.0-3       BiocManager_1.30.18    memoise_2.0.1         </span></span>
+<span><span class="co">#&gt; [64] knitr_1.40             sass_0.4.2</span></span></code></pre></div>
 </div>
   </div>
 
@@ -487,7 +487,7 @@ Clusters at iteration 2
 
 <div class="pkgdown">
   <p></p>
-<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.2.</p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.6.</p>
 </div>
 
       </footer>
