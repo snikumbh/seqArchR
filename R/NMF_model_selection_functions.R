@@ -65,13 +65,14 @@
                                             mustWork = TRUE)
     )
     ##
-    nmf_result <- perform_nmf_func(Xmat,
+    nmf_result <- reticulate::py_suppress_warnings(
+                            perform_nmf_func(Xmat,
                                 nPatterns = as.integer(kVal),
                                 nIter = as.integer(2000),
                                 givenAlpha = alphaVal,
                                 givenL1_ratio = 1,
                                 seed_val = as.integer(seedVal)
-    )
+    ))
     D_W <- as.matrix(get_features_matrix(nmf_result))
     D_H <- as.matrix(get_samples_matrix(nmf_result))
     return(list(featuresMatrix = D_W, samplesMatrix = D_H))
