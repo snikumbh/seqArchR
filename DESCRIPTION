@@ -22,7 +22,7 @@ License: GPL-3 | file LICENSE
 URL: https://snikumbh.github.io/seqArchR/,
     https://github.com/snikumbh/seqArchR
 BugReports: https://github.com/snikumbh/seqArchR/issues
-SystemRequirements: Python (>= 3.5), scikit-learn (>= 0.21.2)
+SystemRequirements: Python (>= 3.5), scikit-learn (>= 0.21.2), packaging
 Depends:
     R (>= 4.2.0)
 Imports:
@@ -69,4 +69,4 @@ biocViews:
     DNASeq
 Encoding: UTF-8
 LazyData: false
-RoxygenNote: 7.1.2
+RoxygenNote: 7.2.1
