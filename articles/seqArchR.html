@@ -39,7 +39,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">seqArchR</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.1.2</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.1.3</span>
       </span>
     </div>
 
@@ -87,7 +87,7 @@
       <h1 data-toc-skip>Example usage of <em>seqArchR</em> on simulated DNA sequences</h1>
                         <h4 data-toc-skip class="author">Sarvesh Nikumbh</h4>
             
-            <h4 data-toc-skip class="date">2022-10-14</h4>
+            <h4 data-toc-skip class="date">2022-10-19</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/snikumbh/seqArchR/blob/HEAD/vignettes/seqArchR.Rmd" class="external-link"><code>vignettes/seqArchR.Rmd</code></a></small>
       <div class="hidden name"><code>seqArchR.Rmd</code></div>
@@ -300,7 +300,7 @@
 <div class="section level3">
 <h3 id="understanding-the-result-object-from-seqarchr">Understanding the result object from <em>seqArchR</em><a class="anchor" aria-label="anchor" href="#understanding-the-result-object-from-seqarchr"></a>
 </h3>
-<p>In the version 1.1.2, <em>seqArchR</em> naively returns a result object which is a nested list of seven elements. These include:</p>
+<p>In the version 1.1.3, <em>seqArchR</em> naively returns a result object which is a nested list of seven elements. These include:</p>
 <ul>
 <li>the sequence cluster labels per iteration [<code>seqsClustLabels</code>];</li>
 <li>the collection of NMF basis vectors per iteration [<code>clustBasisVectors</code>]: each is a list of two elements <code>nBasisVectors</code> and <code>basisVectors</code>;</li>
@@ -442,11 +442,11 @@ Clusters at iteration 2
 <span><span class="co">#&gt; other attached packages:</span></span>
 <span><span class="co">#&gt; [1] Biostrings_2.64.1   GenomeInfoDb_1.32.4 XVector_0.36.0     </span></span>
 <span><span class="co">#&gt; [4] IRanges_2.30.1      S4Vectors_0.34.0    BiocGenerics_0.42.0</span></span>
-<span><span class="co">#&gt; [7] seqArchR_1.1.2      BiocStyle_2.24.0   </span></span>
+<span><span class="co">#&gt; [7] seqArchR_1.1.3      BiocStyle_2.24.0   </span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; loaded via a namespace (and not attached):</span></span>
 <span><span class="co">#&gt;  [1] Rcpp_1.0.9             lattice_0.20-45        prettyunits_1.1.1     </span></span>
-<span><span class="co">#&gt;  [4] ggseqlogo_0.1          rprojroot_2.0.3        digest_0.6.29         </span></span>
+<span><span class="co">#&gt;  [4] ggseqlogo_0.1          rprojroot_2.0.3        digest_0.6.30         </span></span>
 <span><span class="co">#&gt;  [7] utf8_1.2.2             plyr_1.8.7             R6_2.5.1              </span></span>
 <span><span class="co">#&gt; [10] evaluate_0.17          highr_0.9              ggplot2_3.3.6         </span></span>
 <span><span class="co">#&gt; [13] pillar_1.8.1           zlibbioc_1.42.0        rlang_1.0.6           </span></span>
@@ -454,7 +454,7 @@ Clusters at iteration 2
 <span><span class="co">#&gt; [19] pkgdown_2.0.6          labeling_0.4.2         textshaping_0.3.6     </span></span>
 <span><span class="co">#&gt; [22] desc_1.4.2             BiocParallel_1.30.4    stringr_1.4.1         </span></span>
 <span><span class="co">#&gt; [25] RCurl_1.98-1.9         munsell_0.5.0          compiler_4.2.1        </span></span>
-<span><span class="co">#&gt; [28] xfun_0.33              pkgconfig_2.0.3        systemfonts_1.0.4     </span></span>
+<span><span class="co">#&gt; [28] xfun_0.34              pkgconfig_2.0.3        systemfonts_1.0.4     </span></span>
 <span><span class="co">#&gt; [31] htmltools_0.5.3        tibble_3.1.8           GenomeInfoDbData_1.2.8</span></span>
 <span><span class="co">#&gt; [34] bookdown_0.29          codetools_0.2-18       fansi_1.0.3           </span></span>
 <span><span class="co">#&gt; [37] crayon_1.5.2           bitops_1.0-7           grid_4.2.1            </span></span>
@@ -464,7 +464,7 @@ Clusters at iteration 2
 <span><span class="co">#&gt; [49] reshape2_1.4.4         fs_1.5.2               bslib_0.4.0           </span></span>
 <span><span class="co">#&gt; [52] ragg_1.2.3             vctrs_0.4.2            cowplot_1.1.1         </span></span>
 <span><span class="co">#&gt; [55] tools_4.2.1            glue_1.6.2             purrr_0.3.5           </span></span>
-<span><span class="co">#&gt; [58] parallel_4.2.1         fastmap_1.1.0          yaml_2.3.5            </span></span>
+<span><span class="co">#&gt; [58] parallel_4.2.1         fastmap_1.1.0          yaml_2.3.6            </span></span>
 <span><span class="co">#&gt; [61] colorspace_2.0-3       BiocManager_1.30.18    memoise_2.0.1         </span></span>
 <span><span class="co">#&gt; [64] knitr_1.40             sass_0.4.2</span></span></code></pre></div>
 </div>
