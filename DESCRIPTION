@@ -1,7 +1,7 @@
 Type: Package
 Package: seqArchR
 Title: Identify Different Architectures of Sequence Elements
-Version: 1.1.2
+Version: 1.1.3
 Authors@R: 
     person("Sarvesh", "Nikumbh", 
     email = "sarvesh.nikumbh@gmail.com", 
