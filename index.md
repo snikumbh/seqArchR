@@ -4,10 +4,16 @@
 <!-- badges: start -->
 [![DOI](https://zenodo.org/badge/188449833.svg)](https://zenodo.org/badge/latestdoi/188449833)
 [![codecov](https://codecov.io/gh/snikumbh/seqArchR/branch/main/graph/badge.svg?token=NEjCGuOUlW)](https://codecov.io/gh/snikumbh/seqArchR)
-[![R build status](https://github.com/snikumbh/seqArchR/workflows/R-CMD-check/badge.svg)](https://github.com/snikumbh/seqArchR/actions)
+<!-- bioc badges: start -->
+  [![Bioc release status](http://www.bioconductor.org/shields/build/release/bioc/seqArchR.svg)](https://bioconductor.org/checkResults/release/bioc-LATEST/seqArchR)
+  [![Bioc downloads rank](https://bioconductor.org/shields/downloads/release/seqArchR.svg)](http://bioconductor.org/packages/stats/bioc/seqArchR/)
+  [![Bioc support](https://bioconductor.org/shields/posts/seqArchR.svg)](https://support.bioconductor.org/tag/seqArchR)
+  [![Bioc history](https://bioconductor.org/shields/years-in-bioc/seqArchR.svg)](https://bioconductor.org/packages/release/bioc/html/seqArchR.html#since)
+  [![Bioc dependencies](https://bioconductor.org/shields/dependencies/release/seqArchR.svg)](https://bioconductor.org/packages/release/bioc/html/seqArchR.html#since)
+  <!-- bioc badges: end -->
+  
+<!-- [![R build status](https://github.com/snikumbh/seqArchR/workflows/R-CMD-check/badge.svg)](https://github.com/snikumbh/seqArchR/actions) -->
 <!-- badges: end -->
-
-Note: _This package is currently under development. So, please bear with me while I put the final blocks together. Thanks for your understanding!_ 
 
 
 seqArchR is an unsupervised, non-negative matrix factorization (NMF)-based algorithm for discovery of sequence architectures de novo.

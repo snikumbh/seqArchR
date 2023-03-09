@@ -6,7 +6,6 @@
 [![codecov](https://codecov.io/gh/snikumbh/seqArchR/branch/main/graph/badge.svg?token=NEjCGuOUlW)](https://codecov.io/gh/snikumbh/seqArchR)
 <!-- bioc badges: start -->
   [![Bioc release status](http://www.bioconductor.org/shields/build/release/bioc/seqArchR.svg)](https://bioconductor.org/checkResults/release/bioc-LATEST/seqArchR)
-  [![Bioc devel status](http://www.bioconductor.org/shields/build/devel/bioc/seqArchR.svg)](https://bioconductor.org/checkResults/devel/bioc-LATEST/seqArchR)
   [![Bioc downloads rank](https://bioconductor.org/shields/downloads/release/seqArchR.svg)](http://bioconductor.org/packages/stats/bioc/seqArchR/)
   [![Bioc support](https://bioconductor.org/shields/posts/seqArchR.svg)](https://support.bioconductor.org/tag/seqArchR)
   [![Bioc history](https://bioconductor.org/shields/years-in-bioc/seqArchR.svg)](https://bioconductor.org/packages/release/bioc/html/seqArchR.html#since)
@@ -15,8 +14,6 @@
   
 <!-- [![R build status](https://github.com/snikumbh/seqArchR/workflows/R-CMD-check/badge.svg)](https://github.com/snikumbh/seqArchR/actions) -->
 <!-- badges: end -->
-
-Note: _This package is currently under development. So, please bear with me while I put the final blocks together. Thanks for your understanding!_ 
 
 
 seqArchR is an unsupervised, non-negative matrix factorization (NMF)-based algorithm for discovery of sequence architectures de novo.
